@@ -1,0 +1,56 @@
+{
+  "name": "Player's House 2F (Bedroom)",
+  "mapGroup": 24,
+  "mapNumber": 7,
+  "width": 5,
+  "height": 4,
+  "tileset": "HOUSE",
+  "environment": "INDOOR",
+  "npcs": [],
+  "signposts": [
+    {
+      "id": "PC",
+      "gridX": 0,
+      "gridY": 1,
+      "text": "Buddymon Storage System & Item Storage PC."
+    },
+    {
+      "id": "RADIO",
+      "gridX": 4,
+      "gridY": 1,
+      "text": "PROF. OAK'S BUDDYMON TALK! Please tune in next time!"
+    },
+    {
+      "id": "TOWN_MAP",
+      "gridX": 6,
+      "gridY": 1,
+      "text": "A detailed map of the region. New Bark Town is nestled on the quiet eastern coast."
+    },
+    {
+      "id": "BED",
+      "gridX": 0,
+      "gridY": 5,
+      "text": "A warm and comfy bed with fluffy pillows."
+    },
+    {
+      "id": "BOOKSHELF",
+      "gridX": 0,
+      "gridY": 3,
+      "text": "A bookshelf filled with classic Buddymon adventure guides and maps."
+    },
+    {
+      "id": "N64",
+      "gridX": 3,
+      "gridY": 1,
+      "text": "A Nintendo 64! A game with Pikachu is on screen."
+    }
+  ],
+  "warps": [
+    {
+      "id": "STAIRS_TO_1F",
+      "gridX": 9,
+      "gridY": 1,
+      "leadsTo": "Player's House 1F (X: 9, Y: 1)"
+    }
+  ]
+}

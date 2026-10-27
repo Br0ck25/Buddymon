@@ -1,0 +1,119 @@
+{
+  "name": "Player's House 1F",
+  "mapGroup": 24,
+  "mapNumber": 6,
+  "width": 5,
+  "height": 4,
+  "tileset": "HOUSE",
+  "environment": "INDOOR",
+  "eventOffset": 502448,
+  "npcs": [
+    {
+      "id": "MOM",
+      "sprite": "SPRITE_MOM",
+      "gridX": 7,
+      "gridY": 4,
+      "pixelX": 154,
+      "pixelY": 172,
+      "facing": "left",
+      "movement": "SPRITEMOVEDATA_STANDING_LEFT",
+      "dialogues": {
+        "interceptPart1": "Oh, <PLAYER>! Our\nneighbor, PROF.\n\nELM, was looking\nfor you.\n\nHe said he wanted\nyou to do some'r\nthing for him.\n\nOh! I almost for'r\ngot! Your BUDDYMON\n\nGEAR is back from\nthe repair shop.\n\nHere you go!\nBUDDYMON GEAR, or\njust BUDDYGEAR.\n\nIt's essential if\nyou want to be a\ngood trainer.\n\nOh, the day of the\nweek isn't set.\n\nYou mustn't forget\nthat!\nIs it Daylight\nSaving Time now'v\nCome home to\nadjust your clock\n\nfor Daylight\nSavi",
+        "buddygearPart2": "BUDDYMON GEAR, or just BUDDYGEAR. It's essential if you want to be a good trainer. Oh, the day of the week isn't set. You mustn't forget that!",
+        "phonePart3": "Phone numbers are stored in memory. Just choose a name you want to call. Gee, isn't that convenient?",
+        "waitingForElm": "PROF. ELM is waiting for you. Hurry up, baby!",
+        "afterElm": "So, what was PROF. ELM's errand? …That does sound challenging. But, you should be proud that people rely on you! <PLAYER>, do it! I'm behind you all the way!"
+      }
+    },
+    {
+      "id": "NEIGHBOR",
+      "sprite": "SPRITE_POKEFAN_F",
+      "gridX": 4,
+      "gridY": 4,
+      "pixelX": 74,
+      "pixelY": 172,
+      "facing": "right",
+      "movement": "SPRITEMOVEDATA_STANDING_RIGHT",
+      "dialogues": {
+        "morning": "Good morning, <PLAYER>! I'm visiting!",
+        "day": "Hello, <PLAYER>! I'm visiting!",
+        "evening": "Good evening, <PLAYER>! I'm visiting!",
+        "daughterStory": "<PLAYER>, have you heard? My daughter is adamant about becoming PROF. ELM's assistant. She really loves BUDDYMON!"
+      }
+    }
+  ],
+  "signposts": [
+    {
+      "id": "STOVE",
+      "gridX": 5,
+      "gridY": 1,
+      "text": "Mom's specialty! CINNABAR VOLCANO BURGER!"
+    },
+    {
+      "id": "SINK",
+      "gridX": 4,
+      "gridY": 1,
+      "text": "The sink is spotless. Mom likes it clean."
+    },
+    {
+      "id": "FRIDGE",
+      "gridX": 1,
+      "gridY": 1,
+      "text": "Let's see what's in the fridge… FRESH WATER and tasty LEMONADE!"
+    },
+    {
+      "id": "TV",
+      "gridX": 3,
+      "gridY": 1,
+      "text": "There's a movie on TV: Stars dot the sky as two boys ride on a train… I'd better get rolling too!"
+    },
+    {
+      "id": "BOOKSHELF",
+      "gridX": 0,
+      "gridY": 1,
+      "text": "A collection of cookbooks, home decor magazines, and Buddymon care guides."
+    },
+    {
+      "id": "TABLE",
+      "gridX": 4,
+      "gridY": 4,
+      "text": "A cozy dining table with a freshly brewed pot of berry tea and two cups."
+    }
+  ],
+  "warps": [
+    {
+      "id": "FRONT_DOOR_LEFT",
+      "gridX": 6,
+      "gridY": 7,
+      "leadsTo": "NewBarkTown (X: 13, Y: 6)"
+    },
+    {
+      "id": "FRONT_DOOR_RIGHT",
+      "gridX": 7,
+      "gridY": 7,
+      "leadsTo": "NewBarkTown (X: 13, Y: 6)"
+    },
+    {
+      "id": "STAIRS_TO_2F",
+      "gridX": 9,
+      "gridY": 1,
+      "leadsTo": "Player's House 2F (X: 9, Y: 1)"
+    }
+  ],
+  "coordTriggers": [
+    {
+      "id": "MOM_STOP_LEFT",
+      "gridX": 8,
+      "gridY": 4,
+      "condition": "!hasReceivedBuddygear",
+      "action": "Mom stops player with alert (!) and gives Buddygear"
+    },
+    {
+      "id": "MOM_STOP_RIGHT",
+      "gridX": 9,
+      "gridY": 4,
+      "condition": "!hasReceivedBuddygear",
+      "action": "Mom stops player with alert (!) and gives Buddygear"
+    }
+  ]
+}

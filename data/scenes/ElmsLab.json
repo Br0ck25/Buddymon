@@ -1,0 +1,75 @@
+{
+  "name": "Professor Elm's Lab",
+  "mapGroup": 24,
+  "mapNumber": 5,
+  "width": 10,
+  "height": 12,
+  "tileset": "LAB",
+  "environment": "INDOOR",
+  "npcs": [
+    {
+      "id": "PROF_ELM",
+      "sprite": "SPRITE_ELM",
+      "gridX": 5,
+      "gridY": 2,
+      "movement": "SPRITEMOVEDATA_STANDING_DOWN",
+      "dialogues": {
+        "greeting": "<PLAYER>! There you are! I needed to ask a favor of you. I'm conducting new research on Buddymon evolution, and I want you to accompany a rare partner!",
+        "pickStarter": "Go on, choose one of the three Buddymon! Bramblet, Bandit, or Chomplet!"
+      }
+    },
+    {
+      "id": "SCIENTIST",
+      "sprite": "SPRITE_SCIENTIST",
+      "gridX": 2,
+      "gridY": 9,
+      "movement": "SPRITEMOVEDATA_SPINRANDOM_SLOW",
+      "dialogues": {
+        "regular": "Professor Elm is renowned throughout the region for his discoveries on Buddymon!"
+      }
+    },
+    {
+      "id": "STARTER_BALL_1",
+      "sprite": "SPRITE_POKE_BALL",
+      "gridX": 6,
+      "gridY": 3,
+      "description": "Bramblet Pokeball"
+    },
+    {
+      "id": "STARTER_BALL_2",
+      "sprite": "SPRITE_POKE_BALL",
+      "gridX": 7,
+      "gridY": 3,
+      "description": "Bandit Pokeball"
+    },
+    {
+      "id": "STARTER_BALL_3",
+      "sprite": "SPRITE_POKE_BALL",
+      "gridX": 8,
+      "gridY": 3,
+      "description": "Chomplet Pokeball"
+    }
+  ],
+  "signposts": [
+    {
+      "id": "RESEARCH_PAPERS",
+      "gridX": 0,
+      "gridY": 7,
+      "text": "POKéMON... Where do they come from? Where are they going? It's a part of PROF. ELM's research papers."
+    },
+    {
+      "id": "HEALING_MACHINE",
+      "gridX": 0,
+      "gridY": 1,
+      "text": "A machine that restores your Buddymon to full vitality!"
+    }
+  ],
+  "warps": [
+    {
+      "id": "EXIT_DOOR",
+      "gridX": 4,
+      "gridY": 11,
+      "leadsTo": "NewBarkTown (X: 4, Y: 4)"
+    }
+  ]
+}

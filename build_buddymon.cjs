@@ -3253,12 +3253,13 @@ function buildHtml(includeEmbeddedRom) {
 
       function getMomSequence() {
         return [
-          { tag: 'MOM', text: 'Oh, ' + playerName + '! You are awake! Professor Elm was looking for you.', _momSequence: true },
-          { tag: 'MOM', text: 'He said that he had a special offer for you!', _momSequence: true },
-          { tag: 'MOM', text: 'Oh, I almost forgot! Your BUDDYGEAR came back from the repair shop. Here you go!', _momSequence: true },
+          { tag: 'MOM', text: 'Oh, ' + playerName + '…! Our neighbor, PROF. ELM, was looking for you.', _momSequence: true },
+          { tag: 'MOM', text: 'He said he wanted you to do something for him.', _momSequence: true },
+          { tag: 'MOM', text: 'Oh! I almost forgot! Your BUDDYMON GEAR is back from the repair shop. Here you go!', _momSequence: true },
           { tag: 'BUDDYGEAR', text: '★ ' + playerName + ' received the BUDDYGEAR!', _momSequence: true },
-          { tag: 'MOM', text: 'The BUDDYGEAR is essential if you want to be a great Buddymon trainer. Be sure to check its map and phone!', _momSequence: true },
-          { tag: 'MOM', text: "Professor Elm's laboratory is right next door to the east. Have a wonderful adventure, sweetheart!", _momSequence: true }
+          { tag: 'MOM', text: "BUDDYMON GEAR, or just BUDDYGEAR. It's essential if you want to be a good trainer.", _momSequence: true },
+          { tag: 'MOM', text: "Oh, the day of the week isn't set. You mustn't forget that!", _momSequence: true },
+          { tag: 'MOM', text: "Phone numbers are stored in memory. Just choose a name you want to call. Gee, isn't that convenient?", _momSequence: true }
         ];
       }
 
@@ -3290,6 +3291,7 @@ function buildHtml(includeEmbeddedRom) {
         renderHdScene();
       }
 
+      var neighborTalkStep = 0;
       function interactHouse1FNeighbor() {
         if (house1FDialog) {
           advanceHouse1FDialog();
@@ -3297,10 +3299,19 @@ function buildHtml(includeEmbeddedRom) {
         }
         neighborNpc.dir = (house1FPlayer.x > neighborNpc.x) ? 'right' : 'left';
         playChime(540);
-        house1FDialog = {
-          tag: 'NEIGHBOR',
-          text: "Hi, " + playerName + "! I was just having morning tea with your mom. Professor Elm next door was asking all around for you! It must be so exciting to go on a Buddymon journey!"
-        };
+        if (neighborTalkStep === 0) {
+          house1FDialog = {
+            tag: 'NEIGHBOR',
+            text: "Good morning, " + playerName + "! I'm visiting!"
+          };
+          neighborTalkStep = 1;
+        } else {
+          house1FDialog = {
+            tag: 'NEIGHBOR',
+            text: playerName + ", have you heard? My daughter is adamant about becoming PROF. ELM's assistant. She really loves BUDDYMON!"
+          };
+          neighborTalkStep = 0;
+        }
         renderHdScene();
       }
 
@@ -3335,7 +3346,7 @@ function buildHtml(includeEmbeddedRom) {
             momDialogueIndex = 0;
             house1FDialog = getMomSequence()[0];
           } else {
-            house1FDialog = { tag: 'MOM', text: "Professor Elm's laboratory is right next door to the east. Go see what he needs, " + playerName + "!" };
+            house1FDialog = { tag: 'MOM', text: "PROF. ELM is waiting for you. Hurry up, baby!" };
           }
           renderHdScene();
           return;
@@ -3356,7 +3367,7 @@ function buildHtml(includeEmbeddedRom) {
         // TV
         if (dir === 'up' && px >= 140 && px <= 206 && py <= 120) {
           playChime(440);
-          house1FDialog = { tag: 'TV', text: "There's a movie on TV: Stars dot the sky as two friends ride on a train... I'd better get rolling too!" };
+          house1FDialog = { tag: 'TV', text: "There's a movie on TV: Stars dot the sky as two boys ride on a train… I'd better get rolling too!" };
           renderHdScene();
           return;
         }
@@ -3364,14 +3375,14 @@ function buildHtml(includeEmbeddedRom) {
         // Fridge
         if ((dir === 'up' || dir === 'left') && px <= 54 && py <= 116) {
           playChime(520);
-          house1FDialog = { tag: 'FRIDGE', text: "Let's see what's in the fridge... Fresh Water and tasty Lemonade!" };
+          house1FDialog = { tag: 'FRIDGE', text: "Let's see what's in the fridge… FRESH WATER and tasty LEMONADE!" };
           renderHdScene();
           return;
         }
 
         // Sink
         if (dir === 'up' && px >= 50 && px <= 94 && py <= 116) {
-          house1FDialog = { tag: 'SINK', text: "The sink is spotless and shining clean." };
+          house1FDialog = { tag: 'SINK', text: "The sink is spotless. Mom likes it clean." };
           renderHdScene();
           return;
         }
@@ -3379,7 +3390,7 @@ function buildHtml(includeEmbeddedRom) {
         // Stove
         if (dir === 'up' && px >= 90 && px <= 140 && py <= 116) {
           playChime(480);
-          house1FDialog = { tag: 'STOVE', text: "Mom's specialty soup is simmering gently on the stove. Smells delicious!" };
+          house1FDialog = { tag: 'STOVE', text: "Mom's specialty! CINNABAR VOLCANO BURGER!" };
           renderHdScene();
           return;
         }
