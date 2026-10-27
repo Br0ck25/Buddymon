@@ -170,7 +170,7 @@ Art.logo = function() {
 <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3a8"/><stop offset=".5" stop-color="#ffc93c"/><stop offset="1" stop-color="#f08a14"/></linearGradient>
 <clipPath id="top-half"><rect x="0" y="0" width="1000" height="112"/></clipPath>
 </defs>
-<g font-family="'Lilita One','Fredoka',system-ui,sans-serif" text-anchor="middle" stroke-linejoin="round">
+<g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" text-anchor="middle" stroke-linejoin="round">
 <text x="500" y="192" font-size="172" fill="#b84a12" stroke="\${INK}" stroke-width="34" paint-order="stroke">BUDDYMON</text>
 <text x="500" y="176" font-size="172" fill="url(#gold)" stroke="\${INK}" stroke-width="30" paint-order="stroke">BUDDYMON</text>
 <text x="500" y="176" font-size="172" fill="#fff" opacity=".45" clip-path="url(#top-half)">BUDDYMON</text>
@@ -352,8 +352,6 @@ Art.girlSprite = function girlSprite(dir, step) {
     <path d="M4 11 C3 16 4 23 7 24 C8.5 24 9 20 8 16 Z" fill="#36190a"/>
     <path d="M28 11 C29 16 28 23 25 24 C23.5 24 23 20 24 16 Z" fill="#36190a"/>
     <circle cx="16" cy="11" r="7.8" fill="#fce1cd"/>
-    <circle cx="10" cy="13.5" r="1.5" fill="#f472b6" opacity="0.45"/>
-    <circle cx="22" cy="13.5" r="1.5" fill="#f472b6" opacity="0.45"/>
     <ellipse cx="12" cy="11" rx="2.5" ry="3" fill="#4d7c3b"/>
     <ellipse cx="12" cy="11.5" rx="1.8" ry="2" fill="#1b3314"/>
     <circle cx="11.3" cy="10" r="0.8" fill="#fff"/>
@@ -450,14 +448,13 @@ Art.boySprite = function boySprite(dir, step) {
         <!-- Head & Features -->
         <circle cx="16" cy="11" r="7.5" fill="#fce1cd"/>
         <path d="M9.5 12 Q8 13 9.5 13.5" stroke="#a3583b" stroke-width="0.8" fill="none"/>
-        <ellipse cx="12.5" cy="11.5" rx="2.4" ry="2.8" fill="#2b1810"/>
-        <circle cx="12" cy="10.8" r="0.7" fill="#fff"/>
-        <ellipse cx="12.5" cy="11.5" rx="3.2" ry="3.4" fill="none" stroke="#1f2937" stroke-width="1.2"/>
-        <line x1="15.7" y1="11.5" x2="20" y2="10.5" stroke="#1f2937" stroke-width="1"/>
+        <path d="M10 9.8 L14.5 10.5" stroke="#0f172a" stroke-width="1.2"/>
+        <polygon points="10.8,10.5 14.5,10.5 14,13 11.2,13" fill="#2b1810"/>
+        <circle cx="12" cy="11.2" r="0.6" fill="#fff"/>
         <path d="M8 9 Q11 6 16 7 L16 12 Q13 11 8.5 12 Z" fill="#3d2110"/>
         <polygon points="15,11 16,14 14,13" fill="#3d2110"/>
-        <path d="M7 11 C6 6 10 2 17 2 C22 2 25 5 24 10 C23 13 18 13 7 11 Z" fill="#7a2536" stroke="#4f131f" stroke-width="1"/>
-        <path d="M21 4 C24 6 25 10 23 13 C20 12 21 8 21 4 Z" fill="#9b3248"/>
+        <path d="M7 11 C6 6 10 2 17 2 C22 2 25 5 24 10 C23 13 18 13 7 11 Z" fill="#b91c1c" stroke="#7f1d1d" stroke-width="1"/>
+        <path d="M21 4 C24 6 25 10 23 13 C20 12 21 8 21 4 Z" fill="#ef4444"/>
       </g>
     </svg>\`;
   }
@@ -471,36 +468,36 @@ Art.boySprite = function boySprite(dir, step) {
     <rect x="18" y="27" width="5" height="5" fill="#32373e"/>
     <rect x="8" y="\${lBootY}" width="7" height="6" rx="1" fill="#181a1d" stroke="#0d0e10" stroke-width="0.8"/>
     <rect x="8" y="\${lBootY + 4.5}" width="7" height="1.5" fill="#0a0b0d"/>
-    <line x1="8" y1="\${lBootY + 2.5}" x2="15" y2="\${lBootY + 2.5}" stroke="#872c3e" stroke-width="1.2"/>
+    <line x1="8" y1="\${lBootY + 2.5}" x2="15" y2="\${lBootY + 2.5}" stroke="#b91c1c" stroke-width="1.2"/>
     <rect x="17" y="\${rBootY}" width="7" height="6" rx="1" fill="#181a1d" stroke="#0d0e10" stroke-width="0.8"/>
     <rect x="17" y="\${rBootY + 4.5}" width="7" height="1.5" fill="#0a0b0d"/>
-    <line x1="17" y1="\${rBootY + 2.5}" x2="24" y2="\${rBootY + 2.5}" stroke="#872c3e" stroke-width="1.2"/>
+    <line x1="17" y1="\${rBootY + 2.5}" x2="24" y2="\${rBootY + 2.5}" stroke="#b91c1c" stroke-width="1.2"/>
     <rect x="7" y="18" width="18" height="11" rx="3" fill="#272b30" stroke="#181a1d" stroke-width="1"/>
-    <line x1="16" y1="18" x2="16" y2="29" stroke="#9b3248" stroke-width="2"/>
-    <path d="M10 20 L12 23 L12 28" stroke="#872c3e" stroke-width="1" fill="none"/>
-    <path d="M22 20 L20 23 L20 28" stroke="#872c3e" stroke-width="1" fill="none"/>
+    <line x1="16" y1="18" x2="16" y2="29" stroke="#b91c1c" stroke-width="2"/>
+    <path d="M10 20 L12 23 L12 28" stroke="#f59e0b" stroke-width="1" fill="none"/>
+    <path d="M22 20 L20 23 L20 28" stroke="#f59e0b" stroke-width="1" fill="none"/>
     <rect x="9" y="16" width="14" height="3" rx="1.5" fill="#1f2327"/>
     <rect x="4" y="\${isWalk1 ? 20 : 18}" width="4.5" height="8" rx="2" fill="#272b30"/>
     <circle cx="6.2" cy="\${isWalk1 ? 27.5 : 25.5}" r="1.6" fill="#fce1cd"/>
     <rect x="23.5" y="\${isWalk2 ? 20 : 18}" width="4.5" height="8" rx="2" fill="#272b30"/>
     <circle cx="25.8" cy="\${isWalk2 ? 27.5 : 25.5}" r="1.6" fill="#fce1cd"/>
-    <circle cx="16" cy="11" r="8" fill="#fce1cd"/>
-    <circle cx="9.5" cy="13.5" r="1.4" fill="#f7a898" opacity="0.6"/>
-    <circle cx="22.5" cy="13.5" r="1.4" fill="#f7a898" opacity="0.6"/>
+    <circle cx="16" cy="11" r="7.5" fill="#fce1cd"/>
     <polygon points="7,10 9,14 8,11" fill="#3d2110"/>
     <polygon points="25,10 23,14 24,11" fill="#3d2110"/>
     <path d="M8 8 L10 11.5 L12 9 L15 12 L17 9 L20 11.5 L22 8 L24 9.5" stroke="#3d2110" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    <ellipse cx="12" cy="11.5" rx="3.3" ry="3.5" fill="none" stroke="#1f2937" stroke-width="1.2"/>
-    <ellipse cx="20" cy="11.5" rx="3.3" ry="3.5" fill="none" stroke="#1f2937" stroke-width="1.2"/>
-    <line x1="15.3" y1="11.5" x2="16.7" y2="11.5" stroke="#1f2937" stroke-width="1.2"/>
-    <ellipse cx="12" cy="11.5" rx="1.8" ry="2" fill="#2b1810"/>
-    <circle cx="11.3" cy="10.8" r="0.7" fill="#fff"/>
-    <ellipse cx="20" cy="11.5" rx="1.8" ry="2" fill="#2b1810"/>
-    <circle cx="19.3" cy="10.8" r="0.7" fill="#fff"/>
-    <path d="M14 15 Q16 16.5 18 15" stroke="#6b3620" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-    <path d="M6 10 C5 4 10 1 16 1 C22 1 27 4 26 10 C25 11 7 11 6 10 Z" fill="#7a2536" stroke="#4f131f" stroke-width="1"/>
-    <path d="M11 3 C15 1 20 2 23 4.5 C20 6 14 5 11 3 Z" fill="#9b3248"/>
-    <path d="M6 9 C11 11 21 11 26 9" stroke="#4f131f" stroke-width="1" fill="none"/>
+    <!-- Authentic Focused Anime Eyes -->
+    <path d="M10 9.8 L14.5 10.5" stroke="#0f172a" stroke-width="1.2"/>
+    <polygon points="10.5,10.5 14.5,10.5 14,13 11,13" fill="#2b1810"/>
+    <circle cx="12" cy="11.2" r="0.6" fill="#fff"/>
+    <path d="M22 9.8 L17.5 10.5" stroke="#0f172a" stroke-width="1.2"/>
+    <polygon points="21.5,10.5 17.5,10.5 18,13 21,13" fill="#2b1810"/>
+    <circle cx="20" cy="11.2" r="0.6" fill="#fff"/>
+    <line x1="16" y1="13.2" x2="16" y2="14.2" stroke="#8c4b28" stroke-width="0.8"/>
+    <line x1="14.5" y1="15.5" x2="17.5" y2="15.5" stroke="#6b3620" stroke-width="1"/>
+    <!-- Backwards Baseball Cap -->
+    <path d="M6 10 C5 4 10 1 16 1 C22 1 27 4 26 10 C25 11 7 11 6 10 Z" fill="#b91c1c" stroke="#7f1d1d" stroke-width="1"/>
+    <path d="M10 2 C16 0.5 21 2 23 4.5 C19 5.5 14 5 10 2 Z" fill="#ffffff" opacity="0.9"/>
+    <path d="M6 9 C11 11 21 11 26 9" stroke="#7f1d1d" stroke-width="1" fill="none"/>
   </svg>\`;
 };
 
@@ -565,7 +562,6 @@ Art.momSprite = function momSprite(dir, step) {
         <path d="M12 2 C18 2 23 5 22 13 C21 18 19 20 17 17 C16 12 17 6 12 2 Z" fill="#5c3821"/>
         <ellipse cx="11.5" cy="11" rx="2" ry="2.5" fill="#361a08"/>
         <circle cx="11" cy="10.3" r="0.7" fill="#fff"/>
-        <circle cx="9.5" cy="13.5" r="1.3" fill="#f472b6" opacity="0.5"/>
         <path d="M9 13.5 Q11 15 13 13.5" stroke="#a3583b" stroke-width="0.9" fill="none"/>
         <path d="M13 2 C9 2 7 6 8 10 C9 8 11 6 14 6 Z" fill="#5c3821"/>
       </g>
@@ -589,8 +585,6 @@ Art.momSprite = function momSprite(dir, step) {
     <rect x="24" y="\${isWalk2 ? 19 : 17}" width="4" height="6" rx="1.5" fill="#e76f51"/>
     <circle cx="26" cy="\${isWalk2 ? 25 : 23}" r="1.5" fill="#fce1cd"/>
     <circle cx="16" cy="11" r="7.8" fill="#fce1cd"/>
-    <circle cx="10" cy="13.5" r="1.5" fill="#f472b6" opacity="0.5"/>
-    <circle cx="22" cy="13.5" r="1.5" fill="#f472b6" opacity="0.5"/>
     <ellipse cx="12" cy="11.5" rx="2" ry="2.5" fill="#361a08"/>
     <circle cx="11.3" cy="10.8" r="0.7" fill="#fff"/>
     <ellipse cx="20" cy="11.5" rx="2" ry="2.5" fill="#361a08"/>
@@ -663,10 +657,9 @@ Art.neighborSprite = function neighborSprite(dir, step) {
         <path d="M12 2 C18 2 23 5 23 13 C23 18 20 22 17 21 C15 17 18 10 12 4 Z" fill="#9a3412"/>
         <path d="M14 2 C10 2 7 6 8 11 C9 8 11 6 15 6 Z" fill="#7c2d12"/>
         <ellipse cx="20" cy="8" rx="3" ry="4" fill="#b45309"/>
-        <!-- Eye & Blush -->
+        <!-- Eye -->
         <ellipse cx="11.5" cy="11" rx="2" ry="2.5" fill="#1e293b"/>
         <circle cx="11" cy="10.3" r="0.7" fill="#fff"/>
-        <circle cx="9.5" cy="13.5" r="1.3" fill="#f472b6" opacity="0.5"/>
         <path d="M9 13.5 Q11 15 13 13.5" stroke="#a3583b" stroke-width="0.9" fill="none"/>
       </g>
     </svg>\`;
@@ -699,9 +692,6 @@ Art.neighborSprite = function neighborSprite(dir, step) {
     <circle cx="11.5" cy="10.8" r="0.7" fill="#fff"/>
     <ellipse cx="20" cy="11.5" rx="2" ry="2.5" fill="#1e293b"/>
     <circle cx="19.5" cy="10.8" r="0.7" fill="#fff"/>
-    <!-- Blush -->
-    <circle cx="9.5" cy="14" r="1.5" fill="#f472b6" opacity="0.5"/>
-    <circle cx="22.5" cy="14" r="1.5" fill="#f472b6" opacity="0.5"/>
     <!-- Smile -->
     <path d="M14 14 Q16 16 18 14" stroke="#a3583b" stroke-width="1" fill="none" stroke-linecap="round"/>
   </svg>\`;
@@ -766,10 +756,9 @@ Art.teacherSprite = function teacherSprite(dir, step) {
         <!-- Spectacles -->
         <rect x="8.5" y="9.5" width="4.5" height="3.5" rx="0.8" fill="none" stroke="#0284c7" stroke-width="0.9"/>
         <line x1="13" y1="11" x2="16" y2="10" stroke="#0284c7" stroke-width="0.8"/>
-        <!-- Eye & Blush -->
+        <!-- Eye -->
         <ellipse cx="10.5" cy="11" rx="1.6" ry="2" fill="#1e293b"/>
         <circle cx="10" cy="10.3" r="0.6" fill="#fff"/>
-        <circle cx="9" cy="13.5" r="1.3" fill="#f472b6" opacity="0.5"/>
         <path d="M9 13.5 Q11 15 13 13.5" stroke="#a3583b" stroke-width="0.9" fill="none"/>
       </g>
     </svg>\`;
@@ -806,9 +795,7 @@ Art.teacherSprite = function teacherSprite(dir, step) {
     <!-- Eyes -->
     <circle cx="12" cy="11.5" r="1.2" fill="#1e293b"/><circle cx="11.6" cy="11" r="0.4" fill="#fff"/>
     <circle cx="20" cy="11.5" r="1.2" fill="#1e293b"/><circle cx="19.6" cy="11" r="0.4" fill="#fff"/>
-    <!-- Blush & Smile -->
-    <circle cx="9.5" cy="14.5" r="1.3" fill="#f472b6" opacity="0.5"/>
-    <circle cx="22.5" cy="14.5" r="1.3" fill="#f472b6" opacity="0.5"/>
+    <!-- Smile -->
     <path d="M14 15 Q16 17 18 15" stroke="#a3583b" stroke-width="1" fill="none" stroke-linecap="round"/>
   </svg>\`;
 };
@@ -885,8 +872,6 @@ Art.fisherSprite = function fisherSprite(dir, step) {
     <circle cx="11.4" cy="10.8" r="0.7" fill="#fff"/>
     <ellipse cx="20" cy="11.5" rx="2" ry="2.4" fill="#1e293b"/>
     <circle cx="19.4" cy="10.8" r="0.7" fill="#fff"/>
-    <circle cx="9.5" cy="14" r="1.4" fill="#f472b6" opacity="0.5"/>
-    <circle cx="22.5" cy="14" r="1.4" fill="#f472b6" opacity="0.5"/>
     <path d="M13 14.5 Q16 17.5 19 14.5" stroke="#a3583b" stroke-width="1.3" fill="none" stroke-linecap="round"/>
   </svg>\`;
 };
@@ -1057,9 +1042,10 @@ Art.bedroomScene = function(gender, player, aspect) {
       <text x="36" y="80" font-family="sans-serif" font-size="8" font-weight="800" fill="#f59e0b" text-anchor="middle">▼ 1F</text>
     </g>
 
-    <!-- Center Rug -->
-    <ellipse cx="200" cy="220" rx="80" ry="42" fill="url(#rugGrad)" stroke="#d4af37" stroke-width="2.5"/>
-    <ellipse cx="200" cy="220" rx="66" ry="32" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <!-- Center Woven Rug -->
+    <rect x="120" y="180" width="160" height="80" rx="4" fill="#1e3a5f" stroke="#0f1f38" stroke-width="2"/>
+    <rect x="126" y="186" width="148" height="68" rx="2" fill="#25466e" stroke="#60a5fa" stroke-width="1.2" stroke-dasharray="6,4"/>
+    <rect x="130" y="190" width="140" height="60" rx="1" fill="#2b507d"/>
 
     <!-- Bed (Top-Left) -->
     <g id="obj-bed" transform="translate(12, 60)" style="cursor:pointer;">
@@ -1302,9 +1288,10 @@ Art.house1FScene = function(gender, player, mom, neighbor, aspect, momAlertActiv
     </g>
 
     <!-- Dining Area (Center-Left) -->
-    <!-- Cozy Area Rug -->
-    <ellipse cx="140" cy="190" rx="72" ry="44" fill="url(#rugGrad1F)" stroke="#d4af37" stroke-width="2.5"/>
-    <ellipse cx="140" cy="190" rx="58" ry="32" fill="none" stroke="#fcd34d" stroke-width="1.2" stroke-dasharray="5,4"/>
+    <!-- Woven Dining Area Rug -->
+    <rect x="66" y="152" width="148" height="76" rx="4" fill="#6b2126" stroke="#4a1518" stroke-width="2"/>
+    <rect x="72" y="158" width="136" height="64" rx="2" fill="#782329" stroke="#b45309" stroke-width="1.2" stroke-dasharray="6,4"/>
+    <rect x="76" y="162" width="128" height="56" rx="1" fill="#88262d"/>
 
     <!-- Left Chair -->
     <g transform="translate(74, 168)">
@@ -1362,8 +1349,6 @@ Art.house1FScene = function(gender, player, mom, neighbor, aspect, momAlertActiv
       <!-- Right Door Leaf -->
       <rect x="29" y="2" width="25" height="24" fill="#6e4220" stroke="#2b1809" stroke-width="1"/>
       <circle cx="33" cy="15" r="1.8" fill="#d4af37"/>
-      <!-- Exit indicator -->
-      <polygon points="28,26 23,20 33,20" fill="#f59e0b"/>
     </g>
 
     \${(py < 168) ? \`<g transform="translate(\${px}, \${py})">\${playerSvg}</g>\` : ''}
@@ -1372,9 +1357,6 @@ Art.house1FScene = function(gender, player, mom, neighbor, aspect, momAlertActiv
     \${neighbor ? \`
     <g id="obj-neighbor" transform="translate(\${neighbor.x}, \${neighbor.y})" style="cursor:pointer;">
       \${neighborSvg}
-      <g transform="translate(0, -6)">
-        <polygon points="16,0 12,-6 20,-6" fill="#10b981"/>
-      </g>
     </g>\` : ''}
 
     <!-- Mom NPC (Sitting at table having tea) -->
@@ -1384,11 +1366,8 @@ Art.house1FScene = function(gender, player, mom, neighbor, aspect, momAlertActiv
       <g id="mom-alert" transform="translate(16, -16)">
         <rect x="-10" y="-12" width="20" height="18" rx="4" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
         <polygon points="-4,6 4,6 0,11" fill="#ef4444"/>
-        <text x="0" y="2" font-family="'Lilita One', Fredoka, sans-serif" font-size="14" font-weight="900" fill="#ffffff" text-anchor="middle">!</text>
-      </g>\` : \`
-      <g transform="translate(0, -6)">
-        <polygon points="16,0 12,-6 20,-6" fill="#f59e0b"/>
-      </g>\`}
+        <text x="0" y="2" font-family="-apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="900" fill="#ffffff" text-anchor="middle">!</text>
+      </g>\` : ''}
     </g>
 
     \${(py >= 168) ? \`<g transform="translate(\${px}, \${py})">\${playerSvg}</g>\` : ''}
@@ -1582,15 +1561,12 @@ Art.townScene = function(gender, player, npcs, aspect) {
       </g>
       <!-- Lab Sign Plate -->
       <rect x="62" y="44" width="44" height="14" rx="2" fill="#0f172a" stroke="#d4af37" stroke-width="1.2"/>
-      <text x="84" y="54" font-family="'Lilita One', Fredoka, sans-serif" font-size="7" font-weight="900" fill="#38bdf8" text-anchor="middle">ELM LAB</text>
+      <text x="84" y="54" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="7" font-weight="900" fill="#38bdf8" text-anchor="middle">ELM LAB</text>
     </g>
 
     <!-- Silver NPC (Outside Elm's Lab window at x: 38, y: 76) -->
     <g id="obj-silver" transform="translate(38, 76)" style="cursor:pointer;">
       \${silverSvg}
-      <g transform="translate(16, -6)">
-        <polygon points="0,0 -4,-5 4,-5" fill="#ef4444"/>
-      </g>
     </g>
 
     <!-- Lab Signpost (Outside Lab at x: 94, y: 132) -->
@@ -1645,7 +1621,6 @@ Art.townScene = function(gender, player, npcs, aspect) {
         <circle cx="20" cy="30" r="2" fill="#d4af37"/>
         <!-- Welcome Step Mat -->
         <rect x="-4" y="47" width="36" height="6" rx="2" fill="#b45309" stroke="#78350f" stroke-width="1"/>
-        <polygon points="14,44 10,38 18,38" fill="#f59e0b"/>
       </g>
     </g>
 
@@ -1696,24 +1671,17 @@ Art.townScene = function(gender, player, npcs, aspect) {
       <rect x="9" y="10" width="6" height="20" fill="#523218" stroke="#2b1809" stroke-width="1.2"/>
       <rect x="0" y="0" width="24" height="16" rx="3" fill="#78350f" stroke="#3d210c" stroke-width="1.8"/>
       <rect x="3" y="3" width="18" height="10" rx="1.5" fill="#fef08a"/>
-      <text x="12" y="10" font-family="'Lilita One', Fredoka, sans-serif" font-size="7" font-weight="900" fill="#713f12" text-anchor="middle">TOWN</text>
-      <polygon points="12,-4 8,-9 16,-9" fill="#f59e0b"/>
+      <text x="12" y="10" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="7" font-weight="900" fill="#713f12" text-anchor="middle">TOWN</text>
     </g>
 
     <!-- Teacher NPC at x: 196, y: 196 -->
     <g id="obj-teacher" transform="translate(\${npcs.teacher.x}, \${npcs.teacher.y})" style="cursor:pointer;">
       \${teacherSvg}
-      <g transform="translate(0, -6)">
-        <polygon points="16,0 12,-6 20,-6" fill="#10b981"/>
-      </g>
     </g>
 
     <!-- Fisher NPC at x: 410, y: 330 -->
     <g id="obj-fisher" transform="translate(\${npcs.fisher.x}, \${npcs.fisher.y})" style="cursor:pointer;">
       \${fisherSvg}
-      <g transform="translate(0, -6)">
-        <polygon points="16,0 12,-6 20,-6" fill="#f59e0b"/>
-      </g>
     </g>
 
     <!-- Player Chibi Sprite in Town -->
@@ -1755,7 +1723,7 @@ function buildHtml(includeEmbeddedRom) {
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lilita+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #080b10;
@@ -1786,7 +1754,7 @@ function buildHtml(includeEmbeddedRom) {
       overflow: hidden;
       background: var(--bg);
       color: var(--text);
-      font-family: 'Fredoka', system-ui, -apple-system, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       display: flex;
       flex-direction: column;
     }
@@ -1986,7 +1954,7 @@ function buildHtml(includeEmbeddedRom) {
       margin: 0;
       padding: 2.6cqw 4.2cqw;
       text-align: center;
-      font: 700 6.2cqw/1.2 'Fredoka', sans-serif;
+      font: 700 6.2cqw/1.2 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       color: var(--cream);
       border-radius: 5cqw;
       background: rgba(10, 18, 50, 0.78);
@@ -3914,7 +3882,13 @@ function buildHtml(includeEmbeddedRom) {
 
         // Room boundaries: baseboard and side walls
         if (footX < 14 || footX > 386) return false;
-        if (footY < 88 || footY > 326) return false;
+
+        // Front doors threshold (x: 150..250, footY up to 345 allows stepping through the doors to exit)
+        if (footX >= 150 && footX <= 250 && footY <= 345) {
+          // Allow stepping to door
+        } else if (footY < 88 || footY > 326) {
+          return false;
+        }
 
         // Kitchen Suite (Fridge, Sink, Stove): x: 0..136, base at y: 98
         if (footX <= 136 && footY < 100) return false;
@@ -4078,8 +4052,8 @@ function buildHtml(includeEmbeddedRom) {
           return;
         }
 
-        // Stepping through front doors (bottom center: x: 170..230, y >= 300)
-        if (nx >= 170 && nx <= 230 && ny >= 300) {
+        // Stepping through front doors (bottom center: x: 150..250, ny >= 284 or taking a step down when at y >= 276)
+        if (nx >= 150 && nx <= 250 && (ny >= 284 || (dir === 'down' && house1FPlayer.y >= 276))) {
           house1FPlayer.x = nx;
           house1FPlayer.y = ny;
           renderHdScene();
@@ -4232,7 +4206,7 @@ function buildHtml(includeEmbeddedRom) {
         }
 
         // Front Door
-        if (px >= 170 && px <= 230 && py >= 288) {
+        if (px >= 150 && px <= 250 && py >= 260 && dir === 'down') {
           warpOutToTown();
           return;
         }

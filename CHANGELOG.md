@@ -5,6 +5,15 @@ All notable changes to Buddymon will be documented in this file.
 ## [Unreleased] - 2026-10-27
 
 ### Added
+- **Door Warp Collision & Exit Unblocked**:
+  - Fixed 1F front door threshold in `canMoveTo1F` to allow `footY <= 345` along the door corridor (`footX: 150..250`), resolving the collision boundary that previously held the player back at `y = 280`.
+  - Updated movement warp trigger in `moveHouse1FPlayer` to trigger `warpOutToTown()` when walking down through the door mat (`ny >= 284` or stepping down from `y >= 276`), enabling immediate, seamless walking outside into New Bark Town.
+  - Aligned 'A' button interaction when facing down towards the door (`py >= 260, dir === 'down'`).
+- **Aesthetic Refinement & De-Cartooning**:
+  - Replaced bubbly children's cartoon typography (`Fredoka`, `Lilita One`) with clean, sharp, professional RPG typography (`Plus Jakarta Sans` and system gaming sans-serif).
+  - Replaced oversized glowing neon-bordered oval rugs in 1F Living Room and Bedroom with elegant, grounded rectangular woven rugs featuring traditional fret stitching.
+  - Removed non-authentic floating neon chevron badges hovering over NPC heads (Mom, Neighbor, Teacher, Fisher, Silver) and doorway mats, restoring the classic immersive Ken Sugimori aesthetic.
+  - Refactored player sprite (Chris): removed circular spectacles and pink cheek blush circles, replacing them with authentic Ken Sugimori focused anime eyes, white highlights, backward baseball cap, and clean athletic jacket trim.
 - **Sink Centering & Interaction Alignment**: Replaced left-edge bounding check with center footprint alignment (`centerX = px + 16`), allowing the player to stand dead-center in front of the sink (as well as the left and right sides) to trigger the sink dialogue ("The sink is spotless. Mom likes it clean.") without mistakenly activating the neighboring fridge.
 - **HD Outdoor Scene: New Bark Town (`Art.townScene`)**:
   - Recreated New Bark Town in full HD vector art matching Pokemon Crystal's 20x18 ROM map specification.
