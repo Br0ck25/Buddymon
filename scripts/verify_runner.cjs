@@ -289,6 +289,110 @@ server.listen(PORT, async () => {
     await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_mom_returned_to_seat.png'));
 
     console.log('\n======================================================');
+    console.log('--- TEST 5: Sink Center Alignment & Interaction ---');
+    console.log('======================================================');
+
+    // Walk over to the sink center (sink is at x: 54..90, center is 72. Player x: 56 or 64)
+    await evaluate(`
+      window.__house1FPlayer.x = 64;
+      window.__house1FPlayer.y = 104;
+      window.__house1FPlayer.dir = 'up';
+      window.__interactHouse1F();
+    `);
+    await new Promise(r => setTimeout(r, 200));
+
+    let sinkTag = await evaluate(`document.querySelector('#hdDialogueBox .dlg-tag') ? document.querySelector('#hdDialogueBox .dlg-tag').innerText : ''`);
+    let sinkText = await evaluate(`document.querySelector('#hdDialogueBox p') ? document.querySelector('#hdDialogueBox p').innerText : ''`);
+    console.log('Sink Interaction Dialog:', `[${sinkTag}] "${sinkText}"`);
+    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_sink_center_dialog.png'));
+
+    // Also test player standing slightly to the left at x = 48 (matching user screenshot)
+    await evaluate(`window.__handleHdInput('a')`); // Close dialog
+    await new Promise(r => setTimeout(r, 150));
+    await evaluate(`
+      window.__house1FPlayer.x = 48;
+      window.__house1FPlayer.y = 104;
+      window.__house1FPlayer.dir = 'up';
+      window.__interactHouse1F();
+    `);
+    await new Promise(r => setTimeout(r, 200));
+    let sinkLeftTag = await evaluate(`document.querySelector('#hdDialogueBox .dlg-tag') ? document.querySelector('#hdDialogueBox .dlg-tag').innerText : ''`);
+    let sinkLeftText = await evaluate(`document.querySelector('#hdDialogueBox p') ? document.querySelector('#hdDialogueBox p').innerText : ''`);
+    console.log('Sink Left-Side Dialog (x=48):', `[${sinkLeftTag}] "${sinkLeftText}"`);
+
+    // Close dialog
+    await evaluate(`window.__handleHdInput('a')`);
+    await new Promise(r => setTimeout(r, 150));
+
+    console.log('\n======================================================');
+    console.log('--- TEST 6: Warp Outside into New Bark Town Scene ---');
+    console.log('======================================================');
+
+    // Step out through front doors
+    await evaluate(`
+      window.__house1FPlayer.x = 200;
+      window.__house1FPlayer.y = 296;
+      window.__handleHdInput('down');
+    `);
+    await new Promise(r => setTimeout(r, 800)); // wait for fade transition
+
+    let townScene = await evaluate(`window.__getHdScene()`);
+    let townPlayerPos = await evaluate(`({ x: window.__townPlayer.x, y: window.__townPlayer.y, dir: window.__townPlayer.dir })`);
+    console.log('Scene after exiting house:', townScene, 'Player pos in town:', townPlayerPos);
+    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_town_outdoor_scene.png'));
+
+    // Test Silver (Rival) peeking into Elm's Lab window
+    await evaluate(`
+      window.__townPlayer.x = 54;
+      window.__townPlayer.y = 76;
+      window.__townPlayer.dir = 'left';
+      window.__interactTown();
+    `);
+    await new Promise(r => setTimeout(r, 200));
+    let silverTag = await evaluate(`document.querySelector('#hdDialogueBox .dlg-tag') ? document.querySelector('#hdDialogueBox .dlg-tag').innerText : ''`);
+    let silverText = await evaluate(`document.querySelector('#hdDialogueBox p') ? document.querySelector('#hdDialogueBox p').innerText : ''`);
+    console.log('Silver Dialogue:', `[${silverTag}] "${silverText}"`);
+    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_town_silver_dialog.png'));
+
+    // Close dialog
+    await evaluate(`window.__handleHdInput('a')`);
+    await new Promise(r => setTimeout(r, 150));
+
+    // Test Town Sign
+    await evaluate(`
+      window.__townPlayer.x = 236;
+      window.__townPlayer.y = 212;
+      window.__townPlayer.dir = 'up';
+      window.__interactTown();
+    `);
+    await new Promise(r => setTimeout(r, 200));
+    let signTag = await evaluate(`document.querySelector('#hdDialogueBox .dlg-tag') ? document.querySelector('#hdDialogueBox .dlg-tag').innerText : ''`);
+    let signText = await evaluate(`document.querySelector('#hdDialogueBox p') ? document.querySelector('#hdDialogueBox p').innerText : ''`);
+    console.log('Town Sign Dialogue:', `[${signTag}] "${signText}"`);
+    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_town_sign_dialog.png'));
+
+    // Close dialog
+    await evaluate(`window.__handleHdInput('a')`);
+    await new Promise(r => setTimeout(r, 150));
+
+    console.log('\n======================================================');
+    console.log('--- TEST 7: Warp Back Inside to Player\'s House 1F ---');
+    console.log('======================================================');
+
+    // Walk into Player's House Front Door (x: 414, y: 136 facing up)
+    await evaluate(`
+      window.__townPlayer.x = 414;
+      window.__townPlayer.y = 136;
+      window.__moveTownPlayer('up');
+    `);
+    await new Promise(r => setTimeout(r, 800)); // wait for fade transition
+
+    let backInHouse1F = await evaluate(`window.__getHdScene()`);
+    let returnedPos1F = await evaluate(`({ x: window.__house1FPlayer.x, y: window.__house1FPlayer.y })`);
+    console.log('Scene after re-entering door:', backInHouse1F, 'Player 1F pos:', returnedPos1F);
+    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_return_to_house1f.png'));
+
+    console.log('\n======================================================');
     console.log('All tests passed with flying colors!');
     console.log('======================================================');
 

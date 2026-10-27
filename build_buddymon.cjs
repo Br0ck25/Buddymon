@@ -707,6 +707,253 @@ Art.neighborSprite = function neighborSprite(dir, step) {
   </svg>\`;
 };
 
+Art.teacherSprite = function teacherSprite(dir, step) {
+  var isWalk1 = (step === 1);
+  var isWalk2 = (step === 2);
+
+  if (dir === 'up') {
+    var lFootY = isWalk1 ? 31 : 33;
+    var rFootY = isWalk2 ? 31 : 33;
+    return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+      <ellipse cx="16" cy="38" rx="10" ry="2.5" fill="#000" opacity="0.35"/>
+      <rect x="9" y="\${lFootY}" width="6" height="5" rx="1.2" fill="#3f2719" stroke="#1f1006" stroke-width="0.7"/>
+      <rect x="17" y="\${rFootY}" width="6" height="5" rx="1.2" fill="#3f2719" stroke="#1f1006" stroke-width="0.7"/>
+      <!-- Burgundy Skirt -->
+      <path d="M8 23 L24 23 L23 33 L9 33 Z" fill="#881337" stroke="#4c0519" stroke-width="0.8"/>
+      <!-- Cardigan -->
+      <path d="M9 17 L23 17 L22 26 L10 26 Z" fill="#0d9488" stroke="#0f766e" stroke-width="0.8"/>
+      <rect x="4" y="\${isWalk1 ? 19 : 17}" width="4" height="7" rx="1.5" fill="#0d9488"/>
+      <rect x="24" y="\${isWalk2 ? 19 : 17}" width="4" height="7" rx="1.5" fill="#0d9488"/>
+      <!-- Brown Hair Bun -->
+      <circle cx="16" cy="11" r="8" fill="#543118"/>
+      <circle cx="16" cy="4" r="4.2" fill="#3f220d" stroke="#241306" stroke-width="0.8"/>
+    </svg>\`;
+  }
+
+  if (dir === 'left' || dir === 'right') {
+    var isRight = (dir === 'right');
+    var flip = isRight ? 'transform="scale(-1, 1) translate(-32, 0)"' : '';
+    var fFootX = isWalk1 ? 9 : (isWalk2 ? 13 : 11);
+    var bFootX = isWalk1 ? 14 : (isWalk2 ? 8 : 12);
+    var fSoleY = 38;
+    var bSoleY = isWalk1 ? 37 : (isWalk2 ? 37 : 38);
+    var fArmX = isWalk1 ? 15 : (isWalk2 ? 11 : 13);
+    var bArmX = isWalk1 ? 11 : (isWalk2 ? 15 : 13);
+    var fArmY = (isWalk1 || isWalk2) ? 19.5 : 18.5;
+    var bArmY = (isWalk1 || isWalk2) ? 19.5 : 18.5;
+
+    return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+      <ellipse cx="16" cy="38.5" rx="10" ry="2.5" fill="#000" opacity="0.35"/>
+      <g \${flip}>
+        <g opacity="0.8">
+          <rect x="\${bArmX}" y="\${bArmY}" width="3.8" height="6.5" rx="1.5" fill="#0f766e"/>
+          <circle cx="\${bArmX + 1.9}" cy="\${bArmY + 6}" r="1.3" fill="#fce1cd"/>
+        </g>
+        <g opacity="0.85">
+          <rect x="\${bFootX}" y="\${bSoleY - 4}" width="6" height="4" rx="1" fill="#3f2719"/>
+        </g>
+        <!-- Skirt & Cardigan -->
+        <path d="M11 18 L21 18 L23 33 L10 33 Z" fill="#881337" stroke="#4c0519" stroke-width="0.8"/>
+        <path d="M10 18 L19 18 L18 26 L9 26 Z" fill="#0d9488" stroke="#0f766e" stroke-width="0.8"/>
+        <rect x="\${fFootX}" y="\${fSoleY - 4.5}" width="6.5" height="4.5" rx="1.2" fill="#3f2719" stroke="#1f1006" stroke-width="0.6"/>
+        <rect x="\${fArmX}" y="\${fArmY}" width="4" height="6.8" rx="1.6" fill="#0d9488" stroke="#0f766e" stroke-width="0.6"/>
+        <circle cx="\${fArmX + 2}" cy="\${fArmY + 6.5}" r="1.5" fill="#fce1cd"/>
+        <!-- Head -->
+        <circle cx="15" cy="11" r="7.5" fill="#fce1cd"/>
+        <!-- Hair & Bun -->
+        <circle cx="21" cy="7" r="3.5" fill="#3f220d"/>
+        <path d="M12 2 C18 2 22 5 21 13 C21 18 18 21 16 20 C14 16 17 9 12 3 Z" fill="#543118"/>
+        <!-- Spectacles -->
+        <rect x="8.5" y="9.5" width="4.5" height="3.5" rx="0.8" fill="none" stroke="#0284c7" stroke-width="0.9"/>
+        <line x1="13" y1="11" x2="16" y2="10" stroke="#0284c7" stroke-width="0.8"/>
+        <!-- Eye & Blush -->
+        <ellipse cx="10.5" cy="11" rx="1.6" ry="2" fill="#1e293b"/>
+        <circle cx="10" cy="10.3" r="0.6" fill="#fff"/>
+        <circle cx="9" cy="13.5" r="1.3" fill="#f472b6" opacity="0.5"/>
+        <path d="M9 13.5 Q11 15 13 13.5" stroke="#a3583b" stroke-width="0.9" fill="none"/>
+      </g>
+    </svg>\`;
+  }
+
+  // Facing Down
+  var lFootY = isWalk1 ? 31 : 33;
+  var rFootY = isWalk2 ? 31 : 33;
+  return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+    <ellipse cx="16" cy="38" rx="10" ry="2.5" fill="#000" opacity="0.38"/>
+    <rect x="9" y="\${lFootY}" width="6" height="5" rx="1.2" fill="#3f2719" stroke="#1f1006" stroke-width="0.7"/>
+    <rect x="17" y="\${rFootY}" width="6" height="5" rx="1.2" fill="#3f2719" stroke="#1f1006" stroke-width="0.7"/>
+    <!-- Burgundy Skirt -->
+    <path d="M8 23 L24 23 L23 33 L9 33 Z" fill="#881337" stroke="#4c0519" stroke-width="0.8"/>
+    <!-- Cardigan with Buttons -->
+    <path d="M9 17 L23 17 L22 26 L10 26 Z" fill="#0d9488" stroke="#0f766e" stroke-width="0.8"/>
+    <line x1="16" y1="17" x2="16" y2="26" stroke="#042f2e" stroke-width="0.8"/>
+    <circle cx="16" cy="19.5" r="0.8" fill="#fef08a"/>
+    <circle cx="16" cy="23.5" r="0.8" fill="#fef08a"/>
+    <!-- Arms -->
+    <rect x="4" y="\${isWalk1 ? 19 : 17}" width="4" height="7.5" rx="1.6" fill="#0d9488" stroke="#0f766e" stroke-width="0.7"/>
+    <circle cx="6" cy="\${isWalk1 ? 27 : 25}" r="1.5" fill="#fce1cd"/>
+    <rect x="24" y="\${isWalk2 ? 19 : 17}" width="4" height="7.5" rx="1.6" fill="#0d9488" stroke="#0f766e" stroke-width="0.7"/>
+    <circle cx="26" cy="\${isWalk2 ? 27 : 25}" r="1.5" fill="#fce1cd"/>
+    <!-- Head -->
+    <circle cx="16" cy="11" r="7.5" fill="#fce1cd"/>
+    <!-- Hair & Top Bun -->
+    <circle cx="16" cy="4" r="4.2" fill="#3f220d" stroke="#241306" stroke-width="0.8"/>
+    <path d="M8 8 C8 3 12 1 16 1 C20 1 24 3 24 8 C24 13 23 18 21 19 C18 16 19 10 16 10 C13 10 14 16 11 19 C9 18 8 13 8 8 Z" fill="#543118"/>
+    <!-- Cute Glasses -->
+    <rect x="9.5" y="9.5" width="5" height="4" rx="1" fill="none" stroke="#0284c7" stroke-width="0.9"/>
+    <rect x="17.5" y="9.5" width="5" height="4" rx="1" fill="none" stroke="#0284c7" stroke-width="0.9"/>
+    <line x1="14.5" y1="11.5" x2="17.5" y2="11.5" stroke="#0284c7" stroke-width="0.9"/>
+    <!-- Eyes -->
+    <circle cx="12" cy="11.5" r="1.2" fill="#1e293b"/><circle cx="11.6" cy="11" r="0.4" fill="#fff"/>
+    <circle cx="20" cy="11.5" r="1.2" fill="#1e293b"/><circle cx="19.6" cy="11" r="0.4" fill="#fff"/>
+    <!-- Blush & Smile -->
+    <circle cx="9.5" cy="14.5" r="1.3" fill="#f472b6" opacity="0.5"/>
+    <circle cx="22.5" cy="14.5" r="1.3" fill="#f472b6" opacity="0.5"/>
+    <path d="M14 15 Q16 17 18 15" stroke="#a3583b" stroke-width="1" fill="none" stroke-linecap="round"/>
+  </svg>\`;
+};
+
+Art.fisherSprite = function fisherSprite(dir, step) {
+  var isWalk1 = (step === 1);
+  var isWalk2 = (step === 2);
+
+  if (dir === 'up') {
+    var lFootY = isWalk1 ? 31 : 33;
+    var rFootY = isWalk2 ? 31 : 33;
+    return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+      <ellipse cx="16" cy="38" rx="10" ry="2.5" fill="#000" opacity="0.35"/>
+      <rect x="9" y="\${lFootY}" width="6" height="5" rx="1.2" fill="#0369a1" stroke="#0c4a6e" stroke-width="0.7"/>
+      <rect x="17" y="\${rFootY}" width="6" height="5" rx="1.2" fill="#0369a1" stroke="#0c4a6e" stroke-width="0.7"/>
+      <!-- Blue Dungarees -->
+      <rect x="10" y="22" width="12" height="11" rx="1.5" fill="#1d4ed8"/>
+      <!-- Vest Back -->
+      <path d="M8 18 L24 18 L22 26 L10 26 Z" fill="#b45309"/>
+      <!-- Bucket Hat -->
+      <ellipse cx="16" cy="9" rx="11" ry="5.5" fill="#facc15" stroke="#ca8a04" stroke-width="0.8"/>
+      <rect x="9" y="3" width="14" height="7" rx="3" fill="#eab308"/>
+      <circle cx="19" cy="6" r="1.5" fill="#ef4444"/>
+    </svg>\`;
+  }
+
+  if (dir === 'left' || dir === 'right') {
+    var isRight = (dir === 'right');
+    var flip = isRight ? 'transform="scale(-1, 1) translate(-32, 0)"' : '';
+    var fFootX = isWalk1 ? 9 : (isWalk2 ? 13 : 11);
+    var bFootX = isWalk1 ? 14 : (isWalk2 ? 8 : 12);
+    var fSoleY = 38;
+    var bSoleY = isWalk1 ? 37 : (isWalk2 ? 37 : 38);
+
+    return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+      <ellipse cx="16" cy="38.5" rx="10" ry="2.5" fill="#000" opacity="0.35"/>
+      <g \${flip}>
+        <rect x="\${bFootX}" y="\${bSoleY - 4}" width="6" height="4" rx="1" fill="#0369a1"/>
+        <rect x="11" y="21" width="10" height="12" rx="1" fill="#1d4ed8"/>
+        <path d="M10 18 L19 18 L18 26 L9 26 Z" fill="#b45309"/>
+        <rect x="\${fFootX}" y="\${fSoleY - 4.5}" width="6.5" height="4.5" rx="1.2" fill="#0369a1" stroke="#0c4a6e" stroke-width="0.6"/>
+        <circle cx="15" cy="11" r="7.2" fill="#fce1cd"/>
+        <!-- Fisher Hat -->
+        <ellipse cx="15" cy="8" rx="11" ry="4.5" fill="#facc15" stroke="#ca8a04" stroke-width="0.8"/>
+        <rect x="9" y="3" width="12" height="6" rx="2" fill="#eab308"/>
+        <!-- Eye & Cheerful Smile -->
+        <ellipse cx="11.5" cy="11" rx="1.8" ry="2.2" fill="#1e293b"/>
+        <circle cx="11" cy="10.3" r="0.6" fill="#fff"/>
+        <path d="M9 14 Q12 16 15 13.5" stroke="#a3583b" stroke-width="1.2" fill="none"/>
+      </g>
+    </svg>\`;
+  }
+
+  // Facing Down
+  var lFootY = isWalk1 ? 31 : 33;
+  var rFootY = isWalk2 ? 31 : 33;
+  return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+    <ellipse cx="16" cy="38" rx="10" ry="2.5" fill="#000" opacity="0.38"/>
+    <rect x="9" y="\${lFootY}" width="6" height="5" rx="1.2" fill="#0369a1" stroke="#0c4a6e" stroke-width="0.7"/>
+    <rect x="17" y="\${rFootY}" width="6" height="5" rx="1.2" fill="#0369a1" stroke="#0c4a6e" stroke-width="0.7"/>
+    <!-- Dungarees & Fisher Vest -->
+    <rect x="9" y="22" width="14" height="11" rx="1.5" fill="#1d4ed8" stroke="#1e40af" stroke-width="0.7"/>
+    <path d="M8 18 L24 18 L22 26 L10 26 Z" fill="#b45309" stroke="#92400e" stroke-width="0.7"/>
+    <rect x="10" y="20" width="4" height="4" rx="0.8" fill="#d97706"/>
+    <rect x="18" y="20" width="4" height="4" rx="0.8" fill="#d97706"/>
+    <!-- Head -->
+    <circle cx="16" cy="11" r="7.5" fill="#fce1cd"/>
+    <!-- Big Yellow Bucket Hat -->
+    <ellipse cx="16" cy="9" rx="12" ry="5.5" fill="#facc15" stroke="#ca8a04" stroke-width="0.9"/>
+    <rect x="9" y="3" width="14" height="7" rx="3" fill="#eab308"/>
+    <circle cx="20" cy="5.5" r="1.5" fill="#ef4444"/>
+    <!-- Cheerful Eyes & Big Grin -->
+    <ellipse cx="12" cy="11.5" rx="2" ry="2.4" fill="#1e293b"/>
+    <circle cx="11.4" cy="10.8" r="0.7" fill="#fff"/>
+    <ellipse cx="20" cy="11.5" rx="2" ry="2.4" fill="#1e293b"/>
+    <circle cx="19.4" cy="10.8" r="0.7" fill="#fff"/>
+    <circle cx="9.5" cy="14" r="1.4" fill="#f472b6" opacity="0.5"/>
+    <circle cx="22.5" cy="14" r="1.4" fill="#f472b6" opacity="0.5"/>
+    <path d="M13 14.5 Q16 17.5 19 14.5" stroke="#a3583b" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+  </svg>\`;
+};
+
+Art.silverSprite = function silverSprite(dir, step) {
+  var isWalk1 = (step === 1);
+  var isWalk2 = (step === 2);
+
+  if (dir === 'left' || dir === 'right') {
+    var isRight = (dir === 'right');
+    var flip = isRight ? 'transform="scale(-1, 1) translate(-32, 0)"' : '';
+    var fFootX = isWalk1 ? 9 : (isWalk2 ? 13 : 11);
+    var bFootX = isWalk1 ? 14 : (isWalk2 ? 8 : 12);
+    var fSoleY = 38;
+    var bSoleY = isWalk1 ? 37 : (isWalk2 ? 37 : 38);
+
+    return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+      <ellipse cx="16" cy="38.5" rx="10" ry="2.5" fill="#000" opacity="0.4"/>
+      <g \${flip}>
+        <rect x="\${bFootX}" y="\${bSoleY - 4}" width="6" height="4" rx="1" fill="#0f172a"/>
+        <!-- Dark Trench Coat -->
+        <path d="M10 17 L21 17 L23 33 L9 33 Z" fill="#0f172a" stroke="#020617" stroke-width="0.8"/>
+        <path d="M14 17 L19 17 L18 24 L13 24 Z" fill="#dc2626"/>
+        <rect x="\${fFootX}" y="\${fSoleY - 4.5}" width="6.5" height="4.5" rx="1.2" fill="#020617" stroke="#000" stroke-width="0.6"/>
+        <!-- Hands in Pockets -->
+        <rect x="11" y="21" width="3.5" height="7" rx="1.2" fill="#1e293b"/>
+        <!-- Head -->
+        <circle cx="15" cy="11" r="7.2" fill="#fce1cd"/>
+        <!-- Wild Spiky Crimson Hair -->
+        <path d="M18 1 C25 -2 29 6 27 12 C29 10 31 15 28 18 C25 21 21 21 19 19 C22 17 23 11 18 8 Z" fill="#dc2626"/>
+        <path d="M9 3 C6 0 1 5 3 10 C0 8 -2 14 2 16 C5 18 10 17 12 15 C8 13 6 8 9 3 Z" fill="#b91c1c"/>
+        <path d="M11 2 C16 -1 21 2 20 6 C17 3 13 4 11 2 Z" fill="#ef4444"/>
+        <!-- Intense Side Glare -->
+        <path d="M8 9.5 L13 10.5" stroke="#7f1d1d" stroke-width="1.2"/>
+        <polygon points="9,10.5 13,10.5 12,12.5 10,12.5" fill="#0f172a"/>
+        <circle cx="10.8" cy="11.2" r="0.5" fill="#fff"/>
+        <line x1="9" y1="14" x2="13" y2="13.5" stroke="#7f1d1d" stroke-width="1"/>
+      </g>
+    </svg>\`;
+  }
+
+  // Facing Down
+  var lFootY = isWalk1 ? 31 : 33;
+  var rFootY = isWalk2 ? 31 : 33;
+  return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+    <ellipse cx="16" cy="38" rx="10" ry="2.5" fill="#000" opacity="0.4"/>
+    <rect x="9" y="\${lFootY}" width="6" height="5" rx="1.2" fill="#020617"/>
+    <rect x="17" y="\${rFootY}" width="6" height="5" rx="1.2" fill="#020617"/>
+    <!-- Dark Coat with Red Lapels -->
+    <path d="M7 17 L25 17 L24 33 L8 33 Z" fill="#0f172a" stroke="#020617" stroke-width="0.8"/>
+    <polygon points="12,17 16,23 13,23 10,17" fill="#dc2626"/>
+    <polygon points="20,17 16,23 19,23 22,17" fill="#dc2626"/>
+    <!-- Head -->
+    <circle cx="16" cy="11" r="7.5" fill="#fce1cd"/>
+    <!-- Wild Crimson Spikes -->
+    <path d="M7 6 C3 1 1 7 4 11 C0 10 -1 16 3 18 C7 20 12 18 10 14 C6 12 5 7 7 6 Z" fill="#b91c1c"/>
+    <path d="M25 6 C29 1 31 7 28 11 C32 10 33 16 29 18 C25 20 20 18 22 14 C26 12 27 7 25 6 Z" fill="#dc2626"/>
+    <path d="M10 2 C16 -2 22 1 21 6 C17 3 13 3 10 2 Z" fill="#ef4444"/>
+    <!-- Piercing Eyes -->
+    <line x1="9" y1="9.5" x2="14" y2="10.5" stroke="#7f1d1d" stroke-width="1.2"/>
+    <polygon points="10,10.5 14,10.5 13.5,12.5 11,12.5" fill="#0f172a"/>
+    <line x1="23" y1="9.5" x2="18" y2="10.5" stroke="#7f1d1d" stroke-width="1.2"/>
+    <polygon points="22,10.5 18,10.5 18.5,12.5 21,12.5" fill="#0f172a"/>
+    <line x1="14" y1="14.5" x2="18" y2="14.5" stroke="#7f1d1d" stroke-width="1.1"/>
+  </svg>\`;
+};
+
 Art.bedroomScene = function(gender, player, aspect) {
   var px = player.x;
   var py = player.y;
@@ -1145,6 +1392,346 @@ Art.house1FScene = function(gender, player, mom, neighbor, aspect, momAlertActiv
     </g>
 
     \${(py >= 168) ? \`<g transform="translate(\${px}, \${py})">\${playerSvg}</g>\` : ''}
+  </svg>\`;
+};
+
+Art.townScene = function(gender, player, npcs, aspect) {
+  var px = player.x;
+  var py = player.y;
+  var playerSvg = (gender === 'GIRL') ? Art.girlSprite(player.dir, player.step) : Art.boySprite(player.dir, player.step);
+  var teacherSvg = (npcs && npcs.teacher) ? Art.teacherSprite(npcs.teacher.dir, npcs.teacher.step) : '';
+  var fisherSvg = (npcs && npcs.fisher) ? Art.fisherSprite(npcs.fisher.dir, npcs.fisher.step) : '';
+  var silverSvg = (npcs && npcs.silver) ? Art.silverSprite(npcs.silver.dir, npcs.silver.step) : '';
+
+  if (!aspect || aspect <= 0) aspect = 1.25;
+  var mapW = 560;
+  var mapH = 480;
+  var camW = 280;
+  var camH = camW * aspect;
+  if (camH > mapH) {
+    camH = mapH;
+    camW = Math.min(mapW, camH / aspect);
+  }
+  if (camW > mapW) {
+    camW = mapW;
+    camH = Math.min(mapH, camW * aspect);
+  }
+
+  var cx = px + 16;
+  var cy = py + 20;
+  var camX = Math.max(0, Math.min(mapW - camW, cx - camW / 2));
+  var camY = Math.max(0, Math.min(mapH - camH, cy - camH / 2));
+
+  return \`<svg class="town-svg" viewBox="\${camX.toFixed(1)} \${camY.toFixed(1)} \${camW.toFixed(1)} \${camH.toFixed(1)}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="grassGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4ade80"/><stop offset="100%" stop-color="#22c55e"/></linearGradient>
+      <linearGradient id="pathGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f5e6ca"/><stop offset="50%" stop-color="#faebd7"/><stop offset="100%" stop-color="#ede0c4"/></linearGradient>
+      <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="60%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+      <linearGradient id="roofRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e11d48"/><stop offset="100%" stop-color="#9f1239"/></linearGradient>
+      <linearGradient id="roofLab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#64748b"/><stop offset="100%" stop-color="#334155"/></linearGradient>
+      <linearGradient id="roofBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="100%" stop-color="#1e3a8a"/></linearGradient>
+      <linearGradient id="roofBrown" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b45309"/><stop offset="100%" stop-color="#78350f"/></linearGradient>
+      <linearGradient id="wallPlaster" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffbeb"/><stop offset="100%" stop-color="#fef3c7"/></linearGradient>
+      <linearGradient id="labWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fafc"/><stop offset="100%" stop-color="#e2e8f0"/></linearGradient>
+      <linearGradient id="winGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bae6fd"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient>
+    </defs>
+
+    <!-- Base Grass Ground -->
+    <rect x="0" y="0" width="\${mapW}" height="\${mapH}" fill="url(#grassGrad)"/>
+
+    <!-- Decorative Subtle Grass Tufts -->
+    <g stroke="#16a34a" stroke-width="1.2" opacity="0.35">
+      <path d="M40 160 L42 154 M43 160 L46 153 M46 160 L49 155"/>
+      <path d="M160 80 L162 74 M163 80 L166 73 M166 80 L169 75"/>
+      <path d="M300 120 L302 114 M303 120 L306 113 M306 120 L309 115"/>
+      <path d="M470 180 L472 174 M473 180 L476 173 M476 180 L479 175"/>
+      <path d="M120 380 L122 374 M123 380 L126 373 M126 380 L129 375"/>
+      <path d="M340 370 L342 364 M343 370 L346 363 M346 370 L349 365"/>
+      <path d="M490 280 L492 274 M493 280 L496 273 M496 280 L499 275"/>
+    </g>
+
+    <!-- Sandy Cobblestone Pathways -->
+    <g id="town-paths">
+      <!-- Main East-West Thoroughfare -->
+      <path d="M 0 196 Q 160 192 260 196 T 520 200 L 520 240 Q 360 238 260 236 T 0 236 Z" fill="url(#pathGrad)" stroke="#d5c4a1" stroke-width="2"/>
+      <!-- North Path to Elm's Lab -->
+      <path d="M 116 130 L 158 130 L 158 200 L 116 200 Z" fill="url(#pathGrad)" stroke="#d5c4a1" stroke-width="2"/>
+      <!-- North Path to Player's House -->
+      <path d="M 374 126 L 416 126 L 416 202 L 374 202 Z" fill="url(#pathGrad)" stroke="#d5c4a1" stroke-width="2"/>
+      <!-- South Path to Neighbor's House -->
+      <path d="M 88 230 L 126 230 L 126 304 L 88 304 Z" fill="url(#pathGrad)" stroke="#d5c4a1" stroke-width="2"/>
+      <!-- South Path to Elm's House -->
+      <path d="M 212 230 L 254 230 L 254 344 L 212 344 Z" fill="url(#pathGrad)" stroke="#d5c4a1" stroke-width="2"/>
+      <!-- South-East Path to Fisher's Shore -->
+      <path d="M 386 232 L 434 232 L 434 350 L 386 350 Z" fill="url(#pathGrad)" stroke="#d5c4a1" stroke-width="2"/>
+      <!-- Cobblestone texture dots on paths -->
+      <g fill="#cbb692" opacity="0.6">
+        <circle cx="60" cy="216" r="2.5"/><circle cx="140" cy="160" r="2.2"/><circle cx="210" cy="218" r="2.5"/>
+        <circle cx="394" cy="158" r="2.2"/><circle cx="330" cy="216" r="2.5"/><circle cx="450" cy="218" r="2.5"/>
+        <circle cx="106" cy="265" r="2.2"/><circle cx="234" cy="285" r="2.2"/><circle cx="410" cy="285" r="2.2"/>
+      </g>
+    </g>
+
+    <!-- South Coastal Shoreline & Pier Railing -->
+    <g id="south-water">
+      <rect x="0" y="434" width="\${mapW}" height="46" fill="url(#waterGrad)"/>
+      <path d="M 0 434 Q 140 430 280 434 T 560 432 L 560 440 Q 420 442 280 438 T 0 440 Z" fill="#7dd3fc" opacity="0.5"/>
+      <g stroke="#ffffff" stroke-width="1.2" opacity="0.6" stroke-linecap="round">
+        <line x1="60" y1="446" x2="110" y2="446"/><line x1="180" y1="454" x2="240" y2="454"/>
+        <line x1="320" y1="448" x2="380" y2="448"/><line x1="440" y1="456" x2="510" y2="456"/>
+      </g>
+      <!-- Rustic Wooden Fence along Water Edge -->
+      <g id="water-fence" stroke="#523218" stroke-width="2">
+        <line x1="0" y1="428" x2="560" y2="428"/>
+        <line x1="0" y1="434" x2="560" y2="434"/>
+        <rect x="17" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="53" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="89" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="125" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="161" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="197" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="233" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="269" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="305" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="341" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="377" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="413" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="449" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="485" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+        <rect x="521" y="422" width="6" height="15" rx="1.5" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+      </g>
+    </g>
+
+    <!-- Border Trees & Foliage (North & East Perimeter) -->
+    <!-- North Perimeter Pine Trees -->
+    <g id="north-trees">
+      <g transform="translate(10, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(50, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(90, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(130, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(170, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(210, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(250, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(290, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(330, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(370, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(410, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(450, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(490, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+      <g transform="translate(530, -10)"><rect x="14" y="32" width="8" height="18" fill="#523218" rx="2"/><path d="M 18 2 L 34 22 L 2 22 Z" fill="#15803d" stroke="#166534" stroke-width="1.5"/><path d="M 18 10 L 36 32 L 0 32 Z" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/><path d="M 18 20 L 38 42 L -2 42 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/></g>
+    </g>
+
+    <!-- East Tree Ridge -->
+    <g id="east-trees">
+      <g transform="translate(515, 40)"><ellipse cx="22" cy="24" rx="22" ry="20" fill="#15803d" stroke="#14532d" stroke-width="2"/><ellipse cx="18" cy="20" rx="16" ry="14" fill="#16a34a"/><ellipse cx="14" cy="14" rx="8" ry="7" fill="#22c55e" opacity="0.6"/></g>
+      <g transform="translate(515, 88)"><ellipse cx="22" cy="24" rx="22" ry="20" fill="#15803d" stroke="#14532d" stroke-width="2"/><ellipse cx="18" cy="20" rx="16" ry="14" fill="#16a34a"/><ellipse cx="14" cy="14" rx="8" ry="7" fill="#22c55e" opacity="0.6"/></g>
+      <g transform="translate(515, 136)"><ellipse cx="22" cy="24" rx="22" ry="20" fill="#15803d" stroke="#14532d" stroke-width="2"/><ellipse cx="18" cy="20" rx="16" ry="14" fill="#16a34a"/><ellipse cx="14" cy="14" rx="8" ry="7" fill="#22c55e" opacity="0.6"/></g>
+      <g transform="translate(515, 184)"><ellipse cx="22" cy="24" rx="22" ry="20" fill="#15803d" stroke="#14532d" stroke-width="2"/><ellipse cx="18" cy="20" rx="16" ry="14" fill="#16a34a"/><ellipse cx="14" cy="14" rx="8" ry="7" fill="#22c55e" opacity="0.6"/></g>
+      <g transform="translate(515, 232)"><ellipse cx="22" cy="24" rx="22" ry="20" fill="#15803d" stroke="#14532d" stroke-width="2"/><ellipse cx="18" cy="20" rx="16" ry="14" fill="#16a34a"/><ellipse cx="14" cy="14" rx="8" ry="7" fill="#22c55e" opacity="0.6"/></g>
+      <g transform="translate(515, 280)"><ellipse cx="22" cy="24" rx="22" ry="20" fill="#15803d" stroke="#14532d" stroke-width="2"/><ellipse cx="18" cy="20" rx="16" ry="14" fill="#16a34a"/><ellipse cx="14" cy="14" rx="8" ry="7" fill="#22c55e" opacity="0.6"/></g>
+      <g transform="translate(515, 328)"><ellipse cx="22" cy="24" rx="22" ry="20" fill="#15803d" stroke="#14532d" stroke-width="2"/><ellipse cx="18" cy="20" rx="16" ry="14" fill="#16a34a"/><ellipse cx="14" cy="14" rx="8" ry="7" fill="#22c55e" opacity="0.6"/></g>
+      <g transform="translate(515, 376)"><ellipse cx="22" cy="24" rx="22" ry="20" fill="#15803d" stroke="#14532d" stroke-width="2"/><ellipse cx="18" cy="20" rx="16" ry="14" fill="#16a34a"/><ellipse cx="14" cy="14" rx="8" ry="7" fill="#22c55e" opacity="0.6"/></g>
+    </g>
+
+    <!-- Flower Patches -->
+    <g id="flowers">
+      <!-- Near Elm's Lab -->
+      <circle cx="70" cy="154" r="3" fill="#ef4444"/><circle cx="78" cy="158" r="3" fill="#facc15"/><circle cx="86" cy="152" r="3" fill="#38bdf8"/>
+      <!-- Near Player House -->
+      <circle cx="340" cy="146" r="3" fill="#ec4899"/><circle cx="348" cy="150" r="3" fill="#facc15"/><circle cx="356" cy="144" r="3" fill="#ef4444"/>
+      <!-- Near Town Center -->
+      <circle cx="280" cy="174" r="3.5" fill="#facc15"/><circle cx="290" cy="178" r="3" fill="#f43f5e"/><circle cx="300" cy="173" r="3.2" fill="#a855f7"/>
+      <!-- South Grove -->
+      <circle cx="330" cy="390" r="3" fill="#facc15"/><circle cx="340" cy="396" r="3" fill="#38bdf8"/><circle cx="350" cy="392" r="3" fill="#ef4444"/>
+    </g>
+
+    <!-- BUILDINGS -->
+
+    <!-- 1. PROF. ELM'S RESEARCH LAB (Top-Left: x: 56..220, y: 28..136) -->
+    <g id="building-elms-lab" transform="translate(56, 26)">
+      <rect x="4" y="10" width="162" height="106" rx="6" fill="#000" opacity="0.32"/>
+      <!-- Lab Walls -->
+      <rect x="4" y="38" width="158" height="74" rx="4" fill="url(#labWall)" stroke="#64748b" stroke-width="2"/>
+      <rect x="4" y="106" width="158" height="6" fill="#94a3b8"/>
+      <!-- Hi-Tech Roof -->
+      <polygon points="0,38 20,4 146,4 166,38" fill="url(#roofLab)" stroke="#1e293b" stroke-width="2"/>
+      <polygon points="18,36 32,8 134,8 148,36" fill="#475569" opacity="0.75"/>
+      <!-- Satellite Dish / Weather Station -->
+      <line x1="83" y1="4" x2="83" y2="-12" stroke="#94a3b8" stroke-width="2.5"/>
+      <circle cx="83" cy="-14" r="3.5" fill="#ef4444"/>
+      <path d="M 73 -6 Q 83 -12 93 -6" stroke="#94a3b8" stroke-width="2.5" fill="none"/>
+      <!-- 2F Research Windows -->
+      <rect x="22" y="46" width="34" height="20" rx="3" fill="url(#winGlass)" stroke="#334155" stroke-width="1.5"/>
+      <line x1="39" y1="46" x2="39" y2="66" stroke="#334155" stroke-width="1.2"/>
+      <rect x="110" y="46" width="34" height="20" rx="3" fill="url(#winGlass)" stroke="#334155" stroke-width="1.5"/>
+      <line x1="127" y1="46" x2="127" y2="66" stroke="#334155" stroke-width="1.2"/>
+      <!-- 1F Observation Window (Where Silver is looking into!) -->
+      <g id="obj-lab-window">
+        <rect x="18" y="74" width="30" height="24" rx="3" fill="url(#winGlass)" stroke="#334155" stroke-width="1.8"/>
+        <line x1="33" y1="74" x2="33" y2="98" stroke="#334155" stroke-width="1.2"/>
+        <line x1="18" y1="86" x2="48" y2="86" stroke="#334155" stroke-width="1.2"/>
+      </g>
+      <!-- Glass Double Entrance Doors -->
+      <g id="obj-lab-door" style="cursor:pointer;">
+        <rect x="68" y="72" width="34" height="40" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+        <rect x="71" y="75" width="13" height="34" rx="1" fill="url(#winGlass)" opacity="0.85"/>
+        <rect x="86" y="75" width="13" height="34" rx="1" fill="url(#winGlass)" opacity="0.85"/>
+        <rect x="82" y="88" width="2" height="8" rx="0.8" fill="#d4af37"/>
+        <rect x="86" y="88" width="2" height="8" rx="0.8" fill="#d4af37"/>
+        <rect x="64" y="68" width="42" height="4" rx="1" fill="#0284c7"/>
+      </g>
+      <!-- Lab Sign Plate -->
+      <rect x="62" y="44" width="44" height="14" rx="2" fill="#0f172a" stroke="#d4af37" stroke-width="1.2"/>
+      <text x="84" y="54" font-family="'Lilita One', Fredoka, sans-serif" font-size="7" font-weight="900" fill="#38bdf8" text-anchor="middle">ELM LAB</text>
+    </g>
+
+    <!-- Silver NPC (Outside Elm's Lab window at x: 38, y: 76) -->
+    <g id="obj-silver" transform="translate(38, 76)" style="cursor:pointer;">
+      \${silverSvg}
+      <g transform="translate(16, -6)">
+        <polygon points="0,0 -4,-5 4,-5" fill="#ef4444"/>
+      </g>
+    </g>
+
+    <!-- Lab Signpost (Outside Lab at x: 94, y: 132) -->
+    <g id="obj-lab-sign" transform="translate(94, 130)" style="cursor:pointer;">
+      <rect x="8" y="8" width="4" height="16" fill="#523218"/>
+      <rect x="0" y="0" width="20" height="14" rx="2" fill="#784720" stroke="#3d210c" stroke-width="1.2"/>
+      <rect x="2" y="2" width="16" height="10" rx="1" fill="#fef08a"/>
+      <line x1="4" y1="5" x2="16" y2="5" stroke="#713f12" stroke-width="1"/>
+      <line x1="4" y1="8" x2="14" y2="8" stroke="#713f12" stroke-width="1"/>
+    </g>
+
+    <!-- 2. PLAYER'S HOUSE (Top-Right: x: 340..480, y: 32..132) -->
+    <g id="building-player-house" transform="translate(340, 28)">
+      <rect x="4" y="10" width="138" height="102" rx="6" fill="#000" opacity="0.32"/>
+      <!-- Cottage Walls -->
+      <rect x="6" y="38" width="134" height="70" rx="3" fill="url(#wallPlaster)" stroke="#523218" stroke-width="2"/>
+      <!-- Brick Chimney with Smoke -->
+      <g transform="translate(108, 0)">
+        <rect x="0" y="2" width="16" height="24" fill="#991b1b" stroke="#450a0a" stroke-width="1.5"/>
+        <line x1="0" y1="8" x2="16" y2="8" stroke="#7f1d1d" stroke-width="1"/>
+        <line x1="0" y1="16" x2="16" y2="16" stroke="#7f1d1d" stroke-width="1"/>
+        <!-- Soft animated puffs -->
+        <circle cx="8" cy="-6" r="4.5" fill="#ffffff" opacity="0.6"/>
+        <circle cx="12" cy="-16" r="6" fill="#ffffff" opacity="0.45"/>
+        <circle cx="8" cy="-26" r="7.5" fill="#ffffff" opacity="0.25"/>
+      </g>
+      <!-- Pitched Red Shingle Roof -->
+      <polygon points="0,38 16,6 130,6 146,38" fill="url(#roofRed)" stroke="#881337" stroke-width="2"/>
+      <polygon points="14,36 26,10 120,10 132,36" fill="#e11d48" opacity="0.65"/>
+      <!-- 2F Bedroom Dormer Window (Your Room!) -->
+      <g transform="translate(56, 10)">
+        <polygon points="0,24 16,4 32,24" fill="#9f1239" stroke="#4c0519" stroke-width="1.5"/>
+        <rect x="4" y="18" width="24" height="16" fill="url(#wallPlaster)" stroke="#523218" stroke-width="1.2"/>
+        <rect x="7" y="19" width="18" height="13" rx="2" fill="url(#winGlass)" stroke="#334155" stroke-width="1.2"/>
+        <line x1="16" y1="19" x2="16" y2="32" stroke="#334155" stroke-width="1"/>
+      </g>
+      <!-- 1F Window with Flower Planter -->
+      <g transform="translate(18, 52)">
+        <rect x="0" y="0" width="26" height="22" rx="2" fill="url(#winGlass)" stroke="#523218" stroke-width="1.5"/>
+        <line x1="13" y1="0" x2="13" y2="22" stroke="#523218" stroke-width="1"/>
+        <line x1="0" y1="11" x2="26" y2="11" stroke="#523218" stroke-width="1"/>
+        <rect x="-2" y="20" width="30" height="7" rx="1.5" fill="#78350f"/>
+        <circle cx="3" cy="19" r="2.5" fill="#ef4444"/><circle cx="10" cy="18" r="2.5" fill="#facc15"/><circle cx="17" cy="19" r="2.5" fill="#38bdf8"/><circle cx="23" cy="18" r="2.5" fill="#ec4899"/>
+      </g>
+      <!-- Front Door Leading Inside to 1F -->
+      <g id="obj-player-house-door" transform="translate(74, 58)" style="cursor:pointer;">
+        <!-- Porch Canopy -->
+        <polygon points="-6,10 14,0 34,10" fill="#9f1239" stroke="#4c0519" stroke-width="1.2"/>
+        <!-- Door Frame & Leaf -->
+        <rect x="0" y="10" width="28" height="40" rx="2" fill="#523218" stroke="#2b1809" stroke-width="2"/>
+        <rect x="3" y="13" width="22" height="34" rx="1" fill="#784720"/>
+        <circle cx="20" cy="30" r="2" fill="#d4af37"/>
+        <!-- Welcome Step Mat -->
+        <rect x="-4" y="47" width="36" height="6" rx="2" fill="#b45309" stroke="#78350f" stroke-width="1"/>
+        <polygon points="14,44 10,38 18,38" fill="#f59e0b"/>
+      </g>
+    </g>
+
+    <!-- Player's House Signpost (Outside Player's House at x: 326, y: 128) -->
+    <g id="obj-player-house-sign" transform="translate(322, 126)" style="cursor:pointer;">
+      <rect x="8" y="8" width="4" height="16" fill="#523218"/>
+      <rect x="0" y="0" width="20" height="14" rx="2" fill="#78350f" stroke="#3d210c" stroke-width="1.2"/>
+      <rect x="2" y="2" width="16" height="10" rx="1" fill="#fef08a"/>
+      <line x1="4" y1="5" x2="16" y2="5" stroke="#713f12" stroke-width="1"/>
+      <line x1="4" y1="8" x2="14" y2="8" stroke="#713f12" stroke-width="1"/>
+    </g>
+
+    <!-- 3. NEIGHBOR'S HOUSE (Mid-Left: x: 56..164, y: 248..328) -->
+    <g id="building-neighbor-house" transform="translate(56, 246)">
+      <rect x="4" y="8" width="106" height="78" rx="5" fill="#000" opacity="0.3"/>
+      <rect x="4" y="28" width="102" height="54" rx="3" fill="url(#wallPlaster)" stroke="#523218" stroke-width="1.8"/>
+      <polygon points="0,28 12,4 96,4 108,28" fill="url(#roofBlue)" stroke="#1e3a8a" stroke-width="2"/>
+      <!-- Window -->
+      <rect x="16" y="38" width="20" height="18" rx="2" fill="url(#winGlass)" stroke="#523218" stroke-width="1.2"/>
+      <!-- Door -->
+      <rect x="58" y="44" width="22" height="38" rx="2" fill="#523218" stroke="#2b1809" stroke-width="1.5"/>
+      <circle cx="74" cy="62" r="1.5" fill="#d4af37"/>
+    </g>
+
+    <!-- 4. PROF. ELM'S HOUSE (Bottom-Left: x: 180..288, y: 288..368) -->
+    <g id="building-elm-house" transform="translate(180, 286)">
+      <rect x="4" y="8" width="106" height="78" rx="5" fill="#000" opacity="0.3"/>
+      <rect x="4" y="28" width="102" height="54" rx="3" fill="url(#wallPlaster)" stroke="#523218" stroke-width="1.8"/>
+      <polygon points="0,28 12,4 96,4 108,28" fill="url(#roofBrown)" stroke="#451a03" stroke-width="2"/>
+      <!-- Window -->
+      <rect x="18" y="38" width="22" height="18" rx="2" fill="url(#winGlass)" stroke="#523218" stroke-width="1.2"/>
+      <!-- Door -->
+      <rect x="62" y="44" width="22" height="38" rx="2" fill="#523218" stroke="#2b1809" stroke-width="1.5"/>
+      <circle cx="78" cy="62" r="1.5" fill="#d4af37"/>
+    </g>
+
+    <!-- Elm's House Signpost (x: 164, y: 362) -->
+    <g id="obj-elm-house-sign" transform="translate(164, 360)" style="cursor:pointer;">
+      <rect x="8" y="8" width="4" height="16" fill="#523218"/>
+      <rect x="0" y="0" width="20" height="14" rx="2" fill="#78350f" stroke="#3d210c" stroke-width="1.2"/>
+      <rect x="2" y="2" width="16" height="10" rx="1" fill="#fef08a"/>
+      <line x1="4" y1="5" x2="16" y2="5" stroke="#713f12" stroke-width="1"/>
+      <line x1="4" y1="8" x2="14" y2="8" stroke="#713f12" stroke-width="1"/>
+    </g>
+
+    <!-- 5. MAIN TOWN SIGNPOST (Central Junction at x: 240, y: 196) -->
+    <g id="obj-town-sign" transform="translate(236, 192)" style="cursor:pointer;">
+      <rect x="9" y="10" width="6" height="20" fill="#523218" stroke="#2b1809" stroke-width="1.2"/>
+      <rect x="0" y="0" width="24" height="16" rx="3" fill="#78350f" stroke="#3d210c" stroke-width="1.8"/>
+      <rect x="3" y="3" width="18" height="10" rx="1.5" fill="#fef08a"/>
+      <text x="12" y="10" font-family="'Lilita One', Fredoka, sans-serif" font-size="7" font-weight="900" fill="#713f12" text-anchor="middle">TOWN</text>
+      <polygon points="12,-4 8,-9 16,-9" fill="#f59e0b"/>
+    </g>
+
+    <!-- Teacher NPC at x: 196, y: 196 -->
+    <g id="obj-teacher" transform="translate(\${npcs.teacher.x}, \${npcs.teacher.y})" style="cursor:pointer;">
+      \${teacherSvg}
+      <g transform="translate(0, -6)">
+        <polygon points="16,0 12,-6 20,-6" fill="#10b981"/>
+      </g>
+    </g>
+
+    <!-- Fisher NPC at x: 410, y: 330 -->
+    <g id="obj-fisher" transform="translate(\${npcs.fisher.x}, \${npcs.fisher.y})" style="cursor:pointer;">
+      \${fisherSvg}
+      <g transform="translate(0, -6)">
+        <polygon points="16,0 12,-6 20,-6" fill="#f59e0b"/>
+      </g>
+    </g>
+
+    <!-- Player Chibi Sprite in Town -->
+    <g id="obj-player-town" transform="translate(\${px}, \${py})">
+      \${playerSvg}
+    </g>
+
+    <!-- Floating Wind Swirls & Gentle Falling Leaves -->
+    <g id="wind-leaves" opacity="0.75">
+      <!-- Wind Streaks -->
+      <path d="M 60 180 Q 140 170 220 182" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="20,12" fill="none" opacity="0.6"/>
+      <path d="M 280 230 Q 360 220 440 234" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="25,14" fill="none" opacity="0.6"/>
+      <!-- Soft Leaves -->
+      <g transform="translate(180, 170)"><path d="M 0 0 C 4 -4 8 -2 8 2 C 8 6 4 8 0 0 Z" fill="#84cc16"/></g>
+      <g transform="translate(320, 210)"><path d="M 0 0 C 4 -4 8 -2 8 2 C 8 6 4 8 0 0 Z" fill="#22c55e"/></g>
+      <g transform="translate(420, 180)"><path d="M 0 0 C 4 -4 8 -2 8 2 C 8 6 4 8 0 0 Z" fill="#a3e635"/></g>
+      <g transform="translate(140, 260)"><path d="M 0 0 C 4 -4 8 -2 8 2 C 8 6 4 8 0 0 Z" fill="#84cc16"/></g>
+    </g>
   </svg>\`;
 };
 `;
@@ -2128,8 +2715,8 @@ function buildHtml(includeEmbeddedRom) {
       color: #fff;
     }
 
-    /* Buddymon HD Bedroom */
-    #hd .scene.bedroom {
+    /* Buddymon HD Bedroom, 1F Living Room & New Bark Town */
+    #hd .scene.bedroom, #hd .scene.house1f, #hd .scene.town {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -2142,7 +2729,7 @@ function buildHtml(includeEmbeddedRom) {
       box-sizing: border-box;
       padding: 0;
     }
-    #hd .bedroom-wrapper {
+    #hd .bedroom-wrapper, #hd .town-wrapper {
       position: relative;
       width: 100%;
       height: 100%;
@@ -2151,7 +2738,7 @@ function buildHtml(includeEmbeddedRom) {
       align-items: center;
       justify-content: center;
     }
-    #hd .bedroom-svg {
+    #hd .bedroom-svg, #hd .town-svg {
       width: 100%;
       height: 100%;
       display: block;
@@ -2746,6 +3333,11 @@ function buildHtml(includeEmbeddedRom) {
           setStatus('House state saved successfully! (' + new Date().toLocaleTimeString() + ')');
           return;
         }
+        if (currentHdScene === 'town') {
+          saveTownProgress();
+          setStatus('Town state saved successfully! (' + new Date().toLocaleTimeString() + ')');
+          return;
+        }
         if (!GameBoyEmulatorInitialized()) return;
         try {
           var st = gameboy.saveState();
@@ -2763,7 +3355,7 @@ function buildHtml(includeEmbeddedRom) {
 
       async function quickLoadState() {
         var activeScene = localStorage.getItem('BUDDYMON_ACTIVE_SCENE') || 'bedroom';
-        if (activeScene === 'bedroom' || activeScene === 'house1f') {
+        if (activeScene === 'bedroom' || activeScene === 'house1f' || activeScene === 'town') {
           handleContinueGame();
           return;
         }
@@ -2834,6 +3426,22 @@ function buildHtml(includeEmbeddedRom) {
           house1FDialog = null;
           renderHdScene();
           setStatus('Welcome home, ' + playerName + '!');
+          return;
+        }
+
+        if (activeScene === 'town') {
+          currentHdScene = 'town';
+          try {
+            var posTown = JSON.parse(localStorage.getItem('BUDDYMON_TOWN_POS'));
+            if (posTown && typeof posTown.x === 'number') {
+              townPlayer.x = posTown.x;
+              townPlayer.y = posTown.y;
+              townPlayer.dir = posTown.dir || 'down';
+            }
+          } catch (_) {}
+          townDialog = null;
+          renderHdScene();
+          setStatus('Welcome back to New Bark Town, ' + playerName + '!');
           return;
         }
 
@@ -3588,6 +4196,7 @@ function buildHtml(includeEmbeddedRom) {
         var px = house1FPlayer.x;
         var py = house1FPlayer.y;
         var dir = house1FPlayer.dir;
+        var centerX = px + 16;
 
         // Neighbor (at x: 74, y: 172)
         var distToNeighbor = Math.hypot(px - neighborNpc.x, py - neighborNpc.y);
@@ -3629,7 +4238,7 @@ function buildHtml(includeEmbeddedRom) {
         }
 
         // TV
-        if (dir === 'up' && px >= 140 && px <= 206 && py <= 120) {
+        if (dir === 'up' && centerX >= 136 && centerX < 202 && py <= 120) {
           playChime(440);
           house1FDialog = { tag: 'TV', text: "There's a movie on TV: Stars dot the sky as two boys ride on a train… I'd better get rolling too!" };
           renderHdScene();
@@ -3637,7 +4246,7 @@ function buildHtml(includeEmbeddedRom) {
         }
 
         // Fridge
-        if ((dir === 'up' || dir === 'left') && px <= 54 && py <= 116) {
+        if (((dir === 'up' && centerX < 50) || (dir === 'left' && px <= 48)) && py <= 116) {
           playChime(520);
           house1FDialog = { tag: 'FRIDGE', text: "Let's see what's in the fridge… FRESH WATER and tasty LEMONADE!" };
           renderHdScene();
@@ -3645,14 +4254,15 @@ function buildHtml(includeEmbeddedRom) {
         }
 
         // Sink
-        if (dir === 'up' && px >= 50 && px <= 94 && py <= 116) {
+        if (dir === 'up' && centerX >= 50 && centerX < 92 && py <= 116) {
+          playChime(520);
           house1FDialog = { tag: 'SINK', text: "The sink is spotless. Mom likes it clean." };
           renderHdScene();
           return;
         }
 
         // Stove
-        if (dir === 'up' && px >= 90 && px <= 140 && py <= 116) {
+        if (dir === 'up' && centerX >= 92 && centerX < 136 && py <= 116) {
           playChime(480);
           house1FDialog = { tag: 'STOVE', text: "Mom's specialty! CINNABAR VOLCANO BURGER!" };
           renderHdScene();
@@ -3660,7 +4270,8 @@ function buildHtml(includeEmbeddedRom) {
         }
 
         // Bookshelf
-        if (dir === 'up' && px >= 204 && px <= 268 && py <= 116) {
+        if (dir === 'up' && centerX >= 202 && centerX <= 266 && py <= 116) {
+          playChime(460);
           house1FDialog = { tag: 'BOOKSHELF', text: "A collection of cookbooks, home decor magazines, and Buddymon care guides." };
           renderHdScene();
           return;
@@ -3715,6 +4326,259 @@ function buildHtml(includeEmbeddedRom) {
         });
       }
 
+      // New Bark Town State
+      var townPlayer = { x: 414, y: 144, dir: 'down', step: 0 };
+      var teacherNpc = { x: 168, y: 220, dir: 'down', step: 0 };
+      var fisherNpc = { x: 410, y: 330, dir: 'down', step: 0 };
+      var silverNpc = { x: 38, y: 76, dir: 'right', step: 0 };
+      var townDialog = null;
+      var townWalkFlip = 0;
+      var townStepTimer = null;
+
+      window.__townPlayer = townPlayer;
+      window.__teacherNpc = teacherNpc;
+      window.__fisherNpc = fisherNpc;
+      window.__silverNpc = silverNpc;
+      window.__moveTownPlayer = moveTownPlayer;
+      window.__interactTown = interactTown;
+      window.__warpIntoHouse1F = warpIntoHouse1F;
+
+      function canMoveToTown(nx, ny) {
+        var footX = nx + 16;
+        var footY = ny + 34;
+
+        // Town boundaries
+        if (footX < 24 || footX > 530) return false;
+        if (footY < 124 || footY > 426) return false;
+
+        // 1. Elm's Research Lab (x: 56..220, y: 26..136)
+        if (footX >= 52 && footX <= 224 && footY < 136) {
+          if (!(footX >= 120 && footX <= 152 && footY >= 130)) {
+            return false;
+          }
+        }
+
+        // 2. Player's House (x: 340..480, y: 28..132)
+        if (footX >= 336 && footX <= 484 && footY < 132) {
+          if (!(footX >= 404 && footX <= 434 && footY >= 124)) {
+            return false;
+          }
+        }
+
+        // 3. Neighbor's House (x: 56..164, y: 246..328)
+        if (footX >= 52 && footX <= 168 && footY >= 244 && footY <= 332) {
+          return false;
+        }
+
+        // 4. Elm's House (x: 180..288, y: 286..368)
+        if (footX >= 176 && footX <= 292 && footY >= 284 && footY <= 372) {
+          return false;
+        }
+
+        // 5. Silver NPC (at x: 38, y: 76)
+        if (footX >= 26 && footX <= 58 && footY >= 70 && footY <= 104) {
+          return false;
+        }
+
+        // 6. Teacher NPC (at x: 196, y: 196)
+        if (Math.hypot(footX - (teacherNpc.x + 16), footY - (teacherNpc.y + 34)) < 22) {
+          return false;
+        }
+
+        // 7. Fisher NPC (at x: 410, y: 330)
+        if (Math.hypot(footX - (fisherNpc.x + 16), footY - (fisherNpc.y + 34)) < 22) {
+          return false;
+        }
+
+        // 8. Town Center Signpost (x: 236, y: 192)
+        if (footX >= 232 && footX <= 264 && footY >= 188 && footY <= 218) {
+          return false;
+        }
+
+        return true;
+      }
+
+      function moveTownPlayer(dir) {
+        if (townDialog) {
+          advanceTownDialog();
+          return;
+        }
+
+        var dx = 0, dy = 0;
+        var STEP = 16;
+        if (dir === 'up') dy = -STEP;
+        else if (dir === 'down') dy = STEP;
+        else if (dir === 'left') dx = -STEP;
+        else if (dir === 'right') dx = STEP;
+
+        townPlayer.dir = dir;
+        var nx = townPlayer.x + dx;
+        var ny = townPlayer.y + dy;
+
+        // Walking up into Player's House Front Door (x: 396..434, ny <= 134)
+        if (dir === 'up' && nx >= 396 && nx <= 434 && ny <= 134) {
+          townPlayer.x = nx;
+          townPlayer.y = ny;
+          renderHdScene();
+          warpIntoHouse1F();
+          return;
+        }
+
+        // Trying to leave town westward to Route 29 without a starter
+        if (dir === 'left' && nx <= 28) {
+          playChime(420);
+          townDialog = { tag: 'ROUTE 29', text: "Wait! It's dangerous to go out without a Buddymon! Wild creatures jump out in the tall grass!" };
+          renderHdScene();
+          return;
+        }
+
+        if (!canMoveToTown(nx, ny)) {
+          if (dx !== 0 && canMoveToTown(townPlayer.x, ny)) {
+            townPlayer.y = ny;
+          } else if (dy !== 0 && canMoveToTown(nx, townPlayer.y)) {
+            townPlayer.x = nx;
+          } else {
+            townPlayer.step = 0;
+            renderHdScene();
+            return;
+          }
+        } else {
+          townPlayer.x = nx;
+          townPlayer.y = ny;
+        }
+
+        townWalkFlip = 1 - townWalkFlip;
+        townPlayer.step = townWalkFlip + 1;
+        renderHdScene();
+        saveTownProgress();
+
+        if (townStepTimer) clearTimeout(townStepTimer);
+        townStepTimer = setTimeout(function() {
+          townPlayer.step = 0;
+          renderHdScene();
+        }, 220);
+      }
+
+      function advanceTownDialog() {
+        townDialog = null;
+        renderHdScene();
+      }
+
+      function interactTown() {
+        if (townDialog) {
+          advanceTownDialog();
+          return;
+        }
+
+        var px = townPlayer.x;
+        var py = townPlayer.y;
+        var dir = townPlayer.dir;
+        var centerX = px + 16;
+        var centerY = py + 20;
+
+        // 1. Silver (Rival peeking into Elm's Lab window at x: 38, y: 76)
+        if (Math.hypot(px - silverNpc.x, py - silverNpc.y) <= 38) {
+          playChime(380);
+          silverNpc.dir = (px < silverNpc.x) ? 'left' : 'right';
+          townDialog = { tag: 'PASSING BOY', text: "…… What are you staring at? Get lost!" };
+          renderHdScene();
+          return;
+        }
+
+        // 2. Teacher NPC (at x: 168, y: 220)
+        if (Math.hypot(px - teacherNpc.x, py - teacherNpc.y) <= 36) {
+          playChime(540);
+          teacherNpc.dir = (px > teacherNpc.x + 8) ? 'right' : ((px < teacherNpc.x - 8) ? 'left' : ((py > teacherNpc.y) ? 'down' : 'up'));
+          townDialog = { tag: 'TEACHER', text: "Tuning in to the radio? PROF. ELM's laboratory is right here in town!" };
+          renderHdScene();
+          return;
+        }
+
+        // 3. Fisher NPC (at x: 410, y: 330)
+        if (Math.hypot(px - fisherNpc.x, py - fisherNpc.y) <= 36) {
+          playChime(520);
+          fisherNpc.dir = (px > fisherNpc.x + 8) ? 'right' : ((px < fisherNpc.x - 8) ? 'left' : ((py > fisherNpc.y) ? 'down' : 'up'));
+          townDialog = { tag: 'FISHER', text: "Yo, " + playerName + "! I hear PROF. ELM discovered some new Buddymon!" };
+          renderHdScene();
+          return;
+        }
+
+        // 4. Main Town Signpost (at x: 236, y: 192)
+        if (Math.hypot(centerX - 248, centerY - 204) <= 40) {
+          playChime(460);
+          townDialog = { tag: 'SIGN', text: "NEW BARK TOWN - The Town Where the Winds of a New Beginning Blow." };
+          renderHdScene();
+          return;
+        }
+
+        // 5. Player's House Sign (at x: 322, y: 126)
+        if (Math.hypot(centerX - 332, centerY - 134) <= 40) {
+          playChime(460);
+          townDialog = { tag: 'SIGN', text: playerName + "'s House" };
+          renderHdScene();
+          return;
+        }
+
+        // 6. Elm's Lab Sign (at x: 94, y: 130)
+        if (Math.hypot(centerX - 104, centerY - 138) <= 40) {
+          playChime(460);
+          townDialog = { tag: 'SIGN', text: "ELM BUDDYMON RESEARCH LAB" };
+          renderHdScene();
+          return;
+        }
+
+        // 7. Elm's House Sign (at x: 164, y: 360)
+        if (Math.hypot(centerX - 174, centerY - 368) <= 40) {
+          playChime(460);
+          townDialog = { tag: 'SIGN', text: "PROF. ELM'S HOUSE" };
+          renderHdScene();
+          return;
+        }
+
+        // 8. Player's House Front Door (at x: 396..436, y: 124..144)
+        if (dir === 'up' && centerX >= 396 && centerX <= 436 && py <= 144) {
+          warpIntoHouse1F();
+          return;
+        }
+
+        // 9. Elm's Lab Door (at x: 120..152, y: 124..144)
+        if (dir === 'up' && centerX >= 116 && centerX <= 156 && py <= 144) {
+          playChime(480);
+          townDialog = { tag: 'ELM LAB', text: "PROF. ELM's Laboratory. Prof. Elm is inside waiting for you!" };
+          renderHdScene();
+          return;
+        }
+      }
+
+      function saveTownProgress() {
+        localStorage.setItem('BUDDYMON_ACTIVE_SCENE', currentHdScene);
+        localStorage.setItem('BUDDYMON_TOWN_POS', JSON.stringify({
+          x: townPlayer.x,
+          y: townPlayer.y,
+          dir: townPlayer.dir
+        }));
+        localStorage.setItem('BUDDYMON_ACTIVE_SAVE', 'true');
+        localStorage.setItem('BUDDYMON_PLAYER_GENDER', playerGender);
+        localStorage.setItem('BUDDYMON_PLAYER_NAME', playerName);
+      }
+
+      function warpIntoHouse1F() {
+        townDialog = { tag: 'DOOR', text: "Returning to your home..." };
+        renderHdScene();
+
+        fadeTransition(function() {
+          townDialog = null;
+          currentHdScene = 'house1f';
+          house1FPlayer.x = 200;
+          house1FPlayer.y = 286;
+          house1FPlayer.dir = 'up';
+          house1FPlayer.step = 0;
+          renderHdScene();
+          save1FProgress();
+          setStatus('Downstairs living room');
+        });
+      }
+
       async function warpOutToTown() {
         if (!hasReceivedBuddygear) {
           triggerMomIntercept();
@@ -3726,37 +4590,52 @@ function buildHtml(includeEmbeddedRom) {
 
         fadeTransition(async function() {
           try {
-            if (!loadedRomUint8) return;
-            var rawJson = await decompressGzipText(window.__NEW_BARK_TOWN_STATE_GZ_B64__);
-            var st = JSON.parse(rawJson);
-            var isGirl = (playerGender === 'GIRL');
-            if (st[23] && st[23].length > 1138) {
-              st[23][1138] = isGirl ? 1 : 0;
-            }
-            var encodedName = encodeGen2Name(playerName);
-            if (st[23] && st[23].length > 1159) {
-              for (var i = 0; i < 11; i++) {
-                st[23][1149 + i] = encodedName[i];
+            if (loadedRomUint8) {
+              var rawJson = await decompressGzipText(window.__NEW_BARK_TOWN_STATE_GZ_B64__);
+              var st = JSON.parse(rawJson);
+              var isGirl = (playerGender === 'GIRL');
+              if (st[23] && st[23].length > 1138) {
+                st[23][1138] = isGirl ? 1 : 0;
               }
+              var encodedName = encodeGen2Name(playerName);
+              if (st[23] && st[23].length > 1159) {
+                for (var i = 0; i < 11; i++) {
+                  st[23][1149 + i] = encodedName[i];
+                }
+              }
+              clearLastEmulation();
+              st[0] = loadedRomUint8;
+              gameboy = new GameBoyCore(canvas, loadedRomBinaryString);
+              gameboy.openMBC = openSRAM;
+              gameboy.openRTC = openRTC;
+              gameboy.returnFromState(st);
+              run();
+              if (currentSpeed !== 1) gameboy.setSpeed(currentSpeed);
+              saveSRAM();
             }
-            clearLastEmulation();
-            st[0] = loadedRomUint8;
-            gameboy = new GameBoyCore(canvas, loadedRomBinaryString);
-            gameboy.openMBC = openSRAM;
-            gameboy.openRTC = openRTC;
-            gameboy.returnFromState(st);
-            run();
-            if (currentSpeed !== 1) gameboy.setSpeed(currentSpeed);
-            saveSRAM();
 
             hasBeenIn1F = true;
             upstairsWarpCooldown = Date.now() + 5000;
-            currentHdScene = 'game';
+            currentHdScene = 'town';
+            townPlayer.x = 414;
+            townPlayer.y = 144;
+            townPlayer.dir = 'down';
+            townPlayer.step = 0;
+            townDialog = null;
             renderHdScene();
-            localStorage.setItem('BUDDYMON_ACTIVE_SCENE', 'game');
+            saveTownProgress();
             setStatus('New Bark Town');
           } catch (err) {
             console.error('Failed to exit house:', err);
+            currentHdScene = 'town';
+            townPlayer.x = 414;
+            townPlayer.y = 144;
+            townPlayer.dir = 'down';
+            townPlayer.step = 0;
+            townDialog = null;
+            renderHdScene();
+            saveTownProgress();
+            setStatus('New Bark Town');
           }
         });
       }
@@ -4032,6 +4911,29 @@ function buildHtml(includeEmbeddedRom) {
           hdStage.innerHTML = '<div class="scene house1f">' +
             '<div class="bedroom-wrapper">' +
               roomSvg +
+              dialogHtml +
+            '</div>' +
+          '</div>';
+        } else if (currentHdScene === 'town') {
+          hdStage.style.display = 'block';
+          canvas.style.display = 'none';
+
+          var dialogHtml = '';
+          if (townDialog) {
+            dialogHtml = '<div class="bedroom-dialogue" id="hdDialogueBox">' +
+              '<div class="dlg-tag">' + townDialog.tag + '</div>' +
+              '<p>' + townDialog.text + '</p>' +
+              '<span class="more">&#9660;</span>' +
+            '</div>';
+          }
+
+          var hdRect = hdStage.getBoundingClientRect();
+          var aspect = (hdRect && hdRect.width > 0) ? (hdRect.height / hdRect.width) : 1.35;
+          var townSvg = Art.townScene(playerGender, townPlayer, { teacher: teacherNpc, fisher: fisherNpc, silver: silverNpc }, aspect);
+
+          hdStage.innerHTML = '<div class="scene town">' +
+            '<div class="town-wrapper">' +
+              townSvg +
               dialogHtml +
             '</div>' +
           '</div>';
@@ -4388,6 +5290,23 @@ function buildHtml(includeEmbeddedRom) {
             }
           }
           return true;
+        } else if (currentHdScene === 'town') {
+          if (key === 'up' || key === 'down' || key === 'left' || key === 'right') {
+            moveTownPlayer(key);
+            return true;
+          }
+          if (key === 'a' || key === 'start') {
+            interactTown();
+            return true;
+          }
+          if (key === 'b') {
+            if (townDialog) {
+              townDialog = null;
+              renderHdScene();
+              return true;
+            }
+          }
+          return true;
         }
 
         return false;
@@ -4604,20 +5523,21 @@ function buildHtml(includeEmbeddedRom) {
           var fridgeObj = e.target.closest('#obj-fridge');
           if (fridgeObj) {
             playChime(520);
-            house1FDialog = { tag: 'FRIDGE', text: "Let's see what's in the fridge... Fresh Water and tasty Lemonade!" };
+            house1FDialog = { tag: 'FRIDGE', text: "Let's see what's in the fridge… FRESH WATER and tasty LEMONADE!" };
             renderHdScene();
             return;
           }
           var sinkObj = e.target.closest('#obj-sink');
           if (sinkObj) {
-            house1FDialog = { tag: 'SINK', text: "The sink is spotless and shining clean." };
+            playChime(520);
+            house1FDialog = { tag: 'SINK', text: "The sink is spotless. Mom likes it clean." };
             renderHdScene();
             return;
           }
           var stoveObj = e.target.closest('#obj-stove');
           if (stoveObj) {
             playChime(480);
-            house1FDialog = { tag: 'STOVE', text: "Mom's specialty soup is simmering gently on the stove. Smells delicious!" };
+            house1FDialog = { tag: 'STOVE', text: "Mom's specialty! CINNABAR VOLCANO BURGER!" };
             renderHdScene();
             return;
           }
@@ -4643,6 +5563,78 @@ function buildHtml(includeEmbeddedRom) {
           else if (targetTileX < house1FPlayer.x - 8) moveHouse1FPlayer('left');
           else if (targetTileY > house1FPlayer.y + 8) moveHouse1FPlayer('down');
           else if (targetTileY < house1FPlayer.y - 8) moveHouse1FPlayer('up');
+          return;
+        }
+        if (currentHdScene === 'town') {
+          if (townDialog) {
+            advanceTownDialog();
+            return;
+          }
+          var silverObj = e.target.closest('#obj-silver');
+          if (silverObj) {
+            interactTown();
+            return;
+          }
+          var teacherObj = e.target.closest('#obj-teacher');
+          if (teacherObj) {
+            interactTown();
+            return;
+          }
+          var fisherObj = e.target.closest('#obj-fisher');
+          if (fisherObj) {
+            interactTown();
+            return;
+          }
+          var townSignObj = e.target.closest('#obj-town-sign');
+          if (townSignObj) {
+            playChime(460);
+            townDialog = { tag: 'SIGN', text: "NEW BARK TOWN - The Town Where the Winds of a New Beginning Blow." };
+            renderHdScene();
+            return;
+          }
+          var playerHouseSignObj = e.target.closest('#obj-player-house-sign');
+          if (playerHouseSignObj) {
+            playChime(460);
+            townDialog = { tag: 'SIGN', text: playerName + "'s House" };
+            renderHdScene();
+            return;
+          }
+          var labSignObj = e.target.closest('#obj-lab-sign');
+          if (labSignObj) {
+            playChime(460);
+            townDialog = { tag: 'SIGN', text: "ELM BUDDYMON RESEARCH LAB" };
+            renderHdScene();
+            return;
+          }
+          var elmHouseSignObj = e.target.closest('#obj-elm-house-sign');
+          if (elmHouseSignObj) {
+            playChime(460);
+            townDialog = { tag: 'SIGN', text: "PROF. ELM'S HOUSE" };
+            renderHdScene();
+            return;
+          }
+          var playerHouseDoorObj = e.target.closest('#obj-player-house-door');
+          if (playerHouseDoorObj) {
+            warpIntoHouse1F();
+            return;
+          }
+          var labDoorObj = e.target.closest('#obj-lab-door');
+          if (labDoorObj) {
+            playChime(480);
+            townDialog = { tag: 'ELM LAB', text: "PROF. ELM's Laboratory. Prof. Elm is inside waiting for you!" };
+            renderHdScene();
+            return;
+          }
+
+          var rect = hdStage.getBoundingClientRect();
+          var clickX = (e.clientX - rect.left) / rect.width;
+          var clickY = (e.clientY - rect.top) / rect.height;
+          var targetTileX = Math.round(clickX * 560);
+          var targetTileY = Math.round(clickY * 480);
+          if (targetTileX > townPlayer.x + 8) moveTownPlayer('right');
+          else if (targetTileX < townPlayer.x - 8) moveTownPlayer('left');
+          else if (targetTileY > townPlayer.y + 8) moveTownPlayer('down');
+          else if (targetTileY < townPlayer.y - 8) moveTownPlayer('up');
           return;
         }
         if (currentHdScene === 'prof') {

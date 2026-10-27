@@ -5,6 +5,16 @@ All notable changes to Buddymon will be documented in this file.
 ## [Unreleased] - 2026-10-27
 
 ### Added
+- **Sink Centering & Interaction Alignment**: Replaced left-edge bounding check with center footprint alignment (`centerX = px + 16`), allowing the player to stand dead-center in front of the sink (as well as the left and right sides) to trigger the sink dialogue ("The sink is spotless. Mom likes it clean.") without mistakenly activating the neighboring fridge.
+- **HD Outdoor Scene: New Bark Town (`Art.townScene`)**:
+  - Recreated New Bark Town in full HD vector art matching Pokemon Crystal's 20x18 ROM map specification.
+  - **Player's House**: Red-shingled cottage with smoking chimney, 2F dormer window (player's bedroom), flower planter, welcome mat, and interactive front door that warps back into 1F.
+  - **Prof. Elm's Research Lab**: Large 2-story facility with rooftop satellite weather instrument, double frosted glass entry doors, and side observation window.
+  - **Silver / Rival NPC (`Art.silverSprite`)**: Standing outside Elm's Lab window with wild spiky crimson hair and high-collar dark coat, peeking suspiciously inside ("…… What are you staring at? Get lost!").
+  - **Teacher NPC (`Art.teacherSprite`)**: Chibi vector sprite with glasses, teal cardigan, and burgundy skirt strolling near the town center path ("Tuning in to the radio? PROF. ELM's laboratory is right here in town!").
+  - **Fisher NPC (`Art.fisherSprite`)**: Chibi vector sprite in yellow bucket hat, fishing vest, and boots overlooking the southern shoreline ("Yo, <PLAYER>! I hear PROF. ELM discovered some new Buddymon!").
+  - **Signposts & Landmarks**: Carved Town Signpost ("NEW BARK TOWN - The Town Where the Winds of a New Beginning Blow."), Player's House Sign, Elm Lab Sign, Elm House Sign, and southern water shoreline with wooden pier fencing.
+  - **Seamless Roundtrip Warps**: Stepping through the front doors of Player's House 1F fades out to New Bark Town; stepping into the cottage front door in New Bark Town fades seamlessly back into 1F.
 - **Authentic Pokemon Crystal Intro Flow**:
   - **Step 1: Boy/Girl Selection (`gender`)**: Choosing "NEW GAME" now opens directly into the authentic Crystal gender prompt ("Are you a boy? Or are you a girl?") with full-bleed vector artwork and gold-framed dialogue.
   - **Step 2: Dark Clock Wake-up Scene (`clock`)**: Smooth fade to dark with the exact Crystal opening lines (`"......"`, `"Zzz... Hm? Wha...?"`, `"You woke me up!"`, `"Will you check the clock for me? What time is it?"`, and `"What? I overslept! Time to get moving!"`), synced directly with the player's real device clock.
