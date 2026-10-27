@@ -2590,6 +2590,14 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
       // Transition straight into 1F when exiting bedroom stairs
       var live1FState = null;
       var last1FRecordTime = 0;
+      var upstairsWarpCooldown = 0;
+
+      function isValid1FState(st) {
+        if (!st || !st[23] || st[23].length <= 3254) return false;
+        var mg = st[23][3253];
+        var mn = st[23][3254];
+        return (mg === 24 && mn === 6);
+      }
 
       async function warpDownTo1F() {
         if (!loadedRomUint8) {
@@ -2597,18 +2605,22 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
           return;
         }
 
+        upstairsWarpCooldown = Date.now() + 2500;
         bedroomDialog = { tag: 'STAIRS', text: 'Heading downstairs to 1F...' };
         renderHdScene();
 
         setTimeout(async function() {
           try {
             var st = null;
-            if (live1FState) {
+            if (isValid1FState(live1FState)) {
               st = JSON.parse(JSON.stringify(live1FState));
             } else {
               var savedSt = await idbStore.get('BUDDYMON_ACTIVE_STATE');
-              if (savedSt && savedSt.length > 20) {
+              if (isValid1FState(savedSt)) {
                 st = JSON.parse(JSON.stringify(savedSt));
+                live1FState = st;
+              } else if (savedSt) {
+                idbStore.delete('BUDDYMON_ACTIVE_STATE');
               }
             }
 
@@ -3664,6 +3676,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
       function checkWarpUpstairs() {
         if (currentHdScene !== 'game' || window.__HD_MODE__ !== 'on' || !GameBoyEmulatorInitialized() || !GameBoyEmulatorPlaying()) return;
         if (!gameboy) return;
+        if (Date.now() < upstairsWarpCooldown) return;
         try {
           var is2F = false;
           var mg = 0, mn = 0;
@@ -3694,13 +3707,8 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
 
           if (is2F) {
             try {
-              if (live1FState) {
+              if (isValid1FState(live1FState)) {
                 idbStore.set('BUDDYMON_ACTIVE_STATE', live1FState);
-              } else {
-                var liveSt = gameboy.saveState();
-                liveSt[0] = [];
-                live1FState = liveSt;
-                idbStore.set('BUDDYMON_ACTIVE_STATE', liveSt);
               }
               localStorage.setItem('BUDDYMON_ACTIVE_SAVE', 'true');
               saveSRAM();
