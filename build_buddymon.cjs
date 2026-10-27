@@ -256,22 +256,40 @@ Art.girlSprite = function girlSprite(dir, step) {
   if (dir === 'left' || dir === 'right') {
     var isRight = (dir === 'right');
     var flip = isRight ? 'transform="scale(-1, 1) translate(-32, 0)"' : '';
-    var fSoleY = isWalk1 ? 37 : 38;
-    var bSoleY = isWalk2 ? 37 : 38;
+    
+    // Idle stance vs walking strides
+    var fLegX = isWalk1 ? 10 : (isWalk2 ? 14 : 12);
+    var bLegX = isWalk1 ? 16 : (isWalk2 ? 10 : 14);
+    var fBootX = isWalk1 ? 9 : (isWalk2 ? 13 : 11);
+    var bBootX = isWalk1 ? 15 : (isWalk2 ? 9 : 13);
+    var fSoleY = 38;
+    var bSoleY = isWalk1 ? 37 : 38;
+
     return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
-      <ellipse cx="15" cy="38.5" rx="12" ry="2.5" fill="#000" opacity="0.45"/>
+      <!-- Ground Contact Shadow directly under flat soles -->
+      <ellipse cx="16" cy="38.5" rx="10" ry="2.5" fill="#000" opacity="0.4"/>
       <g \${flip}>
-        <rect x="11" y="27" width="5" height="6" fill="#557a50"/>
-        <path d="M10 33 L10 \${bSoleY} L17 \${bSoleY} L17 35 L13 33 Z" fill="#c9893d" stroke="#8f5d21" stroke-width="0.8"/>
-        <rect x="10" y="\${bSoleY - 1}" width="7" height="1.5" fill="#181a1d"/>
-        <rect x="12" y="27" width="5.5" height="6" fill="#557a50"/>
-        <path d="M7 33 L7 \${fSoleY} L16 \${fSoleY} L16 35 L11 33 Z" fill="#c9893d" stroke="#8f5d21" stroke-width="0.8"/>
-        <rect x="7" y="\${fSoleY - 1}" width="9" height="1.5" fill="#181a1d"/>
-        <line x1="8" y1="\${fSoleY - 3}" x2="14" y2="\${fSoleY - 3}" stroke="#872c3e" stroke-width="1"/>
+        <!-- Back Leg & Boot (darker for depth) -->
+        <g opacity="0.85">
+          <rect x="\${bLegX}" y="26" width="5.5" height="7" rx="1" fill="#425f3e"/>
+          <path d="M\${bBootX} \${bSoleY} L\${bBootX + 7.5} \${bSoleY} L\${bBootX + 7.5} \${bSoleY - 4} L\${bBootX + 4} 33 L\${bBootX + 1} 33 L\${bBootX} 35 Z" fill="#a8712e"/>
+          <rect x="\${bBootX}" y="\${bSoleY - 1}" width="7.5" height="1" fill="#181a1d"/>
+        </g>
+
+        <!-- Front Leg & Boot (grounded directly under hips) -->
+        <rect x="\${fLegX}" y="26" width="6" height="7" rx="1" fill="#557a50" stroke="#3b5637" stroke-width="0.6"/>
+        <rect x="\${fLegX - 0.5}" y="32" width="7" height="1.8" rx="0.6" fill="#476643"/>
+        <path d="M\${fBootX} \${fSoleY} L\${fBootX + 8.5} \${fSoleY} L\${fBootX + 8.5} \${fSoleY - 4.5} L\${fBootX + 5} 33 L\${fBootX + 1.5} 33 L\${fBootX} 35.5 Z" fill="#c9893d" stroke="#8f5d21" stroke-width="0.8"/>
+        <rect x="\${fBootX}" y="\${fSoleY - 1.2}" width="8.5" height="1.2" fill="#181a1d"/>
+        <line x1="\${fBootX + 2.5}" y1="35" x2="\${fBootX + 5.5}" y2="35" stroke="#5a3812" stroke-width="0.8"/>
+
+        <!-- Torso & Denim Jacket -->
         <rect x="10" y="17" width="11" height="8" rx="2" fill="#27477d"/>
         <rect x="8.5" y="19" width="3" height="4" fill="#fff"/>
         <rect x="11.5" y="\${isWalk1 ? 19 : 17}" width="4" height="6.5" rx="1.5" fill="#27477d"/>
         <circle cx="13.5" cy="\${isWalk1 ? 26 : 24}" r="1.5" fill="#fce1cd"/>
+
+        <!-- Hair & Head -->
         <path d="M15 2 C21 2 26 6 25 14 C24 20 25 24 22 23 C19 20 18 15 18 13 C18 6 17 2 15 2 Z" fill="#36190a"/>
         <circle cx="14" cy="11" r="7.5" fill="#fce1cd"/>
         <ellipse cx="10" cy="11.5" rx="2.2" ry="2.7" fill="#4d7c3b"/>
@@ -365,30 +383,49 @@ Art.boySprite = function boySprite(dir, step) {
   if (dir === 'left' || dir === 'right') {
     var isRight = (dir === 'right');
     var flip = isRight ? 'transform="scale(-1, 1) translate(-32, 0)"' : '';
-    var fSoleY = isWalk1 ? 37 : 38;
-    var bSoleY = isWalk2 ? 37 : 38;
+    
+    // Idle stance vs walking strides
+    var fLegX = isWalk1 ? 10 : (isWalk2 ? 14 : 12);
+    var bLegX = isWalk1 ? 16 : (isWalk2 ? 10 : 14);
+    var fBootX = isWalk1 ? 9 : (isWalk2 ? 13 : 11);
+    var bBootX = isWalk1 ? 15 : (isWalk2 ? 9 : 13);
+    var fSoleY = 38;
+    var bSoleY = isWalk1 ? 37 : 38;
 
     return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
       <!-- Ground Contact Shadow directly under flat soles -->
-      <ellipse cx="15" cy="38.5" rx="12" ry="2.5" fill="#000" opacity="0.45"/>
+      <ellipse cx="16" cy="38.5" rx="10" ry="2.5" fill="#000" opacity="0.4"/>
       <g \${flip}>
-        <rect x="11" y="27" width="5" height="6" fill="#32373e"/>
-        <path d="M10 33 L10 \${bSoleY} L17 \${bSoleY} L17 35 L13 33 Z" fill="#181a1d"/>
-        <rect x="10" y="\${bSoleY - 1}" width="7" height="1.5" fill="#0a0b0d"/>
-        <rect x="12" y="27" width="5.5" height="6" fill="#32373e"/>
-        <path d="M7 33 L7 \${fSoleY} L16 \${fSoleY} L16 35 L11 33 Z" fill="#181a1d" stroke="#872c3e" stroke-width="0.8"/>
-        <rect x="7" y="\${fSoleY - 1}" width="9" height="1.5" fill="#0a0b0d"/>
-        <line x1="8" y1="\${fSoleY - 3}" x2="14" y2="\${fSoleY - 3}" stroke="#872c3e" stroke-width="1"/>
-        <rect x="10" y="18" width="11" height="10" rx="2.5" fill="#272b30" stroke="#181a1d" stroke-width="1"/>
-        <line x1="12" y1="18" x2="12" y2="28" stroke="#872c3e" stroke-width="1.4"/>
-        <rect x="12" y="\${isWalk1 ? 21 : 19}" width="4.5" height="7.5" rx="1.8" fill="#272b30"/>
-        <circle cx="14.2" cy="\${isWalk1 ? 28 : 26}" r="1.6" fill="#fce1cd"/>
-        <circle cx="15" cy="11" r="7.5" fill="#fce1cd"/>
-        <path d="M8.5 12 Q7 13 8.5 13.5" stroke="#a3583b" stroke-width="0.8" fill="none"/>
-        <ellipse cx="11.5" cy="11.5" rx="2.4" ry="2.8" fill="#2b1810"/>
-        <circle cx="11" cy="10.8" r="0.7" fill="#fff"/>
-        <ellipse cx="11.5" cy="11.5" rx="3.2" ry="3.4" fill="none" stroke="#1f2937" stroke-width="1.2"/>
-        <line x1="14" y1="11.5" x2="18" y2="10.5" stroke="#1f2937" stroke-width="1"/>
+        <!-- Back Leg & Boot (darker for depth) -->
+        <g opacity="0.85">
+          <rect x="\${bLegX}" y="26" width="5.5" height="7" rx="1" fill="#24282d"/>
+          <path d="M\${bBootX} \${bSoleY} L\${bBootX + 7.5} \${bSoleY} L\${bBootX + 7.5} \${bSoleY - 4} L\${bBootX + 4} 33 L\${bBootX + 1} 33 L\${bBootX} 35 Z" fill="#121316"/>
+          <rect x="\${bBootX}" y="\${bSoleY - 1}" width="7.5" height="1" fill="#050607"/>
+        </g>
+
+        <!-- Front Leg & Boot (grounded directly under hips) -->
+        <rect x="\${fLegX}" y="26" width="6" height="7" rx="1" fill="#32373e" stroke="#1f2327" stroke-width="0.6"/>
+        <rect x="\${fLegX - 0.5}" y="32" width="7" height="1.8" rx="0.6" fill="#272b30"/>
+        <path d="M\${fBootX} \${fSoleY} L\${fBootX + 8.5} \${fSoleY} L\${fBootX + 8.5} \${fSoleY - 4.5} L\${fBootX + 5} 33 L\${fBootX + 1.5} 33 L\${fBootX} 35.5 Z" fill="#1a1c20" stroke="#0d0e10" stroke-width="0.7"/>
+        <rect x="\${fBootX}" y="\${fSoleY - 1.2}" width="8.5" height="1.2" fill="#08090a"/>
+        <line x1="\${fBootX + 2.5}" y1="35" x2="\${fBootX + 5.5}" y2="35" stroke="#872c3e" stroke-width="0.8"/>
+
+        <!-- Torso & Jacket -->
+        <rect x="11" y="18" width="10" height="9.5" rx="2.5" fill="#272b30" stroke="#181a1d" stroke-width="1"/>
+        <line x1="13" y1="18" x2="13" y2="27.5" stroke="#872c3e" stroke-width="1.3"/>
+        <rect x="12" y="16.5" width="8" height="2.5" rx="1" fill="#1f2327"/>
+
+        <!-- Arm -->
+        <rect x="13" y="\${isWalk1 ? 21 : 19}" width="4.5" height="7.5" rx="1.8" fill="#272b30" stroke="#181a1d" stroke-width="0.6"/>
+        <circle cx="15.2" cy="\${isWalk1 ? 28 : 26}" r="1.6" fill="#fce1cd"/>
+
+        <!-- Head & Features -->
+        <circle cx="16" cy="11" r="7.5" fill="#fce1cd"/>
+        <path d="M9.5 12 Q8 13 9.5 13.5" stroke="#a3583b" stroke-width="0.8" fill="none"/>
+        <ellipse cx="12.5" cy="11.5" rx="2.4" ry="2.8" fill="#2b1810"/>
+        <circle cx="12" cy="10.8" r="0.7" fill="#fff"/>
+        <ellipse cx="12.5" cy="11.5" rx="3.2" ry="3.4" fill="none" stroke="#1f2937" stroke-width="1.2"/>
+        <line x1="15.7" y1="11.5" x2="20" y2="10.5" stroke="#1f2937" stroke-width="1"/>
         <path d="M8 9 Q11 6 16 7 L16 12 Q13 11 8.5 12 Z" fill="#3d2110"/>
         <polygon points="15,11 16,14 14,13" fill="#3d2110"/>
         <path d="M7 11 C6 6 10 2 17 2 C22 2 25 5 24 10 C23 13 18 13 7 11 Z" fill="#7a2536" stroke="#4f131f" stroke-width="1"/>
@@ -1307,18 +1344,10 @@ function buildHtml(includeEmbeddedRom) {
     #hd .gender-card img {
       width: auto;
       max-width: 92%;
-      height: 72%;
-      max-height: 225px;
+      height: 75%;
+      max-height: 240px;
       object-fit: contain;
       filter: drop-shadow(0 1cqw 1.5cqw rgba(0, 0, 0, 0.4));
-    }
-    #hd .gender-card[data-gender="GIRL"] img {
-      transform: scale(0.95);
-      transform-origin: bottom center;
-    }
-    #hd .hero-portrait img[alt="GIRL"] {
-      transform: scale(0.95);
-      transform-origin: bottom center;
     }
     #hd .gender-label {
       margin-top: 1.5cqw;
@@ -2559,6 +2588,9 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
       window.__setName = function(n) { playerName = n; };
 
       // Transition straight into 1F when exiting bedroom stairs
+      var live1FState = null;
+      var last1FRecordTime = 0;
+
       async function warpDownTo1F() {
         if (!loadedRomUint8) {
           console.warn('Gameboy ROM not loaded yet.');
@@ -2570,42 +2602,62 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
 
         setTimeout(async function() {
           try {
-            var rawJson = await decompressGzipText(window.__HOUSE_1F_STATE_GZ_B64__);
-            var st = JSON.parse(rawJson);
+            var st = null;
+            if (live1FState) {
+              st = JSON.parse(JSON.stringify(live1FState));
+            } else {
+              var savedSt = await idbStore.get('BUDDYMON_ACTIVE_STATE');
+              if (savedSt && savedSt.length > 20) {
+                st = JSON.parse(JSON.stringify(savedSt));
+              }
+            }
+
+            if (!st) {
+              var rawJson = await decompressGzipText(window.__HOUSE_1F_STATE_GZ_B64__);
+              st = JSON.parse(rawJson);
+
+              var isGirl = (playerGender === 'GIRL');
+              if (st[23] && st[23].length > 1138) {
+                st[23][1138] = isGirl ? 1 : 0;
+              }
+
+              var encodedName = encodeGen2Name(playerName);
+              if (st[23] && st[23].length > 1159) {
+                for (var i = 0; i < 11; i++) {
+                  st[23][1149 + i] = encodedName[i];
+                }
+              }
+              if (st[20] && st[20].length > 11534) {
+                for (var j = 0; j < 11; j++) {
+                  st[20][8203 + j] = encodedName[j];
+                  st[20][4619 + j] = encodedName[j];
+                }
+                var sum = 0;
+                for (var k = 8201; k <= 11138; k++) {
+                  sum = (sum + st[20][k]) & 0xffff;
+                }
+                st[20][11533] = sum & 0xff;
+                st[20][11534] = (sum >> 8) & 0xff;
+
+                var backupSum = 0;
+                for (var m = 4617; m <= 7554; m++) {
+                  backupSum = (backupSum + st[20][m]) & 0xffff;
+                }
+                st[20][7949] = backupSum & 0xff;
+                st[20][7950] = (backupSum >> 8) & 0xff;
+              }
+            } else {
+              // Returning downstairs into 1F: ensure Map is 1F and player is at 1F stairs
+              if (st[23] && st[23].length > 3256) {
+                st[23][3253] = 24; // MapGroup 24
+                st[23][3254] = 6;  // MapNumber 6 (1F)
+                st[23][3255] = 9;  // wXCoord 9
+                st[23][3256] = 2;  // wYCoord 2 (in front of stairs)
+              }
+            }
 
             clearLastEmulation();
             st[0] = loadedRomUint8;
-
-            var isGirl = (playerGender === 'GIRL');
-            if (st[23] && st[23].length > 1138) {
-              st[23][1138] = isGirl ? 1 : 0;
-            }
-
-            var encodedName = encodeGen2Name(playerName);
-            if (st[23] && st[23].length > 1159) {
-              for (var i = 0; i < 11; i++) {
-                st[23][1149 + i] = encodedName[i];
-              }
-            }
-            if (st[20] && st[20].length > 11534) {
-              for (var j = 0; j < 11; j++) {
-                st[20][8203 + j] = encodedName[j];
-                st[20][4619 + j] = encodedName[j];
-              }
-              var sum = 0;
-              for (var k = 8201; k <= 11138; k++) {
-                sum = (sum + st[20][k]) & 0xffff;
-              }
-              st[20][11533] = sum & 0xff;
-              st[20][11534] = (sum >> 8) & 0xff;
-
-              var backupSum = 0;
-              for (var m = 4617; m <= 7554; m++) {
-                backupSum = (backupSum + st[20][m]) & 0xffff;
-              }
-              st[20][7949] = backupSum & 0xff;
-              st[20][7950] = (backupSum >> 8) & 0xff;
-            }
 
             gameboy = new GameBoyCore(canvas, loadedRomBinaryString);
             gameboy.openMBC = openSRAM;
@@ -2621,6 +2673,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
 
             var activeSt = gameboy.saveState();
             activeSt[0] = [];
+            live1FState = activeSt;
             await idbStore.set('BUDDYMON_ACTIVE_STATE', activeSt);
             localStorage.setItem('BUDDYMON_ACTIVE_SAVE', 'true');
           } catch (err) {
@@ -3589,10 +3642,11 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
           step = (tile % 2 === 0) ? 1 : 0;
         }
 
-        var spriteW = 24 * scaleX;
-        var spriteH = 30 * scaleY;
-        var leftPx = (cRect.left - vRect.left) + (gx - 4) * scaleX;
-        var topPx = (cRect.top - vRect.top) + (gy - 14) * scaleY;
+        // Match exact 16x16 pixel size of original Crystal sprites
+        var spriteW = 16 * scaleX;
+        var spriteH = 16 * scaleY;
+        var leftPx = (cRect.left - vRect.left) + gx * scaleX;
+        var topPx = (cRect.top - vRect.top) + gy * scaleY;
 
         ov.style.display = 'block';
         ov.style.left = leftPx + 'px';
@@ -3612,18 +3666,42 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
         if (!gameboy) return;
         try {
           var is2F = false;
-          if (gameboy.GBCMemory && gameboy.GBCMemory[3253] === 24 && gameboy.GBCMemory[3254] === 7) {
-            is2F = true;
+          var mg = 0, mn = 0;
+          if (gameboy.GBCMemory) {
+            mg = gameboy.GBCMemory[3253];
+            mn = gameboy.GBCMemory[3254];
           } else if (gameboy.memoryReader) {
-            var mg = gameboy.memoryReader[0xDCB5](gameboy, 0xDCB5);
-            var mn = gameboy.memoryReader[0xDCB6](gameboy, 0xDCB6);
-            if (mg === 24 && mn === 7) is2F = true;
+            mg = gameboy.memoryReader[0xDCB5](gameboy, 0xDCB5);
+            mn = gameboy.memoryReader[0xDCB6](gameboy, 0xDCB6);
           }
+
+          // Continuously track 1F state as player moves and talks to Mom
+          if (mg === 24 && mn === 6) {
+            var now = Date.now();
+            if (now - last1FRecordTime > 250) {
+              last1FRecordTime = now;
+              try {
+                var curSt = gameboy.saveState();
+                curSt[0] = [];
+                live1FState = curSt;
+              } catch (_) {}
+            }
+          }
+
+          if (mg === 24 && mn === 7) {
+            is2F = true;
+          }
+
           if (is2F) {
             try {
-              var liveSt = gameboy.saveState();
-              liveSt[0] = [];
-              idbStore.set('BUDDYMON_ACTIVE_STATE', liveSt);
+              if (live1FState) {
+                idbStore.set('BUDDYMON_ACTIVE_STATE', live1FState);
+              } else {
+                var liveSt = gameboy.saveState();
+                liveSt[0] = [];
+                live1FState = liveSt;
+                idbStore.set('BUDDYMON_ACTIVE_STATE', liveSt);
+              }
               localStorage.setItem('BUDDYMON_ACTIVE_SAVE', 'true');
               saveSRAM();
             } catch (_) {}
