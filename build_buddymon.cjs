@@ -841,19 +841,28 @@ Art.bedroomScene = function(gender, player, aspect) {
       <line x1="8" y1="8" x2="4" y2="0" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round"/>
     </g>
 
-    <!-- Desk & PC -->
+    <!-- Desk, PC & N64 Console -->
     <g id="obj-pc" transform="translate(136, 62)" style="cursor:pointer;">
       <rect x="4" y="10" width="76" height="38" rx="4" fill="#000" opacity="0.3"/>
       <rect x="4" y="6" width="74" height="36" rx="3" fill="#784720" stroke="#3d210c" stroke-width="2"/>
       <rect x="8" y="18" width="66" height="20" fill="#5c3414"/>
-      <rect x="24" y="-12" width="34" height="24" rx="2" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
-      <rect x="26" y="-10" width="30" height="20" rx="1" fill="url(#pcGlow)"/>
-      <rect x="38" y="12" width="6" height="6" fill="#334155"/>
-      <rect x="33" y="16" width="16" height="3" rx="1" fill="#475569"/>
-      <circle cx="41" cy="0" r="4.5" fill="#f59e0b"/>
-      <text x="41" y="2.5" font-family="sans-serif" font-size="5" font-weight="900" fill="#0b1730" text-anchor="middle">B</text>
-      <rect x="23" y="22" width="24" height="8" rx="1.5" fill="#1e293b" stroke="#475569" stroke-width="0.8"/>
-      <rect x="52" y="22" width="6" height="8" rx="2" fill="#0f172a"/>
+      <!-- PC Monitor -->
+      <rect x="18" y="-12" width="34" height="24" rx="2" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+      <rect x="20" y="-10" width="30" height="20" rx="1" fill="url(#pcGlow)"/>
+      <rect x="32" y="12" width="6" height="6" fill="#334155"/>
+      <rect x="27" y="16" width="16" height="3" rx="1" fill="#475569"/>
+      <circle cx="35" cy="0" r="4.5" fill="#f59e0b"/>
+      <text x="35" y="2.5" font-family="sans-serif" font-size="5" font-weight="900" fill="#0b1730" text-anchor="middle">B</text>
+      <!-- Keyboard & Mouse -->
+      <rect x="18" y="22" width="22" height="8" rx="1.5" fill="#1e293b" stroke="#475569" stroke-width="0.8"/>
+      <rect x="43" y="22" width="5" height="8" rx="2" fill="#0f172a"/>
+      <!-- N64 Console -->
+      <g id="obj-n64">
+        <rect x="54" y="16" width="20" height="14" rx="2.5" fill="#1e293b" stroke="#0f172a" stroke-width="1"/>
+        <rect x="57" y="18" width="14" height="4" rx="1" fill="#0f172a"/>
+        <circle cx="59" cy="26" r="1.2" fill="#475569"/><circle cx="63" cy="26" r="1.2" fill="#475569"/><circle cx="67" cy="26" r="1.2" fill="#475569"/><circle cx="71" cy="26" r="1.2" fill="#475569"/>
+        <circle cx="64" cy="20" r="1" fill="#e11d48"/>
+      </g>
     </g>
 
     <!-- Bookshelf against Left Wall -->
@@ -2464,6 +2473,88 @@ function buildHtml(includeEmbeddedRom) {
       var playerName = 'CHRIS';
       var playerGender = 'BOY';
 
+      var profSpeeches = [
+        {
+          tag: 'PROF. OAK',
+          text: 'Hello! Sorry to keep you waiting!',
+          showOak: true
+        },
+        {
+          tag: 'PROF. OAK',
+          text: 'Welcome to the world of BUDDYMON!<br>My name is OAK.<br>People call me the BUDDYMON PROF.',
+          showOak: true
+        },
+        {
+          tag: 'PROF. OAK',
+          text: 'This world is inhabited by creatures that we call BUDDYMON.',
+          showCreature: true
+        },
+        {
+          tag: 'PROF. OAK',
+          text: 'People and BUDDYMON live together by supporting each other.<br>Some people play with BUDDYMON, some battle with them.',
+          showCreature: true
+        },
+        {
+          tag: 'PROF. OAK',
+          text: "But we don't know everything about BUDDYMON yet.<br>There are still many mysteries to solve.<br>That's why I study BUDDYMON every day.",
+          showOak: true
+        },
+        {
+          tag: 'PROF. OAK',
+          text: 'Now, what did you say your name was?',
+          showOak: true
+        },
+        {
+          tag: 'BUDDYMON',
+          text: 'Are you a boy? Or are you a girl?',
+          showGenderSelect: true
+        },
+        {
+          tag: 'PROF. OAK',
+          text: 'All right. What is your name?',
+          showNameSelect: true
+        },
+        {
+          tag: 'PROF. OAK',
+          text: '{NAME}, are you ready?',
+          showHero: true
+        },
+        {
+          tag: 'PROF. OAK',
+          text: 'Your very own BUDDYMON story is about to unfold.',
+          showHero: true
+        },
+        {
+          tag: 'PROF. OAK',
+          text: "You'll face fun times and tough challenges.",
+          showHero: true
+        },
+        {
+          tag: 'PROF. OAK',
+          text: "A world of dreams and adventures with BUDDYMON awaits! Let's go!",
+          showHero: true
+        },
+        {
+          tag: 'PROF. OAK',
+          text: "I'll be seeing you later!",
+          showHero: true
+        }
+      ];
+
+      function getGenderStepIndex() {
+        for (var i = 0; i < profSpeeches.length; i++) {
+          if (profSpeeches[i].showGenderSelect) return i;
+        }
+        return 6;
+      }
+
+      function getNameStepIndex() {
+        for (var i = 0; i < profSpeeches.length; i++) {
+          if (profSpeeches[i].showNameSelect) return i;
+        }
+        return 7;
+      }
+
       function setStatus(msg) {
         console.log('[Buddymon]', msg);
       }
@@ -2832,13 +2923,13 @@ function buildHtml(includeEmbeddedRom) {
         }
         playerName = finalName;
         currentHdScene = 'prof';
-        profStep = 11;
+        profStep = getNameStepIndex() + 1;
         renderHdScene();
       }
 
       function cancelNameEntry() {
         currentHdScene = 'prof';
-        profStep = 10;
+        profStep = getNameStepIndex();
         hdNameChoiceIndex = 0;
         renderHdScene();
       }
@@ -2909,24 +3000,28 @@ function buildHtml(includeEmbeddedRom) {
       var bedroomStepTimer = null;
 
       function canMoveTo(nx, ny) {
-        // Tight boundaries directly touching baseboards (zero empty gap)
-        if (nx < 4 || nx > 364) return false;
-        if (ny < 96 || ny > 296) return false;
+        // Player footprint: center X: nx + 16, bottom feet Y: ny + 34
+        var footX = nx + 16;
+        var footY = ny + 34;
 
-        // Bed: x: 4..86, y: 60..136 (player can walk right up to foot of bed at 138)
-        if (nx <= 86 && ny < 138) return false;
+        // Room boundaries: baseboard and side walls
+        if (footX < 14 || footX > 386) return false;
+        if (footY < 88 || footY > 326) return false;
 
-        // Radio / Nightstand: x: 86..124, y: 60..98
-        if (nx > 86 && nx < 124 && ny < 98) return false;
+        // Bed: x: 4..90, foot of bed ends at y: 136 (can walk right up to foot of bed)
+        if (footX <= 90 && footY < 138) return false;
 
-        // Desk & PC: x: 124..216, y: 60..98 (player walks right up to front of desk at 98)
-        if (nx >= 124 && nx < 216 && ny < 98) return false;
+        // Radio / Nightstand: x: 90..124, base at y: 92
+        if (footX > 90 && footX < 124 && footY < 94) return false;
 
-        // Bookshelf against Left Wall: x: 4..24, y: 134..226 (player walks right up to side panel at 24)
-        if (nx < 24 && ny >= 134 && ny <= 226) return false;
+        // Desk & PC: x: 124..216, base at y: 94 (can walk right up to chair/desk)
+        if (footX >= 124 && footX < 216 && footY < 96) return false;
 
-        // Monstera plant at bottom right: x >= 324, y >= 256
-        if (nx >= 324 && ny >= 256) return false;
+        // Bookshelf against Left Wall: x: 0..26, footY: 150..228
+        if (footX < 26 && footY >= 150 && footY <= 228) return false;
+
+        // Monstera plant at bottom right: x >= 324, footY >= 288
+        if (footX >= 324 && footY >= 288) return false;
 
         return true;
       }
@@ -3037,7 +3132,7 @@ function buildHtml(includeEmbeddedRom) {
         // Bed: near foot of bed facing up, or alongside bed facing left
         if ((dir === 'up' && px <= 90 && py <= 154) || (dir === 'left' && px <= 98 && py <= 140)) {
           playChime(660);
-          bedroomDialog = { tag: 'BED', text: 'A warm, inviting bed! Took a quick power nap. You feel fully refreshed!' };
+          bedroomDialog = { tag: 'BED', text: 'A warm and comfy bed with fluffy pillows.' };
           saveBedroomProgress();
           renderHdScene();
           return;
@@ -3045,20 +3140,27 @@ function buildHtml(includeEmbeddedRom) {
         // Radio: facing up near nightstand
         if (dir === 'up' && px >= 84 && px <= 126 && py <= 116) {
           playChime(440);
-          bedroomDialog = { tag: 'RADIO', text: "♪ The radio is playing the New Bark Town melody! Oak's Buddymon Talk will air shortly." };
+          bedroomDialog = { tag: 'RADIO', text: "PROF. OAK'S BUDDYMON TALK! Please tune in next time!" };
+          renderHdScene();
+          return;
+        }
+        // N64 Console: facing up near right side of desk
+        if (dir === 'up' && px >= 176 && px <= 224 && py <= 116) {
+          playChime(560);
+          bedroomDialog = { tag: 'N64', text: 'A Nintendo 64! A game with Pikachu is on screen.' };
           renderHdScene();
           return;
         }
         // PC Desk: facing up right at the front of desk
-        if (dir === 'up' && px >= 124 && px <= 220 && py <= 116) {
+        if (dir === 'up' && px >= 124 && px < 176 && py <= 116) {
           playChime(520);
-          bedroomDialog = { tag: 'BUDDYMON PC', text: 'Buddymon Storage System — Storage & Mail checked. 0 Buddymon stored. All systems online!' };
+          bedroomDialog = { tag: 'BUDDYMON PC', text: 'Buddymon Storage System & Item Storage PC.' };
           renderHdScene();
           return;
         }
         // Bookshelf on left wall
         if (dir === 'left' && px <= 36 && py >= 130 && py <= 236) {
-          bedroomDialog = { tag: 'BOOKSHELF', text: "A collection of adventure books: 'Buddymon Types & Habitats', and 'The Legend of the Golden Moon'." };
+          bedroomDialog = { tag: 'BOOKSHELF', text: 'A bookshelf filled with classic Buddymon adventure guides and maps.' };
           renderHdScene();
           return;
         }
@@ -3076,7 +3178,7 @@ function buildHtml(includeEmbeddedRom) {
         }
         // Town map above bed
         if (dir === 'up' && px <= 88 && py <= 100) {
-          bedroomDialog = { tag: 'TOWN MAP', text: 'A colorful map of the Johto region! So many towns, routes, and Buddymon to discover!' };
+          bedroomDialog = { tag: 'TOWN MAP', text: 'A detailed map of the region. New Bark Town is nestled on the quiet eastern coast.' };
           renderHdScene();
           return;
         }
@@ -3084,6 +3186,12 @@ function buildHtml(includeEmbeddedRom) {
 
       // Enter HD Bedroom Scene
       function startBedroomGame() {
+        hasReceivedBuddygear = false;
+        try {
+          localStorage.removeItem('BUDDYMON_GEAR_RECEIVED');
+          localStorage.removeItem('BUDDYMON_HOUSE1F_POS');
+          localStorage.removeItem('BUDDYMON_BEDROOM_POS');
+        } catch (_) {}
         currentHdScene = 'bedroom';
         bedroomPlayer.x = 170;
         bedroomPlayer.y = 180;
@@ -3104,6 +3212,7 @@ function buildHtml(includeEmbeddedRom) {
       window.__startBedroomGame = startBedroomGame;
       window.__setGender = function(g) { playerGender = g; };
       window.__setName = function(n) { playerName = n; };
+      window.__handleHdInput = handleHdInput;
 
       // Buddymon HD House 1F State & Logic
       var house1FPlayer = {
@@ -3142,23 +3251,29 @@ function buildHtml(includeEmbeddedRom) {
       window.__getCurrentHdScene = function() { return currentHdScene; };
 
       function canMoveTo1F(nx, ny) {
-        if (nx < 8 || nx > 364) return false;
-        if (ny < 84 || ny > 310) return false;
+        // Player footprint: center X: nx + 16, bottom feet Y: ny + 34
+        var footX = nx + 16;
+        var footY = ny + 34;
 
-        // Top-left kitchen counter (Fridge, Sink, Stove): x: 8..136, y: 84..104
-        if (nx <= 136 && ny < 104) return false;
+        // Room boundaries: baseboard and side walls
+        if (footX < 14 || footX > 386) return false;
+        if (footY < 88 || footY > 326) return false;
 
-        // TV console: x: 136..206, y: 84..104
-        if (nx > 136 && nx < 206 && ny < 104) return false;
+        // Kitchen Suite (Fridge, Sink, Stove): x: 0..136, base at y: 98
+        if (footX <= 136 && footY < 100) return false;
 
-        // Bookshelf: x: 206..268, y: 84..104
-        if (nx >= 206 && nx < 268 && ny < 104) return false;
+        // TV console: x: 136..206, base at y: 96
+        if (footX > 136 && footX < 206 && footY < 96) return false;
 
-        // Ficus corner plant: x: 268..310, y: 84..100
-        if (nx >= 268 && nx < 310 && ny < 100) return false;
+        // Bookshelf: x: 206..266, base at y: 98
+        if (footX >= 206 && footX < 266 && footY < 98) return false;
 
-        // Dining Table & Chairs & Mom & Neighbor: x: 64..186, y: 148..206
-        if (nx >= 64 && nx <= 186 && ny >= 148 && ny <= 206) return false;
+        // Ficus corner plant: x: 266..308, base at y: 88 (can walk right up to plant)
+        if (footX >= 266 && footX < 308 && footY < 88) return false;
+
+        // Dining Table & Chairs & Mom & Neighbor:
+        // Neighbor is at (74, 172), Mom at (154, 172), table in middle
+        if (footX >= 64 && footX <= 188 && footY >= 170 && footY <= 212) return false;
 
         return true;
       }
@@ -3213,9 +3328,10 @@ function buildHtml(includeEmbeddedRom) {
           return;
         }
 
-        // Automatic Mom Stop: If player hasn't received Buddygear, Mom intercepts them when walking past!
-        if (!hasReceivedBuddygear && (ny >= 130 || nx <= 280)) {
+        // Automatic Mom Stop: If player hasn't received Buddygear, Mom intercepts them on ANY step into the room!
+        if (!hasReceivedBuddygear && (ny >= 116 || nx <= 308)) {
           momNpc.dir = (house1FPlayer.x > momNpc.x) ? 'right' : 'left';
+          house1FPlayer.dir = (house1FPlayer.x > momNpc.x) ? 'left' : 'right';
           momAlertActive = true;
           playChime(660);
           momDialogueIndex = 0;
@@ -3603,90 +3719,7 @@ function buildHtml(includeEmbeddedRom) {
             </div>
           \`;
         } else if (currentHdScene === 'prof') {
-          var speeches = [
-            {
-              tag: 'BUDDYMON',
-              text: 'Are you a boy? Or are you a girl?',
-              showGenderSelect: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: 'Hello! Sorry to keep you waiting!',
-              showOak: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: 'Welcome to the world of BUDDYMON!',
-              showOak: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: 'My name is OAK.<br>People call me the BUDDYMON PROF.',
-              showOak: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: 'This world is inhabited by creatures that we call BUDDYMON.',
-              showCreature: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: 'People and BUDDYMON live together by supporting each other.',
-              showCreature: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: 'Some people play with BUDDYMON, some battle with them.',
-              showCreature: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: "But we don't know everything about BUDDYMON yet.",
-              showOak: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: "There are still many mysteries to solve.<br>That's why I study BUDDYMON every day.",
-              showOak: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: 'Now, what did you say your name was?',
-              showHero: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: 'All right. What is your name?',
-              showNameSelect: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: '{NAME}, are you ready?',
-              showHero: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: 'Your very own BUDDYMON story is about to unfold.',
-              showHero: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: "You'll face fun times and tough challenges.",
-              showHero: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: "A world of dreams and adventures with BUDDYMON awaits! Let's go!",
-              showHero: true
-            },
-            {
-              tag: 'PROF. OAK',
-              text: "I'll be seeing you later!",
-              showHero: true
-            }
-          ];
-
-          var step = speeches[Math.min(profStep, speeches.length - 1)];
+          var step = profSpeeches[Math.min(profStep, profSpeeches.length - 1)];
           var artHtml = '';
           if (step.showCreature) {
             artHtml = '<div class="creature-spot">' + Art.bandit() + '</div>';
@@ -3879,6 +3912,12 @@ function buildHtml(includeEmbeddedRom) {
               handleContinueGame();
             } else if (selected === 'NEW GAME') {
               autoSetDeviceClock();
+              hasReceivedBuddygear = false;
+              try {
+                localStorage.removeItem('BUDDYMON_GEAR_RECEIVED');
+                localStorage.removeItem('BUDDYMON_HOUSE1F_POS');
+                localStorage.removeItem('BUDDYMON_BEDROOM_POS');
+              } catch (_) {}
               currentHdScene = 'prof';
               profStep = 0;
               hdNameChoiceIndex = 0;
@@ -3938,7 +3977,8 @@ function buildHtml(includeEmbeddedRom) {
             return true;
           }
         } else if (currentHdScene === 'prof') {
-          if (profStep === 0) {
+          var curStep = profSpeeches[Math.min(profStep, profSpeeches.length - 1)];
+          if (curStep.showGenderSelect) {
             // Gender choice with Left/Right/Up/Down
             if (key === 'left' || key === 'up') {
               playerGender = 'BOY';
@@ -3953,18 +3993,19 @@ function buildHtml(includeEmbeddedRom) {
               return true;
             }
             if (key === 'a' || key === 'start') {
-              profStep = 1;
+              profStep = getNameStepIndex();
               renderHdScene();
               return true;
             }
             if (key === 'b') {
-              currentHdScene = 'menu';
+              if (profStep > 0) profStep--;
+              else currentHdScene = 'menu';
               renderHdScene();
               return true;
             }
             return true;
           }
-          if (profStep === 10) {
+          if (curStep.showNameSelect) {
             // Name choice with Left/Right/Up/Down
             var nameChoices = ['NEW NAME', (playerGender === 'GIRL' ? 'KRIS' : 'CHRIS'), 'BUDDY', (playerGender === 'GIRL' ? 'LEAF' : 'ASH')];
             if (key === 'left' || key === 'up') {
@@ -3982,13 +4023,13 @@ function buildHtml(includeEmbeddedRom) {
                 openNameDialog();
               } else {
                 playerName = nameChoices[hdNameChoiceIndex];
-                profStep = 11;
+                profStep = getNameStepIndex() + 1;
                 renderHdScene();
               }
               return true;
             }
             if (key === 'b') {
-              profStep = 9;
+              profStep = getGenderStepIndex();
               renderHdScene();
               return true;
             }
@@ -3999,8 +4040,11 @@ function buildHtml(includeEmbeddedRom) {
             return true;
           }
           if (key === 'b') {
-            if (profStep > 0 && profStep !== 0 && profStep !== 10) {
+            if (profStep > 0) {
               profStep--;
+              renderHdScene();
+            } else {
+              currentHdScene = 'menu';
               renderHdScene();
             }
             return true;
@@ -4134,12 +4178,13 @@ function buildHtml(includeEmbeddedRom) {
       }
 
       function advanceProfSpeech() {
-        if (profStep === 0 || profStep === 10) {
+        var curStep = profSpeeches[Math.min(profStep, profSpeeches.length - 1)];
+        if (curStep.showGenderSelect || curStep.showNameSelect) {
           // Waiting for choice
           return;
         }
         profStep++;
-        if (profStep >= 16) {
+        if (profStep >= profSpeeches.length) {
           startBedroomGame();
         } else {
           renderHdScene();
@@ -4188,7 +4233,7 @@ function buildHtml(includeEmbeddedRom) {
           } else {
             playerName = 'CHRIS';
           }
-          profStep = 1;
+          profStep = getNameStepIndex();
           renderHdScene();
           return;
         }
@@ -4199,7 +4244,7 @@ function buildHtml(includeEmbeddedRom) {
             openNameDialog();
           } else {
             playerName = chosen;
-            profStep = 11;
+            profStep = getNameStepIndex() + 1;
             renderHdScene();
           }
           return;
