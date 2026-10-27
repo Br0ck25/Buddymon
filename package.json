@@ -1,0 +1,14 @@
+{
+  "name": "buddymon",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Buddymon HD Smartphone Remaster for Cloudflare Workers",
+  "scripts": {
+    "dev": "wrangler dev worker.js",
+    "deploy": "wrangler deploy worker.js"
+  },
+  "devDependencies": {
+    "wrangler": "^3.99.0"
+  }
+}
