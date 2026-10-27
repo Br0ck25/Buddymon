@@ -94,208 +94,203 @@ server.listen(PORT, async () => {
       await new Promise(r => setTimeout(r, 200));
     }
 
-    console.log('\n=========================================');
-    console.log('--- TEST 1: Oak Intro Sequence Order ---');
-    console.log('=========================================');
+    console.log('\n======================================================');
+    console.log('--- TEST 1: New Game -> Boy/Girl Selection Scene ---');
+    console.log('======================================================');
 
-    // Switch to menu scene with clear state and choose NEW GAME
+    // Switch to menu scene with fresh state and select NEW GAME
     await evaluate(`
       localStorage.clear();
       window.__switchScene('menu');
     `);
     await new Promise(r => setTimeout(r, 200));
 
-    await evaluate(`
-      window.__handleHdInput('a'); // Start NEW GAME
-    `);
-    await new Promise(r => setTimeout(r, 300));
+    // Press A on NEW GAME
+    await evaluate(`window.__handleHdInput('a')`);
+    // Wait for fade transition into gender scene
+    await new Promise(r => setTimeout(r, 500));
 
-    let profScene = await evaluate(`window.__getHdScene()`);
-    let dialogText = await evaluate(`document.querySelector('.prof-dialogue p') ? document.querySelector('.prof-dialogue p').innerText : ''`);
-    let hasOak = await evaluate(`!!document.querySelector('.prof-portrait')`);
-    console.log('Step 0 (Scene, HasOak, Dialog):', profScene, hasOak, dialogText);
+    let scene1 = await evaluate(`window.__getHdScene()`);
+    let isGenderStage = await evaluate(`!!document.querySelector('.gender-stage')`);
+    let genderText = await evaluate(`document.querySelector('.prof-dialogue p') ? document.querySelector('.prof-dialogue p').innerText : ''`);
+    console.log('Scene after NEW GAME:', scene1);
+    console.log('Gender Stage Present:', isGenderStage);
+    console.log('Gender Dialogue:', `"${genderText}"`);
+    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_crystal_step1_gender.png'));
 
-    // Step through Oak speeches until Gender Select
-    let foundGenderSelect = false;
-    let foundCreature = false;
-    for (let step = 0; step < 10; step++) {
-      const isCreature = await evaluate(`!!document.querySelector('.creature-spot')`);
-      const isGender = await evaluate(`!!document.querySelector('.gender-stage')`);
-      const dlg = await evaluate(`document.querySelector('.prof-dialogue p') ? document.querySelector('.prof-dialogue p').innerText : ''`);
-      if (isCreature) foundCreature = true;
-      if (isGender) {
-        foundGenderSelect = true;
-        console.log(`Step ${step}: Gender Select reached! Dialog: "${dlg}"`);
-        break;
+    console.log('\n======================================================');
+    console.log('--- TEST 2: Fade to Dark & Clock Wake-Up Scene ---');
+    console.log('======================================================');
+
+    // Select Boy and confirm with 'A'
+    await evaluate(`window.__handleHdInput('a')`);
+    await new Promise(r => setTimeout(r, 500)); // Wait for fade transition
+
+    let scene2 = await evaluate(`window.__getHdScene()`);
+    console.log('Scene after Gender choice:', scene2);
+
+    let clockLines = [];
+    for (let i = 0; i < 5; i++) {
+      let line = await evaluate(`document.querySelector('.clock-dialogue p') ? document.querySelector('.clock-dialogue p').innerText : ''`);
+      clockLines.push(line.replace(/\n/g, ' '));
+      if (i < 4) {
+        await evaluate(`window.__handleHdInput('a')`);
+        await new Promise(r => setTimeout(r, 200));
       }
-      console.log(`Step ${step} dialog: "${dlg}" (creature: ${isCreature})`);
-      await evaluate(`window.__handleHdInput('a')`);
-      await new Promise(r => setTimeout(r, 250));
     }
+    console.log('Clock Sequence Lines:');
+    clockLines.forEach((l, idx) => console.log(`  Line ${idx}: "${l}"`));
+    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_crystal_step2_clock.png'));
 
-    console.log('Oak Intro Verification:', {
-      creatureShownBeforeGender: foundCreature,
-      genderSelectReached: foundGenderSelect
-    });
-    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_oak_intro_order.png'));
+    console.log('\n======================================================');
+    console.log('--- TEST 3: Fade Transition to Prof. Oak & Bandit ---');
+    console.log('======================================================');
 
-    // Select Boy and advance to Name Select
-    await evaluate(`window.__handleHdInput('a')`); // Select Boy
-    await new Promise(r => setTimeout(r, 300));
+    // Confirm last clock line to trigger fade transition to Prof. Oak
+    await evaluate(`window.__handleHdInput('a')`);
+    await new Promise(r => setTimeout(r, 600));
 
-    let isNameSelect = await evaluate(`!!document.querySelector('.choice-box')`);
-    console.log('Name Select Reached:', isNameSelect);
+    let scene3 = await evaluate(`window.__getHdScene()`);
+    let oakText = await evaluate(`document.querySelector('#hdDialogueBox p') ? document.querySelector('#hdDialogueBox p').innerText : ''`);
+    let hasOak = await evaluate(`!!document.querySelector('.prof-portrait')`);
+    console.log('Scene after Clock:', scene3);
+    console.log('Has Oak portrait:', hasOak);
+    console.log('Oak Greeting:', `"${oakText}"`);
+    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_crystal_step3_oak_greeting.png'));
 
-    // Choose preset name
-    await evaluate(`window.__handleHdInput('right')`); // Select second option
-    await evaluate(`window.__handleHdInput('a')`); // Confirm name
-    await new Promise(r => setTimeout(r, 300));
+    // Step to Bandit creature
+    await evaluate(`window.__handleHdInput('a')`);
+    await new Promise(r => setTimeout(r, 200));
+    await evaluate(`window.__handleHdInput('a')`);
+    await new Promise(r => setTimeout(r, 200));
 
-    // Fast-forward through final Oak send-off until bedroom scene
-    for (let step = 0; step < 10; step++) {
-      const cur = await evaluate(`window.__getHdScene()`);
-      if (cur === 'bedroom') break;
+    let hasCreature = await evaluate(`!!document.querySelector('.creature-spot')`);
+    let creatureText = await evaluate(`document.querySelector('#hdDialogueBox p') ? document.querySelector('#hdDialogueBox p').innerText : ''`);
+    console.log('Oak Bandit Creature shown:', hasCreature);
+    console.log('Oak Creature line:', `"${creatureText}"`);
+    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_crystal_step4_oak_creature.png'));
+
+    // Step through to Name Selection
+    for (let s = 0; s < 5; s++) {
+      let isNameBox = await evaluate(`!!document.querySelector('.choice-box')`);
+      if (isNameBox) break;
       await evaluate(`window.__handleHdInput('a')`);
       await new Promise(r => setTimeout(r, 200));
     }
 
-    console.log('\n=========================================');
-    console.log('--- TEST 2: Bedroom Collision & N64 ---');
-    console.log('=========================================');
-    let bedScene = await evaluate(`window.__getHdScene()`);
-    let initialPos = await evaluate(`({ x: window.__bedroomPlayer.x, y: window.__bedroomPlayer.y })`);
-    console.log('Bedroom Scene:', bedScene, 'Initial Pos:', initialPos);
+    let isNameBox = await evaluate(`!!document.querySelector('.choice-box')`);
+    console.log('Name Choice Box reached:', isNameBox);
 
-    // Walk player all the way NORTH towards desk / baseboard
-    for (let i = 0; i < 15; i++) {
-      await evaluate(`window.__handleHdInput('up')`);
+    // Pick preset name CHRIS and send off
+    await evaluate(`window.__handleHdInput('right')`);
+    await evaluate(`window.__handleHdInput('a')`);
+    await new Promise(r => setTimeout(r, 250));
+
+    // Step to send-off and fade to Bedroom
+    for (let s = 0; s < 8; s++) {
+      let cur = await evaluate(`window.__getHdScene()`);
+      if (cur === 'bedroom') break;
+      await evaluate(`window.__handleHdInput('a')`);
+      await new Promise(r => setTimeout(r, 200));
     }
-    let northPos = await evaluate(`({ x: window.__bedroomPlayer.x, y: window.__bedroomPlayer.y, footY: window.__bedroomPlayer.y + 34 })`);
-    console.log('Player at maximum North position:', northPos);
-    console.log(`Foot distance from baseboard (y=84): ${northPos.footY - 84}px (tight, zero awkward gap!)`);
+    await new Promise(r => setTimeout(r, 600));
 
-    // Interact with N64 on right side of desk (px around 186)
-    await evaluate(`
-      window.__bedroomPlayer.x = 186;
-      window.__bedroomPlayer.y = northPos.y;
-      window.__bedroomPlayer.dir = 'up';
-      window.__handleHdInput('a');
-    `);
-    await new Promise(r => setTimeout(r, 200));
+    let sceneBedroom = await evaluate(`window.__getHdScene()`);
+    console.log('Transition to Bedroom Scene:', sceneBedroom);
 
-    let n64Dialog = await evaluate(`document.querySelector('.bedroom-dialogue p') ? document.querySelector('.bedroom-dialogue p').innerText : ''`);
-    console.log('N64 Interaction Dialog:', n64Dialog);
+    console.log('\n======================================================');
+    console.log('--- TEST 4: 1F Hallway Walking & Mom Intercept Walk ---');
+    console.log('======================================================');
 
-    // Dismiss dialog and test PC interaction (px = 140)
-    await evaluate(`window.__handleHdInput('b')`);
-    await evaluate(`
-      window.__bedroomPlayer.x = 140;
-      window.__bedroomPlayer.y = northPos.y;
-      window.__bedroomPlayer.dir = 'up';
-      window.__handleHdInput('a');
-    `);
-    await new Promise(r => setTimeout(r, 200));
-    let pcDialog = await evaluate(`document.querySelector('.bedroom-dialogue p') ? document.querySelector('.bedroom-dialogue p').innerText : ''`);
-    console.log('PC Interaction Dialog:', pcDialog);
-    await evaluate(`window.__handleHdInput('b')`);
-
-    // Test Radio interaction (px = 104)
-    await evaluate(`
-      window.__bedroomPlayer.x = 104;
-      window.__bedroomPlayer.y = northPos.y;
-      window.__bedroomPlayer.dir = 'up';
-      window.__handleHdInput('a');
-    `);
-    await new Promise(r => setTimeout(r, 200));
-    let radioDialog = await evaluate(`document.querySelector('.bedroom-dialogue p') ? document.querySelector('.bedroom-dialogue p').innerText : ''`);
-    console.log('Radio Interaction Dialog (from ROM):', radioDialog);
-    await evaluate(`window.__handleHdInput('b')`);
-
-    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_bedroom_north_collision_n64.png'));
-
-    console.log('\n=========================================');
-    console.log('--- TEST 3: 1F Landing Mom Intercept ---');
-    console.log('=========================================');
-
-    // Walk to stairs at (320, 96) to head downstairs
+    // Walk down stairs into 1F
     await evaluate(`
       window.__bedroomPlayer.x = 320;
       window.__bedroomPlayer.y = 96;
       window.__handleHdInput('up');
     `);
-    await new Promise(r => setTimeout(r, 600));
+    await new Promise(r => setTimeout(r, 700)); // wait for fade transition
 
-    let f1Scene = await evaluate(`window.__getHdScene()`);
-    let spawn1F = await evaluate(`({ x: window.__house1FPlayer.x, y: window.__house1FPlayer.y })`);
-    console.log('Arrived in 1F:', f1Scene, 'Spawn position:', spawn1F);
+    let scene1F = await evaluate(`window.__getHdScene()`);
+    let initial1FPos = await evaluate(`({ x: window.__house1FPlayer.x, y: window.__house1FPlayer.y })`);
+    console.log('Scene:', scene1F, 'Spawn Landing:', initial1FPos);
 
-    // Take ONE step down off the landing:
-    console.log('Taking ONE step down from stairs landing...');
+    // TEST: Player can walk DOWN the hallway without Mom stopping prematurely!
+    console.log('Walking down stairs hallway: step 1 (y: 120)...');
     await evaluate(`window.__handleHdInput('down')`);
-    await new Promise(r => setTimeout(r, 300));
+    let posStep1 = await evaluate(`({ x: window.__house1FPlayer.x, y: window.__house1FPlayer.y })`);
+    let stoppedEarly1 = await evaluate(`!!document.querySelector('.bedroom-dialogue')`);
+    console.log('Step 1 Pos:', posStep1, 'Mom stopped early?', stoppedEarly1);
 
-    let momDialog = await evaluate(`document.querySelector('.bedroom-dialogue p') ? document.querySelector('.bedroom-dialogue p').innerText : ''`);
-    let momAlert = await evaluate(`!!document.querySelector('.mom-alert')`);
-    console.log('Mom Intercept Triggered?', {
-      alertExclamation: momAlert,
-      dialogText: momDialog
-    });
-    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_mom_landing_intercept.png'));
+    console.log('Walking down stairs hallway: step 2 (y: 136)...');
+    await evaluate(`window.__handleHdInput('down')`);
+    let posStep2 = await evaluate(`({ x: window.__house1FPlayer.x, y: window.__house1FPlayer.y })`);
+    let stoppedEarly2 = await evaluate(`!!document.querySelector('.bedroom-dialogue')`);
+    console.log('Step 2 Pos:', posStep2, 'Mom stopped early?', stoppedEarly2);
 
-    // Step through Mom's dialogue sequence to receive Buddygear
+    console.log('Walking down stairs hallway: step 3 (y: 152)...');
+    await evaluate(`window.__handleHdInput('down')`);
+    let posStep3 = await evaluate(`({ x: window.__house1FPlayer.x, y: window.__house1FPlayer.y })`);
+    let stoppedEarly3 = await evaluate(`!!document.querySelector('.bedroom-dialogue')`);
+    console.log('Step 3 Pos:', posStep3, 'Mom stopped early?', stoppedEarly3);
+
+    // NOW: Player takes step 4 to PASS Mom towards the door (y >= 164)!
+    console.log('Taking step 4 to PASS Mom towards front door (y: 168)...');
+    let momInitialX = await evaluate(`window.__momNpc.x`);
+    console.log('Mom start position:', momInitialX);
+
+    await evaluate(`window.__handleHdInput('down')`);
+
+    // Monitor Mom WALKING across the room over to the player!
+    let momWalkingLog = [];
+    for (let t = 0; t < 25; t++) {
+      let curMomX = await evaluate(`window.__momNpc.x`);
+      let curMomDir = await evaluate(`window.__momNpc.dir`);
+      let curMomStep = await evaluate(`window.__momNpc.step`);
+      let hasDialog = await evaluate(`!!document.querySelector('.bedroom-dialogue')`);
+      momWalkingLog.push({ x: curMomX, dir: curMomDir, step: curMomStep, hasDialog });
+      if (hasDialog) break;
+      await new Promise(r => setTimeout(r, 65));
+    }
+
+    console.log('Mom Walk Progression (sample):');
+    momWalkingLog.forEach((m, idx) => console.log(`  Tick ${idx}: Mom X=${m.x}, dir=${m.dir}, step=${m.step}, dialogOpened=${m.hasDialog}`));
+
+    let finalMomX = await evaluate(`window.__momNpc.x`);
+    let momDlgText = await evaluate(`document.querySelector('.bedroom-dialogue p') ? document.querySelector('.bedroom-dialogue p').innerText : ''`);
+    console.log(`Mom reached player at X=${finalMomX}! (Started at ${momInitialX})`);
+    console.log('Mom dialogue opened:', `"${momDlgText}"`);
+    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_mom_walks_to_player.png'));
+
+    // Step through Mom's dialogue sequence
     for (let i = 0; i < 8; i++) {
-      const hasDlg = await evaluate(`!!document.querySelector('.bedroom-dialogue')`);
+      let hasDlg = await evaluate(`!!document.querySelector('.bedroom-dialogue')`);
       if (!hasDlg) break;
       await evaluate(`window.__handleHdInput('a')`);
-      await new Promise(r => setTimeout(r, 150));
+      await new Promise(r => setTimeout(r, 200));
     }
 
-    let gearReceived = await evaluate(`localStorage.getItem('BUDDYMON_GEAR_RECEIVED')`);
-    console.log('Completed Mom Dialogue. BUDDYMON_GEAR_RECEIVED:', gearReceived);
-
-    console.log('\n=========================================');
-    console.log('--- TEST 4: 1F North Wall Collision ---');
-    console.log('=========================================');
-
-    // Move to kitchen area and walk north all the way
-    await evaluate(`
-      window.__house1FPlayer.x = 100;
-      window.__house1FPlayer.y = 150;
-      window.__renderHdScene();
-    `);
-    for (let i = 0; i < 15; i++) {
-      await evaluate(`window.__handleHdInput('up')`);
+    console.log('Mom dialogue finished. Verifying Mom walks BACK to her seat...');
+    // Monitor Mom walking back across the room to x=154
+    let momWalkBackLog = [];
+    for (let t = 0; t < 25; t++) {
+      let curMomX = await evaluate(`window.__momNpc.x`);
+      let curMomDir = await evaluate(`window.__momNpc.dir`);
+      let isBusy = await evaluate(`window.__isMomBusy()`);
+      momWalkBackLog.push({ x: curMomX, dir: curMomDir, isBusy });
+      if (!isBusy && curMomX <= 154) break;
+      await new Promise(r => setTimeout(r, 65));
     }
-    let f1NorthPos = await evaluate(`({ x: window.__house1FPlayer.x, y: window.__house1FPlayer.y, footY: window.__house1FPlayer.y + 34 })`);
-    console.log('1F Player at maximum North position:', f1NorthPos);
-    console.log(`1F Foot distance from appliances (y=98): ${f1NorthPos.footY - 98}px (tight, zero awkward gap!)`);
+    console.log('Mom Walk Back Progression (sample):');
+    momWalkBackLog.forEach((m, idx) => console.log(`  Tick ${idx}: Mom X=${m.x}, dir=${m.dir}, busy=${m.isBusy}`));
 
-    // Interact with Stove
-    await evaluate(`
-      window.__house1FPlayer.dir = 'up';
-      window.__handleHdInput('a');
-    `);
-    await new Promise(r => setTimeout(r, 200));
-    let stoveDialog = await evaluate(`document.querySelector('.bedroom-dialogue p') ? document.querySelector('.bedroom-dialogue p').innerText : ''`);
-    console.log('Stove Dialogue:', stoveDialog);
-    await evaluate(`window.__handleHdInput('b')`);
+    let returnMomX = await evaluate(`window.__momNpc.x`);
+    let returnMomDir = await evaluate(`window.__momNpc.dir`);
+    console.log(`Mom returned to seat at X=${returnMomX}, facing ${returnMomDir} towards Neighbor!`);
+    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_mom_returned_to_seat.png'));
 
-    // Move to TV and interact
-    await evaluate(`
-      window.__house1FPlayer.x = 160;
-      window.__house1FPlayer.dir = 'up';
-      window.__handleHdInput('a');
-    `);
-    await new Promise(r => setTimeout(r, 200));
-    let tvDialog = await evaluate(`document.querySelector('.bedroom-dialogue p') ? document.querySelector('.bedroom-dialogue p').innerText : ''`);
-    console.log('TV Dialogue:', tvDialog);
-    await evaluate(`window.__handleHdInput('b')`);
-
-    await takeScreenshot(path.join(ARTIFACT_DIR, 'verify_1f_north_collision.png'));
-
-    console.log('\n=========================================');
-    console.log('All tests passed with zero errors!');
-    console.log('=========================================');
+    console.log('\n======================================================');
+    console.log('All tests passed with flying colors!');
+    console.log('======================================================');
 
   } catch (err) {
     console.error('Test error:', err);

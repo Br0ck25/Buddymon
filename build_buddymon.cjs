@@ -1336,6 +1336,21 @@ function buildHtml(includeEmbeddedRom) {
       display: none !important;
     }
 
+    /* Smooth Cinematic Screen Transitions (Fade to Black / Fade in) */
+    #hdFadeOverlay {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 9999;
+    }
+    #hdFadeOverlay.black {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     #hd .scene {
       position: absolute;
       inset: 0;
@@ -2382,6 +2397,7 @@ function buildHtml(includeEmbeddedRom) {
   <main class="viewport-workspace">
     <div class="hd-screen-stage" id="lcdContainer">
       <div id="hd"></div>
+      <div id="hdFadeOverlay"></div>
       <div class="game-viewport" id="gameViewport" style="position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
         <canvas id="mainCanvas" width="640" height="576"></canvas>
         <div id="hdPlayerOverlay" style="display:none; position:absolute; pointer-events:none; z-index:10;"></div>
@@ -2473,6 +2489,48 @@ function buildHtml(includeEmbeddedRom) {
       var playerName = 'CHRIS';
       var playerGender = 'BOY';
 
+      function fadeTransition(action, callback, duration) {
+        if (!duration) duration = 280;
+        var overlay = document.getElementById('hdFadeOverlay');
+        if (!overlay) {
+          if (action) action();
+          if (callback) callback();
+          return;
+        }
+        overlay.classList.add('black');
+        setTimeout(function() {
+          try {
+            if (action) action();
+          } catch (e) {
+            console.error('Transition error:', e);
+          }
+          setTimeout(function() {
+            overlay.classList.remove('black');
+            if (callback) callback();
+          }, 60);
+        }, duration);
+      }
+
+      function formatClockTime() {
+        var d = new Date();
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var h = d.getHours();
+        var m = d.getMinutes();
+        var ampm = h >= 12 ? 'PM' : 'AM';
+        var h12 = h % 12 || 12;
+        var mStr = (m < 10 ? '0' : '') + m;
+        return days[d.getDay()] + ', ' + h12 + ':' + mStr + ' ' + ampm;
+      }
+
+      var clockStep = 0;
+      var clockSpeeches = [
+        { text: '......' },
+        { text: 'Zzz... Hm? Wha...?' },
+        { text: 'You woke me up!' },
+        { text: 'Will you check the clock for me?<br>What time is it?' },
+        { text: 'What? I overslept! Time to get moving!<br><span style="display:inline-block; margin-top:8px; padding:4px 12px; background:rgba(245,158,11,0.22); border:1px solid #f59e0b; border-radius:12px; font-size:12px; font-weight:800; color:#fcd34d;">Device Clock: ' + formatClockTime() + '</span>' }
+      ];
+
       var profSpeeches = [
         {
           tag: 'PROF. OAK',
@@ -2502,12 +2560,7 @@ function buildHtml(includeEmbeddedRom) {
         {
           tag: 'PROF. OAK',
           text: 'Now, what did you say your name was?',
-          showOak: true
-        },
-        {
-          tag: 'BUDDYMON',
-          text: 'Are you a boy? Or are you a girl?',
-          showGenderSelect: true
+          showHero: true
         },
         {
           tag: 'PROF. OAK',
@@ -2541,18 +2594,11 @@ function buildHtml(includeEmbeddedRom) {
         }
       ];
 
-      function getGenderStepIndex() {
-        for (var i = 0; i < profSpeeches.length; i++) {
-          if (profSpeeches[i].showGenderSelect) return i;
-        }
-        return 6;
-      }
-
       function getNameStepIndex() {
         for (var i = 0; i < profSpeeches.length; i++) {
           if (profSpeeches[i].showNameSelect) return i;
         }
-        return 7;
+        return 6;
       }
 
       function setStatus(msg) {
@@ -3234,6 +3280,8 @@ function buildHtml(includeEmbeddedRom) {
         step: 0
       };
       var momAlertActive = false;
+      var momWalkingToPlayer = false;
+      var momWalkingBack = false;
       var hasReceivedBuddygear = (localStorage.getItem('BUDDYMON_GEAR_RECEIVED') === 'true');
       var momDialogueIndex = 0;
       var house1FDialog = null;
@@ -3249,6 +3297,7 @@ function buildHtml(includeEmbeddedRom) {
       window.__warpOutToTown = warpOutToTown;
       window.__switchScene = function(sc) { currentHdScene = sc; renderHdScene(); };
       window.__getCurrentHdScene = function() { return currentHdScene; };
+      window.__isMomBusy = function() { return momWalkingToPlayer || momWalkingBack; };
 
       function canMoveTo1F(nx, ny) {
         // Player footprint: center X: nx + 16, bottom feet Y: ny + 34
@@ -3293,7 +3342,109 @@ function buildHtml(includeEmbeddedRom) {
         }
       }
 
+      function triggerMomIntercept() {
+        if (momWalkingToPlayer || momWalkingBack) return;
+        momWalkingToPlayer = true;
+        momAlertActive = true;
+        playChime(660);
+
+        // Turn player to face Mom
+        house1FPlayer.dir = (house1FPlayer.x > momNpc.x) ? 'left' : 'right';
+        // Turn Mom to face player
+        momNpc.dir = (house1FPlayer.x > momNpc.x) ? 'right' : 'left';
+        renderHdScene();
+
+        // Calculate destination for Mom beside player
+        var targetX = (house1FPlayer.x > momNpc.x) ? Math.max(154, house1FPlayer.x - 36) : (house1FPlayer.x + 36);
+        var targetY = house1FPlayer.y;
+
+        // Animate Mom walking over step by step to player
+        var walkTimer = setInterval(function() {
+          var atX = false;
+          var atY = false;
+
+          // Adjust Y position if needed
+          if (Math.abs(momNpc.y - targetY) > 6) {
+            if (momNpc.y < targetY) momNpc.y = Math.min(targetY, momNpc.y + 6);
+            else momNpc.y = Math.max(targetY, momNpc.y - 6);
+          } else {
+            momNpc.y = targetY;
+            atY = true;
+          }
+
+          // Move X towards player
+          if (momNpc.x < targetX) {
+            momNpc.x = Math.min(targetX, momNpc.x + 8);
+            momNpc.dir = 'right';
+          } else if (momNpc.x > targetX) {
+            momNpc.x = Math.max(targetX, momNpc.x - 8);
+            momNpc.dir = 'left';
+          } else {
+            atX = true;
+          }
+
+          momNpc.step = (momNpc.step === 1) ? 2 : 1;
+          renderHdScene();
+
+          if (atX && atY) {
+            clearInterval(walkTimer);
+            momNpc.step = 0;
+            momNpc.dir = (house1FPlayer.x > momNpc.x) ? 'right' : 'left';
+            momWalkingToPlayer = false;
+            momAlertActive = false;
+            momDialogueIndex = 0;
+            house1FDialog = getMomSequence()[0];
+            renderHdScene();
+          }
+        }, 65);
+      }
+
+      function returnMomToSeat() {
+        momWalkingBack = true;
+        momNpc.dir = 'left';
+
+        var walkTimer = setInterval(function() {
+          var atX = false;
+          var atY = false;
+
+          // Return X to 154
+          if (momNpc.x > 154) {
+            momNpc.x = Math.max(154, momNpc.x - 8);
+            momNpc.dir = 'left';
+          } else if (momNpc.x < 154) {
+            momNpc.x = Math.min(154, momNpc.x + 8);
+            momNpc.dir = 'right';
+          } else {
+            momNpc.x = 154;
+            atX = true;
+          }
+
+          // Return Y to 172
+          if (Math.abs(momNpc.y - 172) > 6) {
+            if (momNpc.y < 172) momNpc.y = Math.min(172, momNpc.y + 6);
+            else momNpc.y = Math.max(172, momNpc.y - 6);
+          } else {
+            momNpc.y = 172;
+            atY = true;
+          }
+
+          momNpc.step = (momNpc.step === 1) ? 2 : 1;
+          renderHdScene();
+
+          if (atX && atY) {
+            clearInterval(walkTimer);
+            momNpc.x = 154;
+            momNpc.y = 172;
+            momNpc.step = 0;
+            momNpc.dir = 'left'; // Face neighbor at table
+            momWalkingBack = false;
+            renderHdScene();
+          }
+        }, 65);
+      }
+
       function moveHouse1FPlayer(dir) {
+        if (momWalkingToPlayer || momWalkingBack) return;
         if (house1FDialog) {
           advanceHouse1FDialog();
           return;
@@ -3328,15 +3479,9 @@ function buildHtml(includeEmbeddedRom) {
           return;
         }
 
-        // Automatic Mom Stop: If player hasn't received Buddygear, Mom intercepts them on ANY step into the room!
-        if (!hasReceivedBuddygear && (ny >= 116 || nx <= 308)) {
-          momNpc.dir = (house1FPlayer.x > momNpc.x) ? 'right' : 'left';
-          house1FPlayer.dir = (house1FPlayer.x > momNpc.x) ? 'left' : 'right';
-          momAlertActive = true;
-          playChime(660);
-          momDialogueIndex = 0;
-          house1FDialog = getMomSequence()[0];
-          renderHdScene();
+        // Mom Intercept: In Crystal, Mom waits until player tries to pass her (moving past y=156 towards front door, or stepping into living room)!
+        if (!hasReceivedBuddygear && (ny >= 164 || (nx <= 260 && ny >= 120))) {
+          triggerMomIntercept();
           return;
         }
 
@@ -3390,12 +3535,15 @@ function buildHtml(includeEmbeddedRom) {
           } else {
             house1FDialog = null;
             momAlertActive = false;
-            momNpc.dir = 'left';
-            neighborNpc.dir = 'right';
             hasReceivedBuddygear = true;
-            localStorage.setItem('BUDDYMON_GEAR_RECEIVED', 'true');
+            try {
+              localStorage.setItem('BUDDYMON_GEAR_RECEIVED', 'true');
+            } catch (_) {}
             save1FProgress();
             renderHdScene();
+
+            // Mom walks back to her chair at the dining table!
+            returnMomToSeat();
             return;
           }
         }
@@ -3530,24 +3678,31 @@ function buildHtml(includeEmbeddedRom) {
         bedroomDialog = { tag: 'STAIRS', text: 'Heading downstairs to 1F...' };
         renderHdScene();
 
-        setTimeout(function() {
+        fadeTransition(function() {
           bedroomDialog = null;
           currentHdScene = 'house1f';
           house1FPlayer.x = 320;
           house1FPlayer.y = 104;
           house1FPlayer.dir = 'down';
           house1FPlayer.step = 0;
+          momNpc.x = 154;
+          momNpc.y = 172;
+          momNpc.dir = 'left';
+          momNpc.step = 0;
+          momWalkingToPlayer = false;
+          momWalkingBack = false;
+          momAlertActive = false;
           renderHdScene();
           save1FProgress();
           setStatus('Downstairs living room');
-        }, 300);
+        });
       }
 
       function warpUpTo2F() {
         house1FDialog = { tag: 'STAIRS', text: 'Heading upstairs to your bedroom...' };
         renderHdScene();
 
-        setTimeout(function() {
+        fadeTransition(function() {
           house1FDialog = null;
           currentHdScene = 'bedroom';
           bedroomPlayer.x = 320;
@@ -3557,22 +3712,19 @@ function buildHtml(includeEmbeddedRom) {
           renderHdScene();
           saveBedroomProgress();
           setStatus('Back in your room!');
-        }, 300);
+        });
       }
 
       async function warpOutToTown() {
         if (!hasReceivedBuddygear) {
-          momNpc.dir = (house1FPlayer.x > momNpc.x) ? 'right' : 'left';
-          momAlertActive = true;
-          house1FDialog = { tag: 'MOM', text: playerName + '! Wait! Come speak with me before you head out!' };
-          renderHdScene();
+          triggerMomIntercept();
           return;
         }
 
         house1FDialog = { tag: 'DOOR', text: 'Stepping outside into New Bark Town...' };
         renderHdScene();
 
-        setTimeout(async function() {
+        fadeTransition(async function() {
           try {
             if (!loadedRomUint8) return;
             var rawJson = await decompressGzipText(window.__NEW_BARK_TOWN_STATE_GZ_B64__);
@@ -3606,7 +3758,7 @@ function buildHtml(includeEmbeddedRom) {
           } catch (err) {
             console.error('Failed to exit house:', err);
           }
-        }, 400);
+        });
       }
 
       // 4. Buddymon HD Scene Renderer
@@ -3718,22 +3870,47 @@ function buildHtml(includeEmbeddedRom) {
               </div>
             </div>
           \`;
+        } else if (currentHdScene === 'gender') {
+          hdStage.style.display = 'block';
+          canvas.style.display = 'none';
+
+          hdStage.innerHTML = \`
+            <div class="scene gender-scene">
+              <div class="gender-stage">
+                <div class="gender-card \${playerGender === 'BOY' ? 'active' : ''}" data-gender="BOY">
+                  <img src="\${window.__BOY_IMG__}" alt="Boy">
+                  <div class="gender-label">BOY</div>
+                </div>
+                <div class="gender-card \${playerGender === 'GIRL' ? 'active' : ''}" data-gender="GIRL">
+                  <img src="\${window.__GIRL_IMG__}" alt="Girl">
+                  <div class="gender-label">GIRL</div>
+                </div>
+              </div>
+              <div class="dlg" id="hdDialogueBox">
+                <div class="dlg-tag">BUDDYMON</div>
+                <p>Are you a boy? Or are you a girl?</p>
+                <span class="more">&#9660;</span>
+              </div>
+            </div>
+          \`;
+        } else if (currentHdScene === 'clock') {
+          hdStage.style.display = 'block';
+          canvas.style.display = 'none';
+
+          var curClock = clockSpeeches[Math.min(clockStep, clockSpeeches.length - 1)];
+          hdStage.innerHTML = \`
+            <div class="scene clock-scene" style="background:#020617; display:flex; flex-direction:column; justify-content:flex-end;">
+              <div class="clock-dialogue" id="hdDialogueBox" style="margin: 0 4% 6cqh; background: rgba(15, 23, 42, 0.94); border: 2.5px solid #d4af37; border-radius: 12px; padding: 18px 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.7); position: relative; min-height: 80px;">
+                <p style="margin:0; font-size: 15px; line-height: 1.5; color: #f8fafc; font-weight: 600;">\${curClock.text}</p>
+                <span class="more" style="position: absolute; right: 16px; bottom: 8px; font-size: 12px; color: #f59e0b; animation: hd-bounce 0.8s infinite alternate;">&#9660;</span>
+              </div>
+            </div>
+          \`;
         } else if (currentHdScene === 'prof') {
           var step = profSpeeches[Math.min(profStep, profSpeeches.length - 1)];
           var artHtml = '';
           if (step.showCreature) {
             artHtml = '<div class="creature-spot">' + Art.bandit() + '</div>';
-          } else if (step.showGenderSelect) {
-            artHtml = '<div class="gender-stage">' +
-              '<div class="gender-card ' + (playerGender === 'BOY' ? 'active' : '') + '" data-gender="BOY">' +
-                '<img src="' + window.__BOY_IMG__ + '" alt="Boy">' +
-                '<div class="gender-label">BOY</div>' +
-              '</div>' +
-              '<div class="gender-card ' + (playerGender === 'GIRL' ? 'active' : '') + '" data-gender="GIRL">' +
-                '<img src="' + window.__GIRL_IMG__ + '" alt="Girl">' +
-                '<div class="gender-label">GIRL</div>' +
-              '</div>' +
-            '</div>';
           } else if (step.showNameSelect || step.showHero) {
             var heroImg = (playerGender === 'GIRL') ? window.__GIRL_IMG__ : window.__BOY_IMG__;
             artHtml = '<div class="hero-portrait"><img src="' + heroImg + '" alt="' + playerGender + '"></div>';
@@ -3911,17 +4088,19 @@ function buildHtml(includeEmbeddedRom) {
             if (selected === 'CONTINUE') {
               handleContinueGame();
             } else if (selected === 'NEW GAME') {
-              autoSetDeviceClock();
               hasReceivedBuddygear = false;
               try {
                 localStorage.removeItem('BUDDYMON_GEAR_RECEIVED');
                 localStorage.removeItem('BUDDYMON_HOUSE1F_POS');
                 localStorage.removeItem('BUDDYMON_BEDROOM_POS');
               } catch (_) {}
-              currentHdScene = 'prof';
-              profStep = 0;
+              playerGender = 'BOY';
+              playerName = 'CHRIS';
               hdNameChoiceIndex = 0;
-              renderHdScene();
+              fadeTransition(function() {
+                currentHdScene = 'gender';
+                renderHdScene();
+              });
             } else if (selected === 'OPTION') {
               currentHdScene = 'options';
               hdOptionsIndex = 0;
@@ -3976,35 +4155,68 @@ function buildHtml(includeEmbeddedRom) {
             renderHdScene();
             return true;
           }
-        } else if (currentHdScene === 'prof') {
-          var curStep = profSpeeches[Math.min(profStep, profSpeeches.length - 1)];
-          if (curStep.showGenderSelect) {
-            // Gender choice with Left/Right/Up/Down
-            if (key === 'left' || key === 'up') {
-              playerGender = 'BOY';
-              playerName = 'CHRIS';
+        } else if (currentHdScene === 'gender') {
+          if (key === 'left' || key === 'up') {
+            playerGender = 'BOY';
+            playerName = 'CHRIS';
+            renderHdScene();
+            return true;
+          }
+          if (key === 'right' || key === 'down') {
+            playerGender = 'GIRL';
+            playerName = 'KRIS';
+            renderHdScene();
+            return true;
+          }
+          if (key === 'a' || key === 'start') {
+            playChime(660);
+            fadeTransition(function() {
+              currentHdScene = 'clock';
+              clockStep = 0;
               renderHdScene();
-              return true;
+            });
+            return true;
+          }
+          if (key === 'b') {
+            fadeTransition(function() {
+              currentHdScene = 'menu';
+              renderHdScene();
+            });
+            return true;
+          }
+          return true;
+        } else if (currentHdScene === 'clock') {
+          if (key === 'a' || key === 'start') {
+            clockStep++;
+            if (clockStep === 4) {
+              autoSetDeviceClock();
             }
-            if (key === 'right' || key === 'down') {
-              playerGender = 'GIRL';
-              playerName = 'KRIS';
+            if (clockStep >= clockSpeeches.length) {
+              fadeTransition(function() {
+                currentHdScene = 'prof';
+                profStep = 0;
+                renderHdScene();
+              });
+            } else {
               renderHdScene();
-              return true;
-            }
-            if (key === 'a' || key === 'start') {
-              profStep = getNameStepIndex();
-              renderHdScene();
-              return true;
-            }
-            if (key === 'b') {
-              if (profStep > 0) profStep--;
-              else currentHdScene = 'menu';
-              renderHdScene();
-              return true;
             }
             return true;
           }
+          if (key === 'b') {
+            if (clockStep > 0) {
+              clockStep--;
+              renderHdScene();
+            } else {
+              fadeTransition(function() {
+                currentHdScene = 'gender';
+                renderHdScene();
+              });
+            }
+            return true;
+          }
+          return true;
+        } else if (currentHdScene === 'prof') {
+          var curStep = profSpeeches[Math.min(profStep, profSpeeches.length - 1)];
           if (curStep.showNameSelect) {
             // Name choice with Left/Right/Up/Down
             var nameChoices = ['NEW NAME', (playerGender === 'GIRL' ? 'KRIS' : 'CHRIS'), 'BUDDY', (playerGender === 'GIRL' ? 'LEAF' : 'ASH')];
@@ -4023,13 +4235,13 @@ function buildHtml(includeEmbeddedRom) {
                 openNameDialog();
               } else {
                 playerName = nameChoices[hdNameChoiceIndex];
-                profStep = getNameStepIndex() + 1;
+                profStep++;
                 renderHdScene();
               }
               return true;
             }
             if (key === 'b') {
-              profStep = getGenderStepIndex();
+              if (profStep > 0) profStep--;
               renderHdScene();
               return true;
             }
@@ -4044,11 +4256,15 @@ function buildHtml(includeEmbeddedRom) {
               profStep--;
               renderHdScene();
             } else {
-              currentHdScene = 'menu';
-              renderHdScene();
+              fadeTransition(function() {
+                currentHdScene = 'clock';
+                clockStep = clockSpeeches.length - 1;
+                renderHdScene();
+              });
             }
             return true;
           }
+          return true;
         } else if (currentHdScene === 'naming') {
           if (key === 'up') {
             if (nameGridRow === 0) {
@@ -4179,13 +4395,15 @@ function buildHtml(includeEmbeddedRom) {
 
       function advanceProfSpeech() {
         var curStep = profSpeeches[Math.min(profStep, profSpeeches.length - 1)];
-        if (curStep.showGenderSelect || curStep.showNameSelect) {
+        if (curStep.showNameSelect) {
           // Waiting for choice
           return;
         }
         profStep++;
         if (profStep >= profSpeeches.length) {
-          startBedroomGame();
+          fadeTransition(function() {
+            startBedroomGame();
+          });
         } else {
           renderHdScene();
         }
@@ -4225,29 +4443,43 @@ function buildHtml(includeEmbeddedRom) {
           }
           return;
         }
-        var genderBtn = e.target.closest('[data-gender]');
-        if (genderBtn) {
-          playerGender = genderBtn.dataset.gender;
-          if (playerGender === 'GIRL') {
-            playerName = 'KRIS';
-          } else {
-            playerName = 'CHRIS';
+        if (currentHdScene === 'gender') {
+          var genderBtn = e.target.closest('[data-gender]');
+          if (genderBtn) {
+            playerGender = genderBtn.dataset.gender;
+            playerName = (playerGender === 'GIRL') ? 'KRIS' : 'CHRIS';
+            playChime(660);
+            fadeTransition(function() {
+              currentHdScene = 'clock';
+              clockStep = 0;
+              renderHdScene();
+            });
+            return;
           }
-          profStep = getNameStepIndex();
-          renderHdScene();
           return;
         }
-        var nameBtn = e.target.closest('[data-name]');
-        if (nameBtn) {
-          var chosen = nameBtn.dataset.name;
-          if (chosen === 'NEW NAME') {
-            openNameDialog();
-          } else {
-            playerName = chosen;
-            profStep = getNameStepIndex() + 1;
-            renderHdScene();
-          }
+        if (currentHdScene === 'clock') {
+          handleHdInput('a');
           return;
+        }
+        if (currentHdScene === 'prof') {
+          var nameBtn = e.target.closest('[data-name]');
+          if (nameBtn) {
+            var chosen = nameBtn.dataset.name;
+            if (chosen === 'NEW NAME') {
+              openNameDialog();
+            } else {
+              playerName = chosen;
+              profStep = getNameStepIndex() + 1;
+              renderHdScene();
+            }
+            return;
+          }
+          var dlgBox = e.target.closest('#hdDialogueBox, .dlg');
+          if (dlgBox) {
+            handleHdInput('a');
+            return;
+          }
         }
         if (currentHdScene === 'naming') {
           var charBtn = e.target.closest('[data-char]');
