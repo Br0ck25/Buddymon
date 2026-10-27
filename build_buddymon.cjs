@@ -34,6 +34,9 @@ const bedroomStateB64 = bedroomStateGz.toString('base64');
 const house1FStateRaw = fs.readFileSync('initial_1f_state.json');
 const house1FStateGz = zlib.gzipSync(house1FStateRaw);
 const house1FStateB64 = house1FStateGz.toString('base64');
+const newBarkTownStateRaw = fs.readFileSync('initial_new_bark_town_state.json');
+const newBarkTownStateGz = zlib.gzipSync(newBarkTownStateRaw);
+const newBarkTownStateB64 = newBarkTownStateGz.toString('base64');
 
 // Build the vector art functions
 const vectorArtJs = `
@@ -600,6 +603,110 @@ Art.momSprite = function momSprite(dir, step) {
   </svg>\`;
 };
 
+Art.neighborSprite = function neighborSprite(dir, step) {
+  var isWalk1 = (step === 1);
+  var isWalk2 = (step === 2);
+
+  if (dir === 'up') {
+    var lFootY = isWalk1 ? 31 : 33;
+    var rFootY = isWalk2 ? 31 : 33;
+    return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+      <ellipse cx="16" cy="38" rx="10" ry="2.5" fill="#000" opacity="0.35"/>
+      <rect x="9" y="\${lFootY}" width="6" height="5" rx="1.2" fill="#1e1b4b" stroke="#0f172a" stroke-width="0.7"/>
+      <rect x="17" y="\${rFootY}" width="6" height="5" rx="1.2" fill="#1e1b4b" stroke="#0f172a" stroke-width="0.7"/>
+      <!-- Emerald Dress -->
+      <path d="M7 23 L25 23 L24 33 L8 33 Z" fill="#059669" stroke="#047857" stroke-width="0.8"/>
+      <!-- Cream Shawl -->
+      <path d="M9 19 L23 19 L22 28 L10 28 Z" fill="#fef3c7" stroke="#fde68a" stroke-width="0.8"/>
+      <circle cx="16" cy="24" r="1.5" fill="#d97706"/>
+      <rect x="4" y="\${isWalk1 ? 20 : 18}" width="4" height="7" rx="1.5" fill="#059669"/>
+      <rect x="24" y="\${isWalk2 ? 20 : 18}" width="4" height="7" rx="1.5" fill="#059669"/>
+      <!-- Auburn Hair Back with Waves -->
+      <circle cx="16" cy="11" r="8.5" fill="#9a3412"/>
+      <path d="M7 11 Q16 19 25 11 Q26 18 22 21 Q16 23 10 21 Q6 18 7 11 Z" fill="#7c2d12"/>
+      <ellipse cx="16" cy="4" rx="4.5" ry="3.5" fill="#b45309" stroke="#7c2d12" stroke-width="0.8"/>
+    </svg>\`;
+  }
+
+  if (dir === 'left' || dir === 'right') {
+    var isRight = (dir === 'right');
+    var flip = isRight ? 'transform="scale(-1, 1) translate(-32, 0)"' : '';
+    var fFootX = isWalk1 ? 9 : (isWalk2 ? 13 : 11);
+    var bFootX = isWalk1 ? 14 : (isWalk2 ? 8 : 12);
+    var fSoleY = 38;
+    var bSoleY = isWalk1 ? 37 : (isWalk2 ? 37 : 38);
+
+    var fArmX = isWalk1 ? 15 : (isWalk2 ? 11 : 13);
+    var bArmX = isWalk1 ? 11 : (isWalk2 ? 15 : 13);
+    var fArmY = (isWalk1 || isWalk2) ? 19.5 : 18.5;
+    var bArmY = (isWalk1 || isWalk2) ? 19.5 : 18.5;
+
+    return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+      <ellipse cx="16" cy="38.5" rx="10" ry="2.5" fill="#000" opacity="0.35"/>
+      <g \${flip}>
+        <g opacity="0.8">
+          <rect x="\${bArmX}" y="\${bArmY}" width="3.8" height="6.5" rx="1.5" fill="#047857"/>
+          <circle cx="\${bArmX + 1.9}" cy="\${bArmY + 6}" r="1.3" fill="#fce1cd"/>
+        </g>
+        <g opacity="0.85">
+          <rect x="\${bFootX}" y="\${bSoleY - 4}" width="6" height="4" rx="1" fill="#1e1b4b"/>
+        </g>
+        <!-- Dress and Shawl -->
+        <path d="M11 18 L21 18 L23 33 L10 33 Z" fill="#059669" stroke="#047857" stroke-width="0.8"/>
+        <path d="M9.5 20 L18 20 L19 30 L8.5 30 Z" fill="#fef3c7" stroke="#fde68a" stroke-width="0.8"/>
+        <rect x="\${fFootX}" y="\${fSoleY - 4.5}" width="6.5" height="4.5" rx="1.2" fill="#1e1b4b" stroke="#0f172a" stroke-width="0.6"/>
+        <rect x="\${fArmX}" y="\${fArmY}" width="4" height="6.8" rx="1.6" fill="#059669" stroke="#047857" stroke-width="0.6"/>
+        <circle cx="\${fArmX + 2}" cy="\${fArmY + 6.5}" r="1.5" fill="#fce1cd"/>
+        <!-- Head & Face -->
+        <circle cx="15" cy="11" r="7.5" fill="#fce1cd"/>
+        <!-- Auburn Wavy Hair -->
+        <path d="M12 2 C18 2 23 5 23 13 C23 18 20 22 17 21 C15 17 18 10 12 4 Z" fill="#9a3412"/>
+        <path d="M14 2 C10 2 7 6 8 11 C9 8 11 6 15 6 Z" fill="#7c2d12"/>
+        <ellipse cx="20" cy="8" rx="3" ry="4" fill="#b45309"/>
+        <!-- Eye & Blush -->
+        <ellipse cx="11.5" cy="11" rx="2" ry="2.5" fill="#1e293b"/>
+        <circle cx="11" cy="10.3" r="0.7" fill="#fff"/>
+        <circle cx="9.5" cy="13.5" r="1.3" fill="#f472b6" opacity="0.5"/>
+        <path d="M9 13.5 Q11 15 13 13.5" stroke="#a3583b" stroke-width="0.9" fill="none"/>
+      </g>
+    </svg>\`;
+  }
+
+  // Facing Down
+  var lFootY = isWalk1 ? 31 : 33;
+  var rFootY = isWalk2 ? 31 : 33;
+  return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+    <ellipse cx="16" cy="38" rx="10" ry="2.5" fill="#000" opacity="0.38"/>
+    <rect x="9" y="\${lFootY}" width="6" height="5" rx="1.2" fill="#1e1b4b" stroke="#0f172a" stroke-width="0.7"/>
+    <rect x="17" y="\${rFootY}" width="6" height="5" rx="1.2" fill="#1e1b4b" stroke="#0f172a" stroke-width="0.7"/>
+    <!-- Emerald Dress -->
+    <path d="M7 23 L25 23 L24 33 L8 33 Z" fill="#059669" stroke="#047857" stroke-width="0.8"/>
+    <!-- Cream Shawl -->
+    <path d="M10 17 L22 17 L21 29 L11 29 Z" fill="#fef3c7" stroke="#fde68a" stroke-width="0.8"/>
+    <circle cx="16" cy="23" r="1.5" fill="#d97706"/>
+    <!-- Arms -->
+    <rect x="4" y="\${isWalk1 ? 19 : 17}" width="4" height="7.5" rx="1.6" fill="#059669" stroke="#047857" stroke-width="0.7"/>
+    <circle cx="6" cy="\${isWalk1 ? 27 : 25}" r="1.5" fill="#fce1cd"/>
+    <rect x="24" y="\${isWalk2 ? 19 : 17}" width="4" height="7.5" rx="1.6" fill="#059669" stroke="#047857" stroke-width="0.7"/>
+    <circle cx="26" cy="\${isWalk2 ? 27 : 25}" r="1.5" fill="#fce1cd"/>
+    <!-- Head -->
+    <circle cx="16" cy="11" r="7.5" fill="#fce1cd"/>
+    <!-- Auburn Wavy Hair -->
+    <path d="M8 8 C8 3 12 1 16 1 C20 1 24 3 24 8 C24 13 25 18 24 21 C22 19 23 12 21 10 C18 9 14 9 11 10 C9 12 10 19 8 21 C7 18 8 13 8 8 Z" fill="#9a3412"/>
+    <path d="M11 2 Q16 0 21 2 Q16 4 11 2 Z" fill="#b45309"/>
+    <!-- Eyes -->
+    <ellipse cx="12" cy="11.5" rx="2" ry="2.5" fill="#1e293b"/>
+    <circle cx="11.5" cy="10.8" r="0.7" fill="#fff"/>
+    <ellipse cx="20" cy="11.5" rx="2" ry="2.5" fill="#1e293b"/>
+    <circle cx="19.5" cy="10.8" r="0.7" fill="#fff"/>
+    <!-- Blush -->
+    <circle cx="9.5" cy="14" r="1.5" fill="#f472b6" opacity="0.5"/>
+    <circle cx="22.5" cy="14" r="1.5" fill="#f472b6" opacity="0.5"/>
+    <!-- Smile -->
+    <path d="M14 14 Q16 16 18 14" stroke="#a3583b" stroke-width="1" fill="none" stroke-linecap="round"/>
+  </svg>\`;
+};
+
 Art.bedroomScene = function(gender, player, aspect) {
   var px = player.x;
   var py = player.y;
@@ -782,11 +889,12 @@ Art.bedroomScene = function(gender, player, aspect) {
   </svg>\`;
 };
 
-Art.house1FScene = function(gender, player, mom, aspect) {
+Art.house1FScene = function(gender, player, mom, neighbor, aspect, momAlertActive) {
   var px = player.x;
   var py = player.y;
   var playerSvg = (gender === 'GIRL') ? Art.girlSprite(player.dir, player.step) : Art.boySprite(player.dir, player.step);
   var momSvg = Art.momSprite(mom.dir, mom.step);
+  var neighborSvg = (neighbor && Art.neighborSprite) ? Art.neighborSprite(neighbor.dir, neighbor.step) : '';
 
   if (!aspect || aspect <= 0) aspect = 1.25;
   var camW = 260;
@@ -949,15 +1057,32 @@ Art.house1FScene = function(gender, player, mom, aspect) {
       <rect x="2" y="0" width="16" height="6" rx="1.5" fill="#523218" stroke="#36200e" stroke-width="1"/>
     </g>
 
-    <!-- Dining Table -->
+    <!-- Dining Table & Tea Party -->
     <g id="obj-table" transform="translate(100, 160)" style="cursor:pointer;">
       <ellipse cx="32" cy="30" rx="30" ry="12" fill="#000" opacity="0.35"/>
       <ellipse cx="32" cy="16" rx="28" ry="16" fill="#8a5327" stroke="#36200e" stroke-width="2"/>
-      <ellipse cx="32" cy="16" rx="18" ry="10" fill="#fdfbf7" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,2"/>
-      <ellipse cx="32" cy="15" rx="4" ry="3.5" fill="#f8fafc" stroke="#475569" stroke-width="1"/>
-      <circle cx="32" cy="12" r="1.5" fill="#f59e0b"/>
-      <ellipse cx="23" cy="17" rx="2" ry="1.5" fill="#f8fafc" stroke="#64748b" stroke-width="0.8"/>
-      <ellipse cx="41" cy="17" rx="2" ry="1.5" fill="#f8fafc" stroke="#64748b" stroke-width="0.8"/>
+      <ellipse cx="32" cy="16" rx="20" ry="11" fill="#fdfbf7" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,2"/>
+      
+      <!-- Teapot with steam -->
+      <ellipse cx="32" cy="15" rx="5.5" ry="4.5" fill="#f8fafc" stroke="#475569" stroke-width="1"/>
+      <ellipse cx="32" cy="12" rx="3" ry="1.5" fill="#f59e0b" stroke="#b45309" stroke-width="0.7"/>
+      <circle cx="32" cy="10.5" r="1.2" fill="#fef3c7"/>
+      <path d="M37 15 Q40 13 39 17" fill="none" stroke="#475569" stroke-width="1.2"/>
+      <path d="M26.5 15 Q24 16 25 18" fill="none" stroke="#475569" stroke-width="1.2"/>
+      <path d="M31 8 Q33 5 31 3" stroke="#94a3b8" stroke-width="0.8" fill="none" opacity="0.7"/>
+      
+      <!-- Neighbor's Teacup (Left) -->
+      <ellipse cx="19" cy="17" rx="3.5" ry="2.2" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+      <ellipse cx="19" cy="16.5" rx="2.5" ry="1.4" fill="#b45309"/>
+      
+      <!-- Mom's Teacup (Right) -->
+      <ellipse cx="45" cy="17" rx="3.5" ry="2.2" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+      <ellipse cx="45" cy="16.5" rx="2.5" ry="1.4" fill="#b45309"/>
+      
+      <!-- Plate with sweet treats -->
+      <ellipse cx="32" cy="21" rx="5" ry="3" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+      <circle cx="30.5" cy="21" r="1.2" fill="#d97706"/>
+      <circle cx="33.5" cy="21" r="1.2" fill="#ea580c"/>
     </g>
 
     <!-- Right Chair -->
@@ -985,18 +1110,32 @@ Art.house1FScene = function(gender, player, mom, aspect) {
       <polygon points="28,26 23,20 33,20" fill="#f59e0b"/>
     </g>
 
-    <!-- Mom NPC -->
+    \${(py < 168) ? \`<g transform="translate(\${px}, \${py})">\${playerSvg}</g>\` : ''}
+
+    <!-- Neighbor NPC (Sitting at table having tea with Mom) -->
+    \${neighbor ? \`
+    <g id="obj-neighbor" transform="translate(\${neighbor.x}, \${neighbor.y})" style="cursor:pointer;">
+      \${neighborSvg}
+      <g transform="translate(0, -6)">
+        <polygon points="16,0 12,-6 20,-6" fill="#10b981"/>
+      </g>
+    </g>\` : ''}
+
+    <!-- Mom NPC (Sitting at table having tea) -->
     <g id="obj-mom" transform="translate(\${mom.x}, \${mom.y})" style="cursor:pointer;">
       \${momSvg}
+      \${momAlertActive ? \`
+      <g id="mom-alert" transform="translate(16, -16)">
+        <rect x="-10" y="-12" width="20" height="18" rx="4" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+        <polygon points="-4,6 4,6 0,11" fill="#ef4444"/>
+        <text x="0" y="2" font-family="'Lilita One', Fredoka, sans-serif" font-size="14" font-weight="900" fill="#ffffff" text-anchor="middle">!</text>
+      </g>\` : \`
       <g transform="translate(0, -6)">
         <polygon points="16,0 12,-6 20,-6" fill="#f59e0b"/>
-      </g>
+      </g>\`}
     </g>
 
-    <!-- Player Character Sprite rendered dynamically inside room SVG -->
-    <g transform="translate(\${px}, \${py})">
-      \${playerSvg}
-    </g>
+    \${(py >= 168) ? \`<g transform="translate(\${px}, \${py})">\${playerSvg}</g>\` : ''}
   </svg>\`;
 };
 `;
@@ -2291,7 +2430,8 @@ function buildHtml(includeEmbeddedRom) {
   <script>
     ${includeEmbeddedRom ? `window.__EMBEDDED_ROM_GZ_B64__ = "${romB64}";` : `window.__EMBEDDED_ROM_GZ_B64__ = null;`}
     window.__BEDROOM_STATE_GZ_B64__ = "${bedroomStateB64}";
-window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
+    window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
+    window.__NEW_BARK_TOWN_STATE_GZ_B64__ = "${newBarkTownStateB64}";
     window.__PROF_IMG__ = "data:image/png;base64,${profB64}";
     window.__BOY_IMG__ = "data:image/png;base64,${boyB64}";
     window.__GIRL_IMG__ = "data:image/png;base64,${girlB64}";
@@ -2515,6 +2655,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
       }
 
       async function handleContinueGame() {
+        window.__handleContinueGame = handleContinueGame;
         if (!loadedRomUint8) {
           setStatus('Engine not ready yet');
           return;
@@ -2977,6 +3118,13 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
         dir: 'left',
         step: 0
       };
+      var neighborNpc = {
+        x: 74,
+        y: 172,
+        dir: 'right',
+        step: 0
+      };
+      var momAlertActive = false;
       var hasReceivedBuddygear = (localStorage.getItem('BUDDYMON_GEAR_RECEIVED') === 'true');
       var momDialogueIndex = 0;
       var house1FDialog = null;
@@ -2985,8 +3133,13 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
 
       window.__house1FPlayer = house1FPlayer;
       window.__momNpc = momNpc;
+      window.__neighborNpc = neighborNpc;
       window.__moveHouse1FPlayer = moveHouse1FPlayer;
       window.__interactHouse1F = interactHouse1F;
+      window.__interactHouse1FNeighbor = interactHouse1FNeighbor;
+      window.__warpOutToTown = warpOutToTown;
+      window.__switchScene = function(sc) { currentHdScene = sc; renderHdScene(); };
+      window.__getCurrentHdScene = function() { return currentHdScene; };
 
       function canMoveTo1F(nx, ny) {
         if (nx < 8 || nx > 364) return false;
@@ -3004,8 +3157,8 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
         // Ficus corner plant: x: 268..310, y: 84..100
         if (nx >= 268 && nx < 310 && ny < 100) return false;
 
-        // Dining Table & Chairs & Mom: x: 68..180, y: 148..206
-        if (nx >= 68 && nx <= 180 && ny >= 148 && ny <= 206) return false;
+        // Dining Table & Chairs & Mom & Neighbor: x: 64..186, y: 148..206
+        if (nx >= 64 && nx <= 186 && ny >= 148 && ny <= 206) return false;
 
         return true;
       }
@@ -3060,6 +3213,17 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
           return;
         }
 
+        // Automatic Mom Stop: If player hasn't received Buddygear, Mom intercepts them when walking past!
+        if (!hasReceivedBuddygear && (ny >= 130 || nx <= 280)) {
+          momNpc.dir = (house1FPlayer.x > momNpc.x) ? 'right' : 'left';
+          momAlertActive = true;
+          playChime(660);
+          momDialogueIndex = 0;
+          house1FDialog = getMomSequence()[0];
+          renderHdScene();
+          return;
+        }
+
         if (!canMoveTo1F(nx, ny)) {
           if (dx !== 0 && canMoveTo1F(house1FPlayer.x, ny)) {
             house1FPlayer.y = ny;
@@ -3108,6 +3272,9 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
             return;
           } else {
             house1FDialog = null;
+            momAlertActive = false;
+            momNpc.dir = 'left';
+            neighborNpc.dir = 'right';
             hasReceivedBuddygear = true;
             localStorage.setItem('BUDDYMON_GEAR_RECEIVED', 'true');
             save1FProgress();
@@ -3115,7 +3282,25 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
             return;
           }
         }
+        if (house1FDialog && house1FDialog.tag === 'NEIGHBOR') {
+          neighborNpc.dir = 'right';
+        }
         house1FDialog = null;
+        momAlertActive = false;
+        renderHdScene();
+      }
+
+      function interactHouse1FNeighbor() {
+        if (house1FDialog) {
+          advanceHouse1FDialog();
+          return;
+        }
+        neighborNpc.dir = (house1FPlayer.x > neighborNpc.x) ? 'right' : 'left';
+        playChime(540);
+        house1FDialog = {
+          tag: 'NEIGHBOR',
+          text: "Hi, " + playerName + "! I was just having morning tea with your mom. Professor Elm next door was asking all around for you! It must be so exciting to go on a Buddymon journey!"
+        };
         renderHdScene();
       }
 
@@ -3129,6 +3314,13 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
         var py = house1FPlayer.y;
         var dir = house1FPlayer.dir;
 
+        // Neighbor (at x: 74, y: 172)
+        var distToNeighbor = Math.hypot(px - neighborNpc.x, py - neighborNpc.y);
+        if (distToNeighbor <= 44) {
+          interactHouse1FNeighbor();
+          return;
+        }
+
         // Mom (at x: 154, y: 172)
         var distToMom = Math.hypot(px - momNpc.x, py - momNpc.y);
         if (distToMom <= 44) {
@@ -3139,6 +3331,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
 
           playChime(580);
           if (!hasReceivedBuddygear) {
+            momAlertActive = true;
             momDialogueIndex = 0;
             house1FDialog = getMomSequence()[0];
           } else {
@@ -3242,7 +3435,8 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
 
       async function warpOutToTown() {
         if (!hasReceivedBuddygear) {
-          momNpc.dir = 'down';
+          momNpc.dir = (house1FPlayer.x > momNpc.x) ? 'right' : 'left';
+          momAlertActive = true;
           house1FDialog = { tag: 'MOM', text: playerName + '! Wait! Come speak with me before you head out!' };
           renderHdScene();
           return;
@@ -3254,7 +3448,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
         setTimeout(async function() {
           try {
             if (!loadedRomUint8) return;
-            var rawJson = await decompressGzipText(window.__HOUSE_1F_STATE_GZ_B64__);
+            var rawJson = await decompressGzipText(window.__NEW_BARK_TOWN_STATE_GZ_B64__);
             var st = JSON.parse(rawJson);
             var isGirl = (playerGender === 'GIRL');
             if (st[23] && st[23].length > 1138) {
@@ -3265,14 +3459,6 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
               for (var i = 0; i < 11; i++) {
                 st[23][1149 + i] = encodedName[i];
               }
-            }
-            // In Pokemon Crystal: New Bark Town is MapGroup 24, MapNumber 4!
-            // Door exit position: X=13, Y=6 (facing down)
-            if (st[23] && st[23].length > 3256) {
-              st[23][3253] = 24; // MapGroup 24
-              st[23][3254] = 4;  // MapNumber 4 (New Bark Town)
-              st[23][3255] = 6;  // wYCoord 6
-              st[23][3256] = 13; // wXCoord 13
             }
             clearLastEmulation();
             st[0] = loadedRomUint8;
@@ -3311,6 +3497,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
       }
 
       function renderHdScene() {
+        window.__renderHdScene = renderHdScene;
         if (window.__HD_MODE__ !== 'on') return;
 
         resetIntroTimer();
@@ -3619,7 +3806,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
 
           var hdRect = hdStage.getBoundingClientRect();
           var aspect = (hdRect && hdRect.width > 0) ? (hdRect.height / hdRect.width) : 1.35;
-          var roomSvg = Art.house1FScene(playerGender, house1FPlayer, momNpc, aspect);
+          var roomSvg = Art.house1FScene(playerGender, house1FPlayer, momNpc, neighborNpc, aspect, momAlertActive);
 
           hdStage.innerHTML = '<div class="scene house1f">' +
             '<div class="bedroom-wrapper">' +
@@ -4102,6 +4289,11 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
           var momObj = e.target.closest('#obj-mom');
           if (momObj) {
             interactHouse1F();
+            return;
+          }
+          var neighborObj = e.target.closest('#obj-neighbor');
+          if (neighborObj) {
+            interactHouse1FNeighbor();
             return;
           }
           var stairs1FObj = e.target.closest('#obj-stairs-1f');
