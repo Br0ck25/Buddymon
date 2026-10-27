@@ -1,5 +1,5 @@
 // Buddymon Service Worker - 100% Offline PWA Support
-const CACHE_NAME = 'buddymon-pwa-v4';
+const CACHE_NAME = 'buddymon-pwa-v5';
 const STATIC_ASSETS = [
   './',
   'index.html',

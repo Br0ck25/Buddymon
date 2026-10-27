@@ -501,6 +501,105 @@ Art.boySprite = function boySprite(dir, step) {
   </svg>\`;
 };
 
+Art.momSprite = function momSprite(dir, step) {
+  var isWalk1 = (step === 1);
+  var isWalk2 = (step === 2);
+
+  if (dir === 'up') {
+    var lFootY = isWalk1 ? 31 : 33;
+    var rFootY = isWalk2 ? 31 : 33;
+    return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+      <ellipse cx="16" cy="38" rx="10" ry="2.5" fill="#000" opacity="0.35"/>
+      <rect x="9" y="\${lFootY}" width="6" height="5" rx="1" fill="#4a2e1b"/>
+      <rect x="17" y="\${rFootY}" width="6" height="5" rx="1" fill="#4a2e1b"/>
+      <path d="M7 23 L25 23 L24 33 L8 33 Z" fill="#e76f51" stroke="#b04a32" stroke-width="0.8"/>
+      <path d="M9 19 L23 19 L22 28 L10 28 Z" fill="#fdfbf7" stroke="#cbd5e1" stroke-width="0.8"/>
+      <line x1="10" y1="18" x2="21" y2="25" stroke="#cbd5e1" stroke-width="1.6"/>
+      <line x1="22" y1="18" x2="11" y2="25" stroke="#cbd5e1" stroke-width="1.6"/>
+      <ellipse cx="16" cy="25" rx="3.5" ry="1.8" fill="#fdfbf7" stroke="#cbd5e1" stroke-width="0.7"/>
+      <circle cx="16" cy="25" r="1.2" fill="#e2e8f0"/>
+      <rect x="4" y="\${isWalk1 ? 20 : 18}" width="4" height="7" rx="1.5" fill="#e76f51"/>
+      <rect x="24" y="\${isWalk2 ? 20 : 18}" width="4" height="7" rx="1.5" fill="#e76f51"/>
+      <circle cx="16" cy="11" r="8" fill="#5c3821"/>
+      <ellipse cx="16" cy="4" rx="4.5" ry="3.5" fill="#4a2a14" stroke="#361a08" stroke-width="0.8"/>
+      <rect x="13" y="6" width="6" height="2" rx="1" fill="#f43f5e"/>
+      <path d="M8 12 Q16 16 24 12" stroke="#361a08" stroke-width="1.2" fill="none"/>
+    </svg>\`;
+  }
+
+  if (dir === 'left' || dir === 'right') {
+    var isRight = (dir === 'right');
+    var flip = isRight ? 'transform="scale(-1, 1) translate(-32, 0)"' : '';
+    var fLegX = isWalk1 ? 10 : (isWalk2 ? 14 : 12);
+    var bLegX = isWalk1 ? 15 : (isWalk2 ? 9 : 13);
+    var fFootX = isWalk1 ? 9 : (isWalk2 ? 13 : 11);
+    var bFootX = isWalk1 ? 14 : (isWalk2 ? 8 : 12);
+    var fSoleY = 38;
+    var bSoleY = isWalk1 ? 37 : (isWalk2 ? 37 : 38);
+
+    var fArmX = isWalk1 ? 15 : (isWalk2 ? 11 : 13);
+    var bArmX = isWalk1 ? 11 : (isWalk2 ? 15 : 13);
+    var fArmY = (isWalk1 || isWalk2) ? 19.5 : 18.5;
+    var bArmY = (isWalk1 || isWalk2) ? 19.5 : 18.5;
+
+    return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+      <ellipse cx="16" cy="38.5" rx="10" ry="2.5" fill="#000" opacity="0.35"/>
+      <g \${flip}>
+        <g opacity="0.8">
+          <rect x="\${bArmX}" y="\${bArmY}" width="3.8" height="6.5" rx="1.5" fill="#b04a32"/>
+          <circle cx="\${bArmX + 1.9}" cy="\${bArmY + 6}" r="1.3" fill="#fce1cd"/>
+        </g>
+        <g opacity="0.85">
+          <rect x="\${bFootX}" y="\${bSoleY - 4}" width="6" height="4" rx="1" fill="#4a2e1b"/>
+        </g>
+        <path d="M11 18 L21 18 L23 33 L10 33 Z" fill="#e76f51" stroke="#b04a32" stroke-width="0.8"/>
+        <path d="M9.5 20 L18 20 L19 32 L8.5 32 Z" fill="#fdfbf7" stroke="#cbd5e1" stroke-width="0.8"/>
+        <rect x="\${fFootX}" y="\${fSoleY - 4.5}" width="6.5" height="4.5" rx="1.2" fill="#5c3821" stroke="#361a08" stroke-width="0.6"/>
+        <rect x="\${fArmX}" y="\${fArmY}" width="4" height="6.8" rx="1.6" fill="#e76f51" stroke="#b04a32" stroke-width="0.6"/>
+        <circle cx="\${fArmX + 2}" cy="\${fArmY + 6.5}" r="1.5" fill="#fce1cd"/>
+        <circle cx="15" cy="11" r="7.5" fill="#fce1cd"/>
+        <ellipse cx="20" cy="6" rx="3.5" ry="3" fill="#4a2a14"/>
+        <path d="M12 2 C18 2 23 5 22 13 C21 18 19 20 17 17 C16 12 17 6 12 2 Z" fill="#5c3821"/>
+        <ellipse cx="11.5" cy="11" rx="2" ry="2.5" fill="#361a08"/>
+        <circle cx="11" cy="10.3" r="0.7" fill="#fff"/>
+        <circle cx="9.5" cy="13.5" r="1.3" fill="#f472b6" opacity="0.5"/>
+        <path d="M9 13.5 Q11 15 13 13.5" stroke="#a3583b" stroke-width="0.9" fill="none"/>
+        <path d="M13 2 C9 2 7 6 8 10 C9 8 11 6 14 6 Z" fill="#5c3821"/>
+      </g>
+    </svg>\`;
+  }
+
+  // Facing Down
+  var lFootY = isWalk1 ? 31 : 33;
+  var rFootY = isWalk2 ? 31 : 33;
+  return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
+    <ellipse cx="16" cy="38" rx="10" ry="2.5" fill="#000" opacity="0.38"/>
+    <rect x="9" y="\${lFootY}" width="6" height="5" rx="1.2" fill="#5c3821" stroke="#361a08" stroke-width="0.7"/>
+    <rect x="17" y="\${rFootY}" width="6" height="5" rx="1.2" fill="#5c3821" stroke="#361a08" stroke-width="0.7"/>
+    <path d="M7 23 L25 23 L24 33 L8 33 Z" fill="#e76f51" stroke="#b04a32" stroke-width="0.8"/>
+    <path d="M10 17 L22 17 L21 31 L11 31 Z" fill="#fdfbf7" stroke="#cbd5e1" stroke-width="0.8"/>
+    <rect x="13" y="24" width="6" height="4.5" rx="1" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.6"/>
+    <circle cx="16" cy="24" r="0.9" fill="#f43f5e"/>
+    <path d="M12 17 L16 19.5 L20 17" stroke="#b04a32" stroke-width="0.9" fill="none"/>
+    <rect x="4" y="\${isWalk1 ? 19 : 17}" width="4" height="6" rx="1.5" fill="#e76f51"/>
+    <circle cx="6" cy="\${isWalk1 ? 25 : 23}" r="1.5" fill="#fce1cd"/>
+    <rect x="24" y="\${isWalk2 ? 19 : 17}" width="4" height="6" rx="1.5" fill="#e76f51"/>
+    <circle cx="26" cy="\${isWalk2 ? 25 : 23}" r="1.5" fill="#fce1cd"/>
+    <circle cx="16" cy="11" r="7.8" fill="#fce1cd"/>
+    <circle cx="10" cy="13.5" r="1.5" fill="#f472b6" opacity="0.5"/>
+    <circle cx="22" cy="13.5" r="1.5" fill="#f472b6" opacity="0.5"/>
+    <ellipse cx="12" cy="11.5" rx="2" ry="2.5" fill="#361a08"/>
+    <circle cx="11.3" cy="10.8" r="0.7" fill="#fff"/>
+    <ellipse cx="20" cy="11.5" rx="2" ry="2.5" fill="#361a08"/>
+    <circle cx="19.3" cy="10.8" r="0.7" fill="#fff"/>
+    <path d="M14 14.5 Q16 16.5 18 14.5" stroke="#a3583b" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <ellipse cx="16" cy="4" rx="4.5" ry="3.5" fill="#4a2a14"/>
+    <path d="M6 10 C5 4 10 1.5 16 1.5 C22 1.5 27 4 26 10 C24 8 21 8 19 11 C17 8 14 8 12 11 C10 8 7 8 6 10 Z" fill="#5c3821" stroke="#361a08" stroke-width="0.8"/>
+    <path d="M7 8 Q8 13 9 14" stroke="#5c3821" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M25 8 Q24 13 23 14" stroke="#5c3821" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </svg>\`;
+};
+
 Art.bedroomScene = function(gender, player, aspect) {
   var px = player.x;
   var py = player.y;
@@ -679,6 +778,224 @@ Art.bedroomScene = function(gender, player, aspect) {
     <!-- Player Character Sprite rendered dynamically inside room SVG -->
     <g transform="translate(\${px}, \${py})">
       \${spriteSvg}
+    </g>
+  </svg>\`;
+};
+
+Art.house1FScene = function(gender, player, mom, aspect) {
+  var px = player.x;
+  var py = player.y;
+  var playerSvg = (gender === 'GIRL') ? Art.girlSprite(player.dir, player.step) : Art.boySprite(player.dir, player.step);
+  var momSvg = Art.momSprite(mom.dir, mom.step);
+
+  if (!aspect || aspect <= 0) aspect = 1.25;
+  var camW = 260;
+  var camH = camW * aspect;
+  if (camH > 340) {
+    camH = 340;
+    camW = Math.min(400, camH / aspect);
+  }
+  if (camW > 400) {
+    camW = 400;
+    camH = Math.min(340, camW * aspect);
+  }
+
+  var cx = px + 12;
+  var cy = py + 16;
+  var camX = Math.max(0, Math.min(400 - camW, cx - camW / 2));
+  var camY = Math.max(0, Math.min(340 - camH, cy - camH / 2));
+
+  return \`<svg class="bedroom-svg" viewBox="\${camX.toFixed(1)} \${camY.toFixed(1)} \${camW.toFixed(1)} \${camH.toFixed(1)}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="floorWood1F" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b47846"/><stop offset="100%" stop-color="#8a5327"/></linearGradient>
+      <linearGradient id="wallGrad1F" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2d4c0"/><stop offset="70%" stop-color="#d4c2a7"/><stop offset="100%" stop-color="#bfa98d"/></linearGradient>
+      <radialGradient id="rugGrad1F" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#991b1b"/><stop offset="85%" stop-color="#7f1d1d"/><stop offset="100%" stop-color="#d4af37"/></radialGradient>
+      <linearGradient id="fridgeGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f8fafc"/><stop offset="70%" stop-color="#e2e8f0"/><stop offset="100%" stop-color="#cbd5e1"/></linearGradient>
+      <linearGradient id="tvGlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0284c7"/></linearGradient>
+    </defs>
+
+    <!-- Wall & Baseboard -->
+    <rect x="0" y="0" width="400" height="84" fill="url(#wallGrad1F)"/>
+    <g stroke="#cfbea6" stroke-width="1" opacity="0.45">
+      <line x1="20" y1="0" x2="20" y2="78"/><line x1="60" y1="0" x2="60" y2="78"/><line x1="100" y1="0" x2="100" y2="78"/>
+      <line x1="140" y1="0" x2="140" y2="78"/><line x1="180" y1="0" x2="180" y2="78"/><line x1="220" y1="0" x2="220" y2="78"/>
+      <line x1="260" y1="0" x2="260" y2="78"/><line x1="300" y1="0" x2="300" y2="78"/>
+    </g>
+    <rect x="0" y="0" width="400" height="8" fill="#523218"/>
+    <rect x="0" y="78" width="400" height="6" fill="#523218" stroke="#36200e" stroke-width="1"/>
+
+    <!-- Floor -->
+    <rect x="0" y="84" width="400" height="256" fill="url(#floorWood1F)"/>
+    <g stroke="#71421e" stroke-width="1.5" opacity="0.65">
+      <line x1="0" y1="116" x2="400" y2="116"/><line x1="0" y1="148" x2="400" y2="148"/><line x1="0" y1="180" x2="400" y2="180"/><line x1="0" y1="212" x2="400" y2="212"/><line x1="0" y1="244" x2="400" y2="244"/><line x1="0" y1="276" x2="400" y2="276"/><line x1="0" y1="308" x2="400" y2="308"/>
+      <line x1="50" y1="84" x2="50" y2="116"/><line x1="160" y1="84" x2="160" y2="116"/><line x1="280" y1="84" x2="280" y2="116"/>
+      <line x1="100" y1="116" x2="100" y2="148"/><line x1="220" y1="116" x2="220" y2="148"/><line x1="350" y1="116" x2="350" y2="148"/>
+      <line x1="60" y1="148" x2="60" y2="180"/><line x1="180" y1="148" x2="180" y2="180"/><line x1="300" y1="148" x2="300" y2="180"/>
+      <line x1="120" y1="180" x2="120" y2="212"/><line x1="250" y1="180" x2="250" y2="212"/><line x1="370" y1="180" x2="370" y2="212"/>
+      <line x1="70" y1="212" x2="70" y2="244"/><line x1="190" y1="212" x2="190" y2="244"/><line x1="310" y1="212" x2="310" y2="244"/>
+      <line x1="130" y1="244" x2="130" y2="276"/><line x1="260" y1="244" x2="260" y2="276"/><line x1="380" y1="244" x2="380" y2="276"/>
+    </g>
+
+    <!-- Stairs Leading Up to 2F Bedroom -->
+    <g id="obj-stairs-1f" transform="translate(320, 16)" style="cursor:pointer;">
+      <rect x="2" y="10" width="66" height="76" rx="3" fill="#000" opacity="0.45"/>
+      <rect x="2" y="6" width="66" height="80" rx="4" fill="#141d30" stroke="#2a3b5c" stroke-width="2"/>
+      <rect x="6" y="12" width="58" height="10" fill="#ad6028" stroke="#1f1006" stroke-width="1"/>
+      <rect x="6" y="22" width="58" height="10" fill="#965423" stroke="#1f1006" stroke-width="1"/>
+      <rect x="6" y="32" width="58" height="10" fill="#80471e" stroke="#1f1006" stroke-width="1"/>
+      <rect x="6" y="42" width="58" height="10" fill="#693a18" stroke="#1f1006" stroke-width="1"/>
+      <rect x="6" y="52" width="58" height="10" fill="#522d13" stroke="#1f1006" stroke-width="1"/>
+      <rect x="6" y="62" width="58" height="12" fill="#3b200d" stroke="#1f1006" stroke-width="1"/>
+      <line x1="6" y1="10" x2="6" y2="76" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="6" cy="10" r="2" fill="#fcd34d"/>
+      <circle cx="6" cy="43" r="2" fill="#fcd34d"/>
+      <circle cx="6" cy="76" r="2" fill="#fcd34d"/>
+      <rect x="14" y="70" width="44" height="14" rx="3" fill="#101726" stroke="#d4af37" stroke-width="1.2"/>
+      <text x="36" y="80" font-family="sans-serif" font-size="8" font-weight="800" fill="#f59e0b" text-anchor="middle">▲ 2F</text>
+    </g>
+
+    <!-- Kitchen Suite (Top-Left) -->
+    <!-- Fridge -->
+    <g id="obj-fridge" transform="translate(14, 44)" style="cursor:pointer;">
+      <rect x="2" y="6" width="34" height="54" rx="5" fill="#000" opacity="0.3"/>
+      <rect x="0" y="2" width="34" height="56" rx="4" fill="url(#fridgeGrad)" stroke="#64748b" stroke-width="1.8"/>
+      <line x1="0" y1="22" x2="34" y2="22" stroke="#94a3b8" stroke-width="1.2"/>
+      <rect x="3" y="10" width="2.5" height="8" rx="1" fill="#475569"/>
+      <rect x="3" y="26" width="2.5" height="12" rx="1" fill="#475569"/>
+      <circle cx="24" cy="12" r="3" fill="#f59e0b"/>
+      <circle cx="24" cy="12" r="1.5" fill="#ef4444"/>
+      <rect x="18" y="28" width="8" height="6" rx="1" fill="#38bdf8"/>
+    </g>
+
+    <!-- Kitchen Sink -->
+    <g id="obj-sink" transform="translate(54, 52)" style="cursor:pointer;">
+      <rect x="2" y="6" width="36" height="46" rx="3" fill="#000" opacity="0.25"/>
+      <rect x="0" y="2" width="36" height="46" rx="2" fill="#6e4220" stroke="#36200e" stroke-width="1.8"/>
+      <rect x="2" y="0" width="32" height="10" rx="1.5" fill="#d4af37" opacity="0.85"/>
+      <rect x="6" y="14" width="24" height="14" rx="2" fill="#cbd5e1" stroke="#64748b" stroke-width="1.2"/>
+      <path d="M18 10 L18 6 Q18 4 15 4" stroke="#94a3b8" stroke-width="2" fill="none"/>
+      <circle cx="15" cy="5" r="1.2" fill="#475569"/>
+      <line x1="2" y1="32" x2="34" y2="32" stroke="#36200e" stroke-width="1"/>
+      <circle cx="18" cy="38" r="1.5" fill="#d4af37"/>
+    </g>
+
+    <!-- Kitchen Stove -->
+    <g id="obj-stove" transform="translate(94, 52)" style="cursor:pointer;">
+      <rect x="2" y="6" width="36" height="46" rx="3" fill="#000" opacity="0.25"/>
+      <rect x="0" y="2" width="36" height="46" rx="2" fill="#6e4220" stroke="#36200e" stroke-width="1.8"/>
+      <rect x="2" y="0" width="32" height="10" rx="1.5" fill="#1e293b"/>
+      <ellipse cx="10" cy="5" rx="5" ry="2" fill="#334155"/>
+      <ellipse cx="26" cy="5" rx="5" ry="2" fill="#334155"/>
+      <rect x="6" y="-3" width="8" height="6" rx="1" fill="#e11d48"/>
+      <rect x="22" y="-4" width="7" height="6" rx="1.5" fill="#f59e0b"/>
+      <rect x="6" y="16" width="24" height="18" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.2"/>
+      <circle cx="10" cy="40" r="1.5" fill="#94a3b8"/>
+      <circle cx="18" cy="40" r="1.5" fill="#94a3b8"/>
+      <circle cx="26" cy="40" r="1.5" fill="#94a3b8"/>
+    </g>
+
+    <!-- Retro TV Console (Top-Center) -->
+    <g id="obj-tv" transform="translate(148, 48)" style="cursor:pointer;">
+      <rect x="4" y="6" width="46" height="48" rx="4" fill="#000" opacity="0.32"/>
+      <rect x="0" y="36" width="46" height="16" rx="2" fill="#523218" stroke="#2b1809" stroke-width="1.5"/>
+      <line x1="23" y1="36" x2="23" y2="52" stroke="#2b1809" stroke-width="1"/>
+      <rect x="4" y="6" width="38" height="32" rx="3" fill="#6e4220" stroke="#36200e" stroke-width="1.8"/>
+      <rect x="7" y="9" width="24" height="20" rx="3" fill="url(#tvGlow)" stroke="#1e293b" stroke-width="1.2"/>
+      <circle cx="19" cy="14" r="3" fill="#fff" opacity="0.85"/>
+      <rect x="10" y="21" width="18" height="4" fill="#0f172a"/>
+      <circle cx="13" cy="25" r="1.2" fill="#cbd5e1"/><circle cx="21" cy="25" r="1.2" fill="#cbd5e1"/>
+      <line x1="7" y1="26" x2="31" y2="26" stroke="#94a3b8" stroke-width="0.8"/>
+      <circle cx="35" cy="14" r="2" fill="#1e293b"/>
+      <circle cx="35" cy="22" r="2" fill="#1e293b"/>
+      <line x1="16" y1="6" x2="10" y2="-2" stroke="#94a3b8" stroke-width="1.2"/>
+      <line x1="24" y1="6" x2="30" y2="-2" stroke="#94a3b8" stroke-width="1.2"/>
+    </g>
+
+    <!-- Grand Bookshelf -->
+    <g id="obj-bookshelf-1f" transform="translate(212, 44)" style="cursor:pointer;">
+      <rect x="3" y="6" width="44" height="54" rx="3" fill="#000" opacity="0.3"/>
+      <rect x="0" y="2" width="44" height="56" rx="3" fill="#5c381c" stroke="#2b1809" stroke-width="2"/>
+      <rect x="4" y="6" width="36" height="14" fill="#3b200d"/>
+      <rect x="4" y="23" width="36" height="14" fill="#3b200d"/>
+      <rect x="4" y="40" width="36" height="14" fill="#3b200d"/>
+      <rect x="6" y="8" width="4" height="11" fill="#ef4444"/><rect x="11" y="7" width="5" height="12" fill="#3b82f6"/>
+      <rect x="17" y="9" width="3" height="10" fill="#10b981"/><rect x="21" y="7" width="6" height="12" fill="#f59e0b"/>
+      <rect x="28" y="8" width="5" height="11" fill="#8b5cf6"/><rect x="34" y="10" width="4" height="9" fill="#ec4899"/>
+      <rect x="6" y="25" width="5" height="11" fill="#06b6d4"/><rect x="12" y="24" width="4" height="12" fill="#84cc16"/>
+      <rect x="17" y="26" width="6" height="10" fill="#e11d48"/><rect x="24" y="24" width="5" height="12" fill="#d97706"/>
+      <rect x="30" y="25" width="4" height="11" fill="#475569"/><rect x="35" y="27" width="3" height="9" fill="#10b981"/>
+    </g>
+
+    <!-- Ficus Plant in Corner -->
+    <g transform="translate(274, 62)">
+      <ellipse cx="14" cy="28" rx="8" ry="3" fill="#000" opacity="0.3"/>
+      <path d="M7 20 L21 20 L19 28 L9 28 Z" fill="#9a3412" stroke="#431407" stroke-width="1.2"/>
+      <ellipse cx="14" cy="20" rx="6" ry="2" fill="#451a03"/>
+      <ellipse cx="14" cy="14" rx="7" ry="5" fill="#15803d"/>
+      <ellipse cx="9" cy="11" rx="6" ry="4" fill="#16a34a"/>
+      <ellipse cx="19" cy="11" rx="6" ry="4" fill="#16a34a"/>
+      <ellipse cx="14" cy="6" rx="5" ry="4" fill="#22c55e"/>
+    </g>
+
+    <!-- Dining Area (Center-Left) -->
+    <!-- Cozy Area Rug -->
+    <ellipse cx="140" cy="190" rx="72" ry="44" fill="url(#rugGrad1F)" stroke="#d4af37" stroke-width="2.5"/>
+    <ellipse cx="140" cy="190" rx="58" ry="32" fill="none" stroke="#fcd34d" stroke-width="1.2" stroke-dasharray="5,4"/>
+
+    <!-- Left Chair -->
+    <g transform="translate(74, 168)">
+      <ellipse cx="10" cy="18" rx="8" ry="3" fill="#000" opacity="0.25"/>
+      <rect x="2" y="6" width="16" height="14" rx="2" fill="#6e4220" stroke="#36200e" stroke-width="1.2"/>
+      <rect x="2" y="0" width="16" height="6" rx="1.5" fill="#523218" stroke="#36200e" stroke-width="1"/>
+    </g>
+
+    <!-- Dining Table -->
+    <g id="obj-table" transform="translate(100, 160)" style="cursor:pointer;">
+      <ellipse cx="32" cy="30" rx="30" ry="12" fill="#000" opacity="0.35"/>
+      <ellipse cx="32" cy="16" rx="28" ry="16" fill="#8a5327" stroke="#36200e" stroke-width="2"/>
+      <ellipse cx="32" cy="16" rx="18" ry="10" fill="#fdfbf7" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,2"/>
+      <ellipse cx="32" cy="15" rx="4" ry="3.5" fill="#f8fafc" stroke="#475569" stroke-width="1"/>
+      <circle cx="32" cy="12" r="1.5" fill="#f59e0b"/>
+      <ellipse cx="23" cy="17" rx="2" ry="1.5" fill="#f8fafc" stroke="#64748b" stroke-width="0.8"/>
+      <ellipse cx="41" cy="17" rx="2" ry="1.5" fill="#f8fafc" stroke="#64748b" stroke-width="0.8"/>
+    </g>
+
+    <!-- Right Chair -->
+    <g transform="translate(164, 168)">
+      <ellipse cx="10" cy="18" rx="8" ry="3" fill="#000" opacity="0.25"/>
+      <rect x="2" y="6" width="16" height="14" rx="2" fill="#6e4220" stroke="#36200e" stroke-width="1.2"/>
+      <rect x="2" y="0" width="16" height="6" rx="1.5" fill="#523218" stroke="#36200e" stroke-width="1"/>
+    </g>
+
+    <!-- Front Doors (Bottom-Center) -->
+    <g id="obj-front-door" transform="translate(172, 296)" style="cursor:pointer;">
+      <!-- Welcome Mat -->
+      <rect x="-8" y="26" width="72" height="18" rx="3" fill="#78350f" stroke="#451a03" stroke-width="1.5"/>
+      <rect x="-4" y="28" width="64" height="14" rx="2" fill="#92400e"/>
+      <text x="28" y="38" font-family="sans-serif" font-size="7.5" font-weight="800" fill="#fef3c7" text-anchor="middle" letter-spacing="1">WELCOME</text>
+      <!-- Double Doors Frame -->
+      <rect x="0" y="0" width="56" height="28" rx="2" fill="#36200e" stroke="#1f1006" stroke-width="2"/>
+      <!-- Left Door Leaf -->
+      <rect x="2" y="2" width="25" height="24" fill="#6e4220" stroke="#2b1809" stroke-width="1"/>
+      <circle cx="23" cy="15" r="1.8" fill="#d4af37"/>
+      <!-- Right Door Leaf -->
+      <rect x="29" y="2" width="25" height="24" fill="#6e4220" stroke="#2b1809" stroke-width="1"/>
+      <circle cx="33" cy="15" r="1.8" fill="#d4af37"/>
+      <!-- Exit indicator -->
+      <polygon points="28,26 23,20 33,20" fill="#f59e0b"/>
+    </g>
+
+    <!-- Mom NPC -->
+    <g id="obj-mom" transform="translate(\${mom.x}, \${mom.y})" style="cursor:pointer;">
+      \${momSvg}
+      <g transform="translate(0, -6)">
+        <polygon points="16,0 12,-6 20,-6" fill="#f59e0b"/>
+      </g>
+    </g>
+
+    <!-- Player Character Sprite rendered dynamically inside room SVG -->
+    <g transform="translate(\${px}, \${py})">
+      \${playerSvg}
     </g>
   </svg>\`;
 };
@@ -2147,6 +2464,11 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
           setStatus('Room state saved successfully! (' + new Date().toLocaleTimeString() + ')');
           return;
         }
+        if (currentHdScene === 'house1f') {
+          save1FProgress();
+          setStatus('House state saved successfully! (' + new Date().toLocaleTimeString() + ')');
+          return;
+        }
         if (!GameBoyEmulatorInitialized()) return;
         try {
           var st = gameboy.saveState();
@@ -2164,7 +2486,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
 
       async function quickLoadState() {
         var activeScene = localStorage.getItem('BUDDYMON_ACTIVE_SCENE') || 'bedroom';
-        if (activeScene === 'bedroom') {
+        if (activeScene === 'bedroom' || activeScene === 'house1f') {
           handleContinueGame();
           return;
         }
@@ -2218,6 +2540,22 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
           bedroomDialog = null;
           renderHdScene();
           setStatus('Welcome back to your room, ' + playerName + '!');
+          return;
+        }
+
+        if (activeScene === 'house1f') {
+          currentHdScene = 'house1f';
+          try {
+            var pos1f = JSON.parse(localStorage.getItem('BUDDYMON_HOUSE1F_POS'));
+            if (pos1f && typeof pos1f.x === 'number') {
+              house1FPlayer.x = pos1f.x;
+              house1FPlayer.y = pos1f.y;
+              house1FPlayer.dir = pos1f.dir || 'down';
+            }
+          } catch (_) {}
+          house1FDialog = null;
+          renderHdScene();
+          setStatus('Welcome home, ' + playerName + '!');
           return;
         }
 
@@ -2626,91 +2964,318 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
       window.__setGender = function(g) { playerGender = g; };
       window.__setName = function(n) { playerName = n; };
 
-      // Transition straight into 1F when exiting bedroom stairs
-      var live1FState = null;
-      var last1FRecordTime = 0;
-      var upstairsWarpCooldown = 0;
-      var hasBeenIn1F = false;
+      // Buddymon HD House 1F State & Logic
+      var house1FPlayer = {
+        x: 320,
+        y: 104,
+        dir: 'down',
+        step: 0
+      };
+      var momNpc = {
+        x: 154,
+        y: 172,
+        dir: 'left',
+        step: 0
+      };
+      var hasReceivedBuddygear = (localStorage.getItem('BUDDYMON_GEAR_RECEIVED') === 'true');
+      var momDialogueIndex = 0;
+      var house1FDialog = null;
+      var house1FStepTimer = null;
+      var house1FWalkFlip = 0;
 
-      function isValid1FState(st) {
-        if (!st || !st[23] || st[23].length <= 3254) return false;
-        var mg = st[23][3253];
-        var mn = st[23][3254];
-        return (mg === 24 && mn === 6);
+      window.__house1FPlayer = house1FPlayer;
+      window.__momNpc = momNpc;
+      window.__moveHouse1FPlayer = moveHouse1FPlayer;
+      window.__interactHouse1F = interactHouse1F;
+
+      function canMoveTo1F(nx, ny) {
+        if (nx < 8 || nx > 364) return false;
+        if (ny < 84 || ny > 310) return false;
+
+        // Top-left kitchen counter (Fridge, Sink, Stove): x: 8..136, y: 84..104
+        if (nx <= 136 && ny < 104) return false;
+
+        // TV console: x: 136..206, y: 84..104
+        if (nx > 136 && nx < 206 && ny < 104) return false;
+
+        // Bookshelf: x: 206..268, y: 84..104
+        if (nx >= 206 && nx < 268 && ny < 104) return false;
+
+        // Ficus corner plant: x: 268..310, y: 84..100
+        if (nx >= 268 && nx < 310 && ny < 100) return false;
+
+        // Dining Table & Chairs & Mom: x: 68..180, y: 148..206
+        if (nx >= 68 && nx <= 180 && ny >= 148 && ny <= 206) return false;
+
+        return true;
       }
 
-      async function warpDownTo1F() {
-        if (!loadedRomUint8) {
-          console.warn('Gameboy ROM not loaded yet.');
+      function save1FProgress() {
+        localStorage.setItem('BUDDYMON_ACTIVE_SCENE', currentHdScene);
+        localStorage.setItem('BUDDYMON_HOUSE1F_POS', JSON.stringify({
+          x: house1FPlayer.x,
+          y: house1FPlayer.y,
+          dir: house1FPlayer.dir
+        }));
+        localStorage.setItem('BUDDYMON_ACTIVE_SAVE', 'true');
+        localStorage.setItem('BUDDYMON_PLAYER_GENDER', playerGender);
+        localStorage.setItem('BUDDYMON_PLAYER_NAME', playerName);
+        if (hasReceivedBuddygear) {
+          localStorage.setItem('BUDDYMON_GEAR_RECEIVED', 'true');
+        }
+      }
+
+      function moveHouse1FPlayer(dir) {
+        if (house1FDialog) {
+          advanceHouse1FDialog();
           return;
         }
 
-        upstairsWarpCooldown = Date.now() + 5000;
+        var dx = 0, dy = 0;
+        var STEP = 16;
+        if (dir === 'up') dy = -STEP;
+        else if (dir === 'down') dy = STEP;
+        else if (dir === 'left') dx = -STEP;
+        else if (dir === 'right') dx = STEP;
+
+        house1FPlayer.dir = dir;
+        var nx = house1FPlayer.x + dx;
+        var ny = house1FPlayer.y + dy;
+
+        // Stepping into stairs back up to 2F bedroom (top right: x >= 316, y <= 96)
+        if (nx >= 316 && ny <= 96) {
+          house1FPlayer.x = nx;
+          house1FPlayer.y = ny;
+          renderHdScene();
+          warpUpTo2F();
+          return;
+        }
+
+        // Stepping through front doors (bottom center: x: 170..230, y >= 300)
+        if (nx >= 170 && nx <= 230 && ny >= 300) {
+          house1FPlayer.x = nx;
+          house1FPlayer.y = ny;
+          renderHdScene();
+          warpOutToTown();
+          return;
+        }
+
+        if (!canMoveTo1F(nx, ny)) {
+          if (dx !== 0 && canMoveTo1F(house1FPlayer.x, ny)) {
+            house1FPlayer.y = ny;
+          } else if (dy !== 0 && canMoveTo1F(nx, house1FPlayer.y)) {
+            house1FPlayer.x = nx;
+          } else {
+            house1FPlayer.step = 0;
+            renderHdScene();
+            return;
+          }
+        } else {
+          house1FPlayer.x = nx;
+          house1FPlayer.y = ny;
+        }
+
+        house1FWalkFlip = 1 - house1FWalkFlip;
+        house1FPlayer.step = house1FWalkFlip + 1;
+        renderHdScene();
+        save1FProgress();
+
+        if (house1FStepTimer) clearTimeout(house1FStepTimer);
+        house1FStepTimer = setTimeout(function() {
+          house1FPlayer.step = 0;
+          renderHdScene();
+        }, 220);
+      }
+
+      function getMomSequence() {
+        return [
+          { tag: 'MOM', text: 'Oh, ' + playerName + '! You are awake! Professor Elm was looking for you.', _momSequence: true },
+          { tag: 'MOM', text: 'He said that he had a special offer for you!', _momSequence: true },
+          { tag: 'MOM', text: 'Oh, I almost forgot! Your BUDDYGEAR came back from the repair shop. Here you go!', _momSequence: true },
+          { tag: 'BUDDYGEAR', text: '★ ' + playerName + ' received the BUDDYGEAR!', _momSequence: true },
+          { tag: 'MOM', text: 'The BUDDYGEAR is essential if you want to be a great Buddymon trainer. Be sure to check its map and phone!', _momSequence: true },
+          { tag: 'MOM', text: "Professor Elm's laboratory is right next door to the east. Have a wonderful adventure, sweetheart!", _momSequence: true }
+        ];
+      }
+
+      function advanceHouse1FDialog() {
+        if (house1FDialog && house1FDialog._momSequence) {
+          momDialogueIndex++;
+          var seq = getMomSequence();
+          if (momDialogueIndex < seq.length) {
+            house1FDialog = seq[momDialogueIndex];
+            renderHdScene();
+            return;
+          } else {
+            house1FDialog = null;
+            hasReceivedBuddygear = true;
+            localStorage.setItem('BUDDYMON_GEAR_RECEIVED', 'true');
+            save1FProgress();
+            renderHdScene();
+            return;
+          }
+        }
+        house1FDialog = null;
+        renderHdScene();
+      }
+
+      function interactHouse1F() {
+        if (house1FDialog) {
+          advanceHouse1FDialog();
+          return;
+        }
+
+        var px = house1FPlayer.x;
+        var py = house1FPlayer.y;
+        var dir = house1FPlayer.dir;
+
+        // Mom (at x: 154, y: 172)
+        var distToMom = Math.hypot(px - momNpc.x, py - momNpc.y);
+        if (distToMom <= 44) {
+          if (px > momNpc.x + 8) momNpc.dir = 'right';
+          else if (px < momNpc.x - 8) momNpc.dir = 'left';
+          else if (py > momNpc.y) momNpc.dir = 'down';
+          else momNpc.dir = 'up';
+
+          playChime(580);
+          if (!hasReceivedBuddygear) {
+            momDialogueIndex = 0;
+            house1FDialog = getMomSequence()[0];
+          } else {
+            house1FDialog = { tag: 'MOM', text: "Professor Elm's laboratory is right next door to the east. Go see what he needs, " + playerName + "!" };
+          }
+          renderHdScene();
+          return;
+        }
+
+        // Stairs
+        if (px >= 310 && py <= 104) {
+          warpUpTo2F();
+          return;
+        }
+
+        // Front Door
+        if (px >= 170 && px <= 230 && py >= 288) {
+          warpOutToTown();
+          return;
+        }
+
+        // TV
+        if (dir === 'up' && px >= 140 && px <= 206 && py <= 120) {
+          playChime(440);
+          house1FDialog = { tag: 'TV', text: "There's a movie on TV: Stars dot the sky as two friends ride on a train... I'd better get rolling too!" };
+          renderHdScene();
+          return;
+        }
+
+        // Fridge
+        if ((dir === 'up' || dir === 'left') && px <= 54 && py <= 116) {
+          playChime(520);
+          house1FDialog = { tag: 'FRIDGE', text: "Let's see what's in the fridge... Fresh Water and tasty Lemonade!" };
+          renderHdScene();
+          return;
+        }
+
+        // Sink
+        if (dir === 'up' && px >= 50 && px <= 94 && py <= 116) {
+          house1FDialog = { tag: 'SINK', text: "The sink is spotless and shining clean." };
+          renderHdScene();
+          return;
+        }
+
+        // Stove
+        if (dir === 'up' && px >= 90 && px <= 140 && py <= 116) {
+          playChime(480);
+          house1FDialog = { tag: 'STOVE', text: "Mom's specialty soup is simmering gently on the stove. Smells delicious!" };
+          renderHdScene();
+          return;
+        }
+
+        // Bookshelf
+        if (dir === 'up' && px >= 204 && px <= 268 && py <= 116) {
+          house1FDialog = { tag: 'BOOKSHELF', text: "A collection of cookbooks, home decor magazines, and Buddymon care guides." };
+          renderHdScene();
+          return;
+        }
+
+        // Table
+        if (px >= 80 && px <= 140 && py >= 140 && py <= 200) {
+          house1FDialog = { tag: 'DINING TABLE', text: "A cozy dining table with a freshly brewed pot of berry tea and two cups." };
+          renderHdScene();
+          return;
+        }
+      }
+
+      function warpDownTo1F() {
         bedroomDialog = { tag: 'STAIRS', text: 'Heading downstairs to 1F...' };
+        renderHdScene();
+
+        setTimeout(function() {
+          bedroomDialog = null;
+          currentHdScene = 'house1f';
+          house1FPlayer.x = 320;
+          house1FPlayer.y = 104;
+          house1FPlayer.dir = 'down';
+          house1FPlayer.step = 0;
+          renderHdScene();
+          save1FProgress();
+          setStatus('Downstairs living room');
+        }, 300);
+      }
+
+      function warpUpTo2F() {
+        house1FDialog = { tag: 'STAIRS', text: 'Heading upstairs to your bedroom...' };
+        renderHdScene();
+
+        setTimeout(function() {
+          house1FDialog = null;
+          currentHdScene = 'bedroom';
+          bedroomPlayer.x = 320;
+          bedroomPlayer.y = 104;
+          bedroomPlayer.dir = 'down';
+          bedroomPlayer.step = 0;
+          renderHdScene();
+          saveBedroomProgress();
+          setStatus('Back in your room!');
+        }, 300);
+      }
+
+      async function warpOutToTown() {
+        if (!hasReceivedBuddygear) {
+          momNpc.dir = 'down';
+          house1FDialog = { tag: 'MOM', text: playerName + '! Wait! Come speak with me before you head out!' };
+          renderHdScene();
+          return;
+        }
+
+        house1FDialog = { tag: 'DOOR', text: 'Stepping outside into New Bark Town...' };
         renderHdScene();
 
         setTimeout(async function() {
           try {
-            var st = null;
-            if (isValid1FState(live1FState)) {
-              st = JSON.parse(JSON.stringify(live1FState));
-            } else {
-              var savedSt = await idbStore.get('BUDDYMON_ACTIVE_STATE');
-              if (isValid1FState(savedSt)) {
-                st = JSON.parse(JSON.stringify(savedSt));
-                live1FState = st;
-              } else if (savedSt) {
-                idbStore.delete('BUDDYMON_ACTIVE_STATE');
+            if (!loadedRomUint8) return;
+            var rawJson = await decompressGzipText(window.__HOUSE_1F_STATE_GZ_B64__);
+            var st = JSON.parse(rawJson);
+            var isGirl = (playerGender === 'GIRL');
+            if (st[23] && st[23].length > 1138) {
+              st[23][1138] = isGirl ? 1 : 0;
+            }
+            var encodedName = encodeGen2Name(playerName);
+            if (st[23] && st[23].length > 1159) {
+              for (var i = 0; i < 11; i++) {
+                st[23][1149 + i] = encodedName[i];
               }
             }
-
-            if (!st) {
-              var rawJson = await decompressGzipText(window.__HOUSE_1F_STATE_GZ_B64__);
-              st = JSON.parse(rawJson);
-
-              var isGirl = (playerGender === 'GIRL');
-              if (st[23] && st[23].length > 1138) {
-                st[23][1138] = isGirl ? 1 : 0;
-              }
-
-              var encodedName = encodeGen2Name(playerName);
-              if (st[23] && st[23].length > 1159) {
-                for (var i = 0; i < 11; i++) {
-                  st[23][1149 + i] = encodedName[i];
-                }
-              }
-              if (st[20] && st[20].length > 11534) {
-                for (var j = 0; j < 11; j++) {
-                  st[20][8203 + j] = encodedName[j];
-                  st[20][4619 + j] = encodedName[j];
-                }
-                var sum = 0;
-                for (var k = 8201; k <= 11138; k++) {
-                  sum = (sum + st[20][k]) & 0xffff;
-                }
-                st[20][11533] = sum & 0xff;
-                st[20][11534] = (sum >> 8) & 0xff;
-
-                var backupSum = 0;
-                for (var m = 4617; m <= 7554; m++) {
-                  backupSum = (backupSum + st[20][m]) & 0xffff;
-                }
-                st[20][7949] = backupSum & 0xff;
-                st[20][7950] = (backupSum >> 8) & 0xff;
-              }
-            } else {
-              // Returning downstairs into 1F: ensure Map is 1F and player is at 1F stairs
-              if (st[23] && st[23].length > 3256) {
-                st[23][3253] = 24; // MapGroup 24
-                st[23][3254] = 6;  // MapNumber 6 (1F)
-                st[23][3255] = 9;  // wXCoord 9
-                st[23][3256] = 2;  // wYCoord 2 (in front of stairs)
-              }
+            // In Pokemon Crystal: New Bark Town is MapGroup 24, MapNumber 4!
+            // Door exit position: X=13, Y=6 (facing down)
+            if (st[23] && st[23].length > 3256) {
+              st[23][3253] = 24; // MapGroup 24
+              st[23][3254] = 4;  // MapNumber 4 (New Bark Town)
+              st[23][3255] = 6;  // wYCoord 6
+              st[23][3256] = 13; // wXCoord 13
             }
-
             clearLastEmulation();
             st[0] = loadedRomUint8;
-
             gameboy = new GameBoyCore(canvas, loadedRomBinaryString);
             gameboy.openMBC = openSRAM;
             gameboy.openRTC = openRTC;
@@ -2724,14 +3289,9 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
             currentHdScene = 'game';
             renderHdScene();
             localStorage.setItem('BUDDYMON_ACTIVE_SCENE', 'game');
-
-            var activeSt = gameboy.saveState();
-            activeSt[0] = [];
-            live1FState = activeSt;
-            await idbStore.set('BUDDYMON_ACTIVE_STATE', activeSt);
-            localStorage.setItem('BUDDYMON_ACTIVE_SAVE', 'true');
+            setStatus('New Bark Town');
           } catch (err) {
-            console.error('Failed to warp down:', err);
+            console.error('Failed to exit house:', err);
           }
         }, 400);
       }
@@ -3044,6 +3604,29 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
               dialogHtml +
             '</div>' +
           '</div>';
+        } else if (currentHdScene === 'house1f') {
+          hdStage.style.display = 'block';
+          canvas.style.display = 'none';
+
+          var dialogHtml = '';
+          if (house1FDialog) {
+            dialogHtml = '<div class="bedroom-dialogue" id="hdDialogueBox">' +
+              '<div class="dlg-tag">' + house1FDialog.tag + '</div>' +
+              '<p>' + house1FDialog.text + '</p>' +
+              '<span class="more">&#9660;</span>' +
+            '</div>';
+          }
+
+          var hdRect = hdStage.getBoundingClientRect();
+          var aspect = (hdRect && hdRect.width > 0) ? (hdRect.height / hdRect.width) : 1.35;
+          var roomSvg = Art.house1FScene(playerGender, house1FPlayer, momNpc, aspect);
+
+          hdStage.innerHTML = '<div class="scene house1f">' +
+            '<div class="bedroom-wrapper">' +
+              roomSvg +
+              dialogHtml +
+            '</div>' +
+          '</div>';
         } else if (currentHdScene === 'game') {
           // In the room! HD Canvas fills the stage
           hdStage.style.display = 'none';
@@ -3330,6 +3913,23 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
             }
           }
           return true;
+        } else if (currentHdScene === 'house1f') {
+          if (key === 'up' || key === 'down' || key === 'left' || key === 'right') {
+            moveHouse1FPlayer(key);
+            return true;
+          }
+          if (key === 'a' || key === 'start') {
+            interactHouse1F();
+            return true;
+          }
+          if (key === 'b') {
+            if (house1FDialog) {
+              house1FDialog = null;
+              renderHdScene();
+              return true;
+            }
+          }
+          return true;
         }
 
         return false;
@@ -3492,6 +4092,77 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
           else if (targetTileX < bedroomPlayer.x) moveBedroomPlayer('left');
           else if (targetTileY > bedroomPlayer.y) moveBedroomPlayer('down');
           else if (targetTileY < bedroomPlayer.y) moveBedroomPlayer('up');
+          return;
+        }
+        if (currentHdScene === 'house1f') {
+          if (house1FDialog) {
+            advanceHouse1FDialog();
+            return;
+          }
+          var momObj = e.target.closest('#obj-mom');
+          if (momObj) {
+            interactHouse1F();
+            return;
+          }
+          var stairs1FObj = e.target.closest('#obj-stairs-1f');
+          if (stairs1FObj) {
+            warpUpTo2F();
+            return;
+          }
+          var doorObj = e.target.closest('#obj-front-door');
+          if (doorObj) {
+            warpOutToTown();
+            return;
+          }
+          var tvObj = e.target.closest('#obj-tv');
+          if (tvObj) {
+            playChime(440);
+            house1FDialog = { tag: 'TV', text: "There's a movie on TV: Stars dot the sky as two friends ride on a train... I'd better get rolling too!" };
+            renderHdScene();
+            return;
+          }
+          var fridgeObj = e.target.closest('#obj-fridge');
+          if (fridgeObj) {
+            playChime(520);
+            house1FDialog = { tag: 'FRIDGE', text: "Let's see what's in the fridge... Fresh Water and tasty Lemonade!" };
+            renderHdScene();
+            return;
+          }
+          var sinkObj = e.target.closest('#obj-sink');
+          if (sinkObj) {
+            house1FDialog = { tag: 'SINK', text: "The sink is spotless and shining clean." };
+            renderHdScene();
+            return;
+          }
+          var stoveObj = e.target.closest('#obj-stove');
+          if (stoveObj) {
+            playChime(480);
+            house1FDialog = { tag: 'STOVE', text: "Mom's specialty soup is simmering gently on the stove. Smells delicious!" };
+            renderHdScene();
+            return;
+          }
+          var book1FObj = e.target.closest('#obj-bookshelf-1f');
+          if (book1FObj) {
+            house1FDialog = { tag: 'BOOKSHELF', text: "A collection of cookbooks, home decor magazines, and Buddymon care guides." };
+            renderHdScene();
+            return;
+          }
+          var tableObj = e.target.closest('#obj-table');
+          if (tableObj) {
+            house1FDialog = { tag: 'DINING TABLE', text: "A cozy dining table with a freshly brewed pot of berry tea and two cups." };
+            renderHdScene();
+            return;
+          }
+
+          var rect = hdStage.getBoundingClientRect();
+          var clickX = (e.clientX - rect.left) / rect.width;
+          var clickY = (e.clientY - rect.top) / rect.height;
+          var targetTileX = Math.round(clickX * 400);
+          var targetTileY = Math.round(clickY * 340);
+          if (targetTileX > house1FPlayer.x + 8) moveHouse1FPlayer('right');
+          else if (targetTileX < house1FPlayer.x - 8) moveHouse1FPlayer('left');
+          else if (targetTileY > house1FPlayer.y + 8) moveHouse1FPlayer('down');
+          else if (targetTileY < house1FPlayer.y - 8) moveHouse1FPlayer('up');
           return;
         }
         if (currentHdScene === 'prof') {
@@ -3730,18 +4401,21 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
             mn = gameboy.memoryReader[0xDCB6](gameboy, 0xDCB6);
           }
 
-          // Continuously track 1F state as player moves and talks to Mom
+          // Entering Player's House 1F (Map Group 24, Map Number 6) from New Bark Town
           if (mg === 24 && mn === 6) {
             hasBeenIn1F = true;
-            var now = Date.now();
-            if (now - last1FRecordTime > 250) {
-              last1FRecordTime = now;
-              try {
-                var curSt = gameboy.saveState();
-                curSt[0] = [];
-                live1FState = curSt;
-              } catch (_) {}
-            }
+            upstairsWarpCooldown = Date.now() + 4000;
+            if (gameboy) gameboy.stopEmulator = 1;
+            currentHdScene = 'house1f';
+            house1FPlayer.x = 200;
+            house1FPlayer.y = 280;
+            house1FPlayer.dir = 'up';
+            house1FPlayer.step = 0;
+            house1FDialog = null;
+            renderHdScene();
+            save1FProgress();
+            setStatus('Back inside your house!');
+            return;
           }
 
           if (hasBeenIn1F && mg === 24 && mn === 7) {
