@@ -1,5 +1,5 @@
 // Buddymon Service Worker - 100% Offline PWA Support
-const CACHE_NAME = 'buddymon-pwa-v2';
+const CACHE_NAME = 'buddymon-pwa-v4';
 const STATIC_ASSETS = [
   './',
   'index.html',
@@ -44,10 +44,26 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
 
+  // Network-first for navigation / HTML requests so users immediately get updates
+  if (req.mode === 'navigate' || (req.headers.get('accept') && req.headers.get('accept').includes('text/html'))) {
+    event.respondWith(
+      fetch(req).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
+        }
+        return networkResponse;
+      }).catch(() => {
+        return caches.match('index.html');
+      })
+    );
+    return;
+  }
+
+  // Cache-first with network background update for static assets
   event.respondWith(
     caches.match(req).then((cachedResponse) => {
       if (cachedResponse) {
-        // Fetch in background to update cache if online
         fetch(req).then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
             caches.open(CACHE_NAME).then((cache) => cache.put(req, networkResponse));
@@ -64,11 +80,6 @@ self.addEventListener('fetch', (event) => {
           cache.put(req, responseClone);
         });
         return networkResponse;
-      }).catch(() => {
-        // Offline fallback for navigation requests
-        if (req.mode === 'navigate') {
-          return caches.match('index.html');
-        }
       });
     })
   );

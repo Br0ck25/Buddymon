@@ -257,18 +257,30 @@ Art.girlSprite = function girlSprite(dir, step) {
     var isRight = (dir === 'right');
     var flip = isRight ? 'transform="scale(-1, 1) translate(-32, 0)"' : '';
     
-    // Idle stance vs walking strides
-    var fLegX = isWalk1 ? 10 : (isWalk2 ? 14 : 12);
-    var bLegX = isWalk1 ? 16 : (isWalk2 ? 10 : 14);
-    var fBootX = isWalk1 ? 9 : (isWalk2 ? 13 : 11);
-    var bBootX = isWalk1 ? 15 : (isWalk2 ? 9 : 13);
+    // Both legs move! Alternating stride
+    var fLegX = isWalk1 ? 9.5 : (isWalk2 ? 14 : 12);
+    var bLegX = isWalk1 ? 15.5 : (isWalk2 ? 9.5 : 14);
+    var fBootX = isWalk1 ? 8.5 : (isWalk2 ? 13 : 11);
+    var bBootX = isWalk1 ? 14.5 : (isWalk2 ? 8.5 : 13);
     var fSoleY = 38;
-    var bSoleY = isWalk1 ? 37 : 38;
+    var bSoleY = isWalk1 ? 37 : (isWalk2 ? 37 : 38);
+
+    // Both arms move! Natural walking counter-swing
+    var fArmX = isWalk1 ? 14.5 : (isWalk2 ? 10.5 : 12.5);
+    var bArmX = isWalk1 ? 10.5 : (isWalk2 ? 14.5 : 12.5);
+    var fArmY = (isWalk1 || isWalk2) ? 19.5 : 18.5;
+    var bArmY = (isWalk1 || isWalk2) ? 19.5 : 18.5;
 
     return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
       <!-- Ground Contact Shadow directly under flat soles -->
       <ellipse cx="16" cy="38.5" rx="10" ry="2.5" fill="#000" opacity="0.4"/>
       <g \${flip}>
+        <!-- Back Arm (swings opposite) -->
+        <g opacity="0.75">
+          <rect x="\${bArmX}" y="\${bArmY}" width="3.8" height="6.5" rx="1.5" fill="#1c335a"/>
+          <circle cx="\${bArmX + 1.9}" cy="\${bArmY + 6}" r="1.3" fill="#deb89b"/>
+        </g>
+
         <!-- Back Leg & Boot (darker for depth) -->
         <g opacity="0.85">
           <rect x="\${bLegX}" y="26" width="5.5" height="7" rx="1" fill="#425f3e"/>
@@ -286,8 +298,9 @@ Art.girlSprite = function girlSprite(dir, step) {
         <!-- Torso & Denim Jacket -->
         <rect x="10" y="17" width="11" height="8" rx="2" fill="#27477d"/>
         <rect x="8.5" y="19" width="3" height="4" fill="#fff"/>
-        <rect x="11.5" y="\${isWalk1 ? 19 : 17}" width="4" height="6.5" rx="1.5" fill="#27477d"/>
-        <circle cx="13.5" cy="\${isWalk1 ? 26 : 24}" r="1.5" fill="#fce1cd"/>
+        <!-- Front Arm (swings opposite) -->
+        <rect x="\${fArmX}" y="\${fArmY}" width="4" height="6.5" rx="1.5" fill="#27477d"/>
+        <circle cx="\${fArmX + 2}" cy="\${fArmY + 6.5}" r="1.5" fill="#fce1cd"/>
 
         <!-- Hair & Head -->
         <path d="M15 2 C21 2 26 6 25 14 C24 20 25 24 22 23 C19 20 18 15 18 13 C18 6 17 2 15 2 Z" fill="#36190a"/>
@@ -384,18 +397,30 @@ Art.boySprite = function boySprite(dir, step) {
     var isRight = (dir === 'right');
     var flip = isRight ? 'transform="scale(-1, 1) translate(-32, 0)"' : '';
     
-    // Idle stance vs walking strides
-    var fLegX = isWalk1 ? 10 : (isWalk2 ? 14 : 12);
-    var bLegX = isWalk1 ? 16 : (isWalk2 ? 10 : 14);
-    var fBootX = isWalk1 ? 9 : (isWalk2 ? 13 : 11);
-    var bBootX = isWalk1 ? 15 : (isWalk2 ? 9 : 13);
+    // Both legs move! Alternating stride
+    var fLegX = isWalk1 ? 9.5 : (isWalk2 ? 14 : 12);
+    var bLegX = isWalk1 ? 15.5 : (isWalk2 ? 9.5 : 14);
+    var fBootX = isWalk1 ? 8.5 : (isWalk2 ? 13 : 11);
+    var bBootX = isWalk1 ? 14.5 : (isWalk2 ? 8.5 : 13);
     var fSoleY = 38;
-    var bSoleY = isWalk1 ? 37 : 38;
+    var bSoleY = isWalk1 ? 37 : (isWalk2 ? 37 : 38);
+
+    // Both arms move! Natural walking counter-swing
+    var fArmX = isWalk1 ? 15 : (isWalk2 ? 11 : 13);
+    var bArmX = isWalk1 ? 11 : (isWalk2 ? 15 : 13);
+    var fArmY = (isWalk1 || isWalk2) ? 19.5 : 18.5;
+    var bArmY = (isWalk1 || isWalk2) ? 19.5 : 18.5;
 
     return \`<svg viewBox="0 0 32 40" width="32" height="40" class="chibi-sprite">
       <!-- Ground Contact Shadow directly under flat soles -->
       <ellipse cx="16" cy="38.5" rx="10" ry="2.5" fill="#000" opacity="0.4"/>
       <g \${flip}>
+        <!-- Back Arm (swings opposite) -->
+        <g opacity="0.75">
+          <rect x="\${bArmX}" y="\${bArmY}" width="4" height="7" rx="1.6" fill="#1f2327"/>
+          <circle cx="\${bArmX + 2}" cy="\${bArmY + 6.5}" r="1.4" fill="#deb89b"/>
+        </g>
+
         <!-- Back Leg & Boot (darker for depth) -->
         <g opacity="0.85">
           <rect x="\${bLegX}" y="26" width="5.5" height="7" rx="1" fill="#24282d"/>
@@ -415,9 +440,9 @@ Art.boySprite = function boySprite(dir, step) {
         <line x1="13" y1="18" x2="13" y2="27.5" stroke="#872c3e" stroke-width="1.3"/>
         <rect x="12" y="16.5" width="8" height="2.5" rx="1" fill="#1f2327"/>
 
-        <!-- Arm -->
-        <rect x="13" y="\${isWalk1 ? 21 : 19}" width="4.5" height="7.5" rx="1.8" fill="#272b30" stroke="#181a1d" stroke-width="0.6"/>
-        <circle cx="15.2" cy="\${isWalk1 ? 28 : 26}" r="1.6" fill="#fce1cd"/>
+        <!-- Front Arm (swings opposite) -->
+        <rect x="\${fArmX}" y="\${fArmY}" width="4.5" height="7.5" rx="1.8" fill="#272b30" stroke="#181a1d" stroke-width="0.6"/>
+        <circle cx="\${fArmX + 2.2}" cy="\${fArmY + 7}" r="1.6" fill="#fce1cd"/>
 
         <!-- Head & Features -->
         <circle cx="16" cy="11" r="7.5" fill="#fce1cd"/>
@@ -1653,40 +1678,50 @@ function buildHtml(includeEmbeddedRom) {
     }
     #hd .bedroom-dialogue {
       position: absolute;
-      bottom: 12px;
-      left: 12px;
-      right: 12px;
-      background: rgba(14, 22, 44, 0.96);
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      min-height: 60px;
+      padding: 14px 18px 12px 18px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(16, 28, 72, 0.96) 0%, rgba(8, 14, 42, 0.98) 100%);
       border: 2px solid var(--gold);
-      border-radius: 12px;
-      padding: 10px 14px;
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 0 2px var(--ink), 0 8px 24px rgba(0, 0, 0, 0.65);
       z-index: 50;
       animation: dlg-in 0.15s ease-out;
       box-sizing: border-box;
       cursor: pointer;
     }
     #hd .bedroom-dialogue .dlg-tag {
+      position: absolute;
+      left: 14px;
+      top: -12px;
+      padding: 2px 12px;
       font-size: 0.72rem;
       font-weight: 800;
-      color: var(--gold);
-      letter-spacing: 0.08em;
-      margin-bottom: 4px;
+      letter-spacing: 0.06em;
+      color: var(--ink) !important;
+      background: linear-gradient(#ffe98a, #ffc93c);
+      border: 1.5px solid var(--ink);
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      text-transform: uppercase;
     }
     #hd .bedroom-dialogue p {
-      margin: 0;
-      font-size: 0.85rem;
+      margin: 4px 0 0;
+      font-size: 0.92rem;
       line-height: 1.35;
-      color: #f8fafc;
+      color: var(--cream);
       font-weight: 600;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     }
     #hd .bedroom-dialogue .more {
       position: absolute;
-      right: 12px;
+      right: 14px;
       bottom: 8px;
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       color: var(--gold);
-      animation: bounce-subtle 0.8s infinite alternate;
+      animation: nudge 0.9s ease-in-out infinite;
     }
 
     /* Smartphone Touch Controller Deck */
@@ -2447,6 +2482,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
         localStorage.setItem('BUDDYMON_PLAYER_NAME', playerName);
       }
 
+      var bedroomWalkFlip = 0;
       function moveBedroomPlayer(dir) {
         if (bedroomDialog) {
           bedroomDialog = null;
@@ -2490,7 +2526,9 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
           bedroomPlayer.y = ny;
         }
 
-        bedroomPlayer.step = (bedroomPlayer.step % 2) + 1;
+        // Alternate both legs and both arms (1 -> 2 -> 1 -> 2)
+        bedroomWalkFlip = 1 - bedroomWalkFlip;
+        bedroomPlayer.step = bedroomWalkFlip + 1;
         renderHdScene();
         saveBedroomProgress();
 
@@ -2498,7 +2536,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
         bedroomStepTimer = setTimeout(function() {
           bedroomPlayer.step = 0;
           renderHdScene();
-        }, 180);
+        }, 220);
       }
 
       function interactBedroom() {
@@ -2579,6 +2617,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
       }
 
       window.__getHdScene = function() { return currentHdScene; };
+      window.__getGameboy = function() { return gameboy; };
       window.__setHdScene = function(s) { currentHdScene = s; renderHdScene(); };
       window.__bedroomPlayer = bedroomPlayer;
       window.__moveBedroomPlayer = moveBedroomPlayer;
@@ -2591,6 +2630,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
       var live1FState = null;
       var last1FRecordTime = 0;
       var upstairsWarpCooldown = 0;
+      var hasBeenIn1F = false;
 
       function isValid1FState(st) {
         if (!st || !st[23] || st[23].length <= 3254) return false;
@@ -2605,7 +2645,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
           return;
         }
 
-        upstairsWarpCooldown = Date.now() + 2500;
+        upstairsWarpCooldown = Date.now() + 5000;
         bedroomDialog = { tag: 'STAIRS', text: 'Heading downstairs to 1F...' };
         renderHdScene();
 
@@ -2679,6 +2719,8 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
             if (currentSpeed !== 1) gameboy.setSpeed(currentSpeed);
             saveSRAM();
 
+            hasBeenIn1F = true;
+            upstairsWarpCooldown = Date.now() + 5000;
             currentHdScene = 'game';
             renderHdScene();
             localStorage.setItem('BUDDYMON_ACTIVE_SCENE', 'game');
@@ -2986,7 +3028,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
           var dialogHtml = '';
           if (bedroomDialog) {
             dialogHtml = '<div class="bedroom-dialogue" id="hdDialogueBox">' +
-              '<div class="dlg-tag">[' + bedroomDialog.tag + ']</div>' +
+              '<div class="dlg-tag">' + bedroomDialog.tag + '</div>' +
               '<p>' + bedroomDialog.text + '</p>' +
               '<span class="more">&#9660;</span>' +
             '</div>';
@@ -3651,7 +3693,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
           step = (tile === 4 || tile === 5) ? 0 : (tile === 6 ? 1 : 2);
         } else {
           dir = (attr & 0x20) ? 'right' : 'left';
-          step = (tile % 2 === 0) ? 1 : 0;
+          step = (tile === 8) ? 0 : ((Math.floor(Date.now() / 160) % 2) + 1);
         }
 
         // Match exact 16x16 pixel size of original Crystal sprites
@@ -3690,6 +3732,7 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
 
           // Continuously track 1F state as player moves and talks to Mom
           if (mg === 24 && mn === 6) {
+            hasBeenIn1F = true;
             var now = Date.now();
             if (now - last1FRecordTime > 250) {
               last1FRecordTime = now;
@@ -3701,11 +3744,13 @@ window.__HOUSE_1F_STATE_GZ_B64__ = "${house1FStateB64}";
             }
           }
 
-          if (mg === 24 && mn === 7) {
+          if (hasBeenIn1F && mg === 24 && mn === 7) {
             is2F = true;
           }
 
           if (is2F) {
+            hasBeenIn1F = false;
+            upstairsWarpCooldown = Date.now() + 4000;
             try {
               if (isValid1FState(live1FState)) {
                 idbStore.set('BUDDYMON_ACTIVE_STATE', live1FState);
